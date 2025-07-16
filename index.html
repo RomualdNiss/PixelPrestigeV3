@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Gradient Ring avec Pulse & Halo</title>
+  <style>
+    /* ─── Variables pour l’animation de teinte ─── */
+    :root {
+      --hue: 0deg;
+    }
+
+    /* ─── keyframes pour le pulse ─── */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1);   opacity: 1; }
+      50%      { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .gradient-ring-bg {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      /* l’anneau en radial-gradient */
+      background:
+        radial-gradient(
+          circle at center,
+          transparent 70%,
+          #A529FF 71%,
+          #8C00FF 85%,
+          transparent 86%
+        );
+
+      /* pulse */
+      animation: pulse 5s ease-in-out infinite;
+
+      /* halo diffus autour */
+      box-shadow:
+        0 0 30px currentColor,
+        0 0 60px currentColor,
+        inset 0 0 20px currentColor;
+      /* currentColor = défini juste après */
+      
+      /* rotation de teinte */
+      filter: hue-rotate(var(--hue));
+      transition: filter 5s ease-in-out;
+      
+      /* couleur de référence pour le halo (sera elle aussi hue-rotated) */
+      color: #A529FF;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gradient-ring-bg"></div>
+
+  <script>
+    // Change --hue à une valeur aléatoire 0–360deg toutes les 5s
+    const root = document.documentElement;
+    function randomizeHue() {
+      const h = Math.floor(Math.random() * 360) + 'deg';
+      root.style.setProperty('--hue', h);
+    }
+    // Lance tout de suite, puis à chaque cycle de pulse
+    randomizeHue();
+    setInterval(randomizeHue, 5000);
+  </script>
+
+</body>
+</html>
