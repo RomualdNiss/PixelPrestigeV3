@@ -5,7 +5,33 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Gradient Ring avec Pulse & Halo</title>
   <style>
-    /* ─── Couleur choisie dynamiquement par le script ─── */
+    /* ─── Propriétés enregistrées pour des transitions fluides ─── */
+    @property --x {
+      syntax: '<percentage>';
+      inherits: false;
+      initial-value: 50%;
+    }
+    @property --y {
+      syntax: '<percentage>';
+      inherits: false;
+      initial-value: 50%;
+    }
+    @property --fx {
+      syntax: '<length>';
+      inherits: false;
+      initial-value: 0px;
+    }
+    @property --fy {
+      syntax: '<length>';
+      inherits: false;
+      initial-value: 0px;
+    }
+    @property --rot {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
     :root {
       --clr: 165,41,255; /* valeur par défaut */
     }
@@ -21,8 +47,8 @@
       to   { transform: scale(1.8); opacity: 0; }
     }
     @keyframes flareScale {
-      from { transform: var(--pos) rotate(var(--rot)) scale(0.7); opacity: 1; }
-      to   { transform: var(--pos) rotate(var(--rot)) scale(1.4); opacity: 0; }
+      from { transform: scale(0.7); opacity: 1; }
+      to   { transform: scale(1.4); opacity: 0; }
     }
 
 
@@ -62,7 +88,8 @@
       /* currentColor = défini juste après */
       
       /* couleur de référence pour le halo */
-        color: rgb(var(--clr));
+        color: var(--clr);
+      transition: color 5s ease;
       }
 
       .wave {
@@ -76,6 +103,7 @@
         background: radial-gradient(circle at var(--x) var(--y), rgba(var(--clr),0.6), transparent 60%);
         animation: ripple 4s ease-out infinite;
         animation-delay: var(--delay, 0s);
+        transition: --x 5s ease, --y 5s ease;
       }
       .flare {
         position: absolute;
@@ -87,9 +115,17 @@
         pointer-events: none;
         mix-blend-mode: screen;
         background: radial-gradient(circle, rgba(var(--clr),0.9), transparent 70%);
-        --pos: translate(0,0);
+        --fx: 0px;
+        --fy: 0px;
         --rot: 0deg;
-        transform: var(--pos) rotate(var(--rot));
+        transform: translate(var(--fx), var(--fy)) rotate(var(--rot));
+        transition: --fx 5s ease, --fy 5s ease, --rot 5s ease;
+      }
+      .flare > div {
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background: inherit;
         animation: flareScale 6s ease-out infinite;
         animation-delay: var(--delay, 0s);
       }
@@ -100,14 +136,14 @@
 
   <div class="gradient-ring-bg">
     <div class="wave"></div>
-    <div class="flare"></div>
-    <div class="flare"></div>
+    <div class="flare"><div></div></div>
+    <div class="flare"><div></div></div>
     <div class="wave"></div>
-    <div class="flare"></div>
-    <div class="flare"></div>
+    <div class="flare"><div></div></div>
+    <div class="flare"><div></div></div>
     <div class="wave"></div>
-    <div class="flare"></div>
-    <div class="flare"></div>
+    <div class="flare"><div></div></div>
+    <div class="flare"><div></div></div>
   </div>
 
   <script>
@@ -123,6 +159,8 @@
 
     function randomizeEffects() {
       const rgb = colors[Math.floor(Math.random() * colors.length)];
+      const color = `rgb(${rgb.join(',')})`;
+      ring.style.color = color;
       ring.style.setProperty('--clr', rgb.join(','));
       waves.forEach(wave => {
         const a = Math.random() * Math.PI * 2;
@@ -137,9 +175,10 @@
         const r = 190 + Math.random() * 20;
         const x2 = Math.cos(a2) * r;
         const y2 = Math.sin(a2) * r;
-        flare.style.setProperty("--pos", `translate(${x2}px, ${y2}px)`);
-        flare.style.setProperty("--rot", `${a2}rad`);
-        flare.style.setProperty("--delay", `-${Math.random() * 6}s`);
+        flare.style.setProperty('--fx', `${x2}px`);
+        flare.style.setProperty('--fy', `${y2}px`);
+        flare.style.setProperty('--rot', `${a2}rad`);
+        flare.style.setProperty('--delay', `-${Math.random() * 6}s`);
       });
     }
     randomizeEffects();
