@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Gradient Ring avec Pulse & Halo</title>
   <style>
-    /* ─── Variables pour l’animation de teinte ─── */
-    :root {
-      --hue: 0deg;
-    }
+    /* ─── Aucune teinte dynamique : couleurs unifiées ─── */
 
     /* ─── keyframes pour le pulse ─── */
     @keyframes pulse {
@@ -46,8 +43,8 @@
         radial-gradient(
           circle at center,
           transparent 70%,
-          #A529FF 71%,
-          #8C00FF 85%,
+          currentColor 71%,
+          currentColor 85%,
           transparent 86%
         );
 
@@ -61,11 +58,7 @@
         inset 0 0 20px currentColor;
       /* currentColor = défini juste après */
       
-      /* rotation de teinte */
-      filter: hue-rotate(var(--hue));
-      transition: filter 5s ease-in-out;
-      
-      /* couleur de référence pour le halo (sera elle aussi hue-rotated) */
+      /* couleur de référence pour le halo */
         color: #A529FF;
       }
 
@@ -77,10 +70,9 @@
         border-radius: inherit;
         mix-blend-mode: screen;
         mask: radial-gradient(circle at center, transparent 69%, #000 70%, #000 86%, transparent 87%);
-        background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.6), transparent 60%);
+        background: radial-gradient(circle at var(--x) var(--y), rgba(165,41,255,0.6), transparent 60%);
         animation: ripple 4s ease-out infinite;
         animation-delay: var(--delay, 0s);
-        filter: hue-rotate(var(--hue));
       }
       .flare {
         position: absolute;
@@ -91,8 +83,7 @@
         border-radius: 50%;
         pointer-events: none;
         mix-blend-mode: screen;
-        background: radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%);
-        filter: hue-rotate(var(--hue));
+        background: radial-gradient(circle, rgba(165,41,255,0.9), transparent 70%);
         --pos: translate(0,0);
         --rot: 0deg;
         transform: var(--pos) rotate(var(--rot));
@@ -117,13 +108,10 @@
   </div>
 
   <script>
-    // Change la teinte et positionne les vagues de façon aléatoire toutes les 5 s
-    const root = document.documentElement;
+    // Positionne les vagues de façon aléatoire toutes les 5 s
     const waves = document.querySelectorAll('.wave');
 const flares = document.querySelectorAll('.flare');
     function randomizeEffects() {
-      const h = Math.floor(Math.random() * 360) + 'deg';
-      root.style.setProperty('--hue', h);
       waves.forEach(wave => {
         const a = Math.random() * Math.PI * 2;
         const x = 50 + Math.cos(a) * 38;
