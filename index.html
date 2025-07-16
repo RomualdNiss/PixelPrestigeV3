@@ -20,6 +20,11 @@
       from { transform: scale(0.3); opacity: 0.8; }
       to   { transform: scale(1.8); opacity: 0; }
     }
+    @keyframes flareScale {
+      from { transform: var(--pos) rotate(var(--rot)) scale(0.7); opacity: 1; }
+      to   { transform: var(--pos) rotate(var(--rot)) scale(1.4); opacity: 0; }
+    }
+
 
     body {
       margin: 0;
@@ -77,21 +82,46 @@
         animation-delay: var(--delay, 0s);
         filter: hue-rotate(var(--hue));
       }
+      .flare {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 60px;
+        border-radius: 50%;
+        pointer-events: none;
+        mix-blend-mode: screen;
+        background: radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%);
+        filter: hue-rotate(var(--hue));
+        --pos: translate(0,0);
+        --rot: 0deg;
+        transform: var(--pos) rotate(var(--rot));
+        animation: flareScale 6s ease-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
   </style>
 </head>
 <body>
 
   <div class="gradient-ring-bg">
     <div class="wave"></div>
+    <div class="flare"></div>
+    <div class="flare"></div>
     <div class="wave"></div>
+    <div class="flare"></div>
+    <div class="flare"></div>
     <div class="wave"></div>
+    <div class="flare"></div>
+    <div class="flare"></div>
   </div>
 
   <script>
     // Change la teinte et positionne les vagues de façon aléatoire toutes les 5 s
     const root = document.documentElement;
     const waves = document.querySelectorAll('.wave');
-    function randomizeHueAndWaves() {
+const flares = document.querySelectorAll('.flare');
+    function randomizeEffects() {
       const h = Math.floor(Math.random() * 360) + 'deg';
       root.style.setProperty('--hue', h);
       waves.forEach(wave => {
@@ -102,9 +132,18 @@
         wave.style.setProperty('--y', y + '%');
         wave.style.setProperty('--delay', `-${Math.random() * 4}s`);
       });
+      flares.forEach(flare => {
+        const a2 = Math.random() * Math.PI * 2;
+        const r = 190 + Math.random() * 20;
+        const x2 = Math.cos(a2) * r;
+        const y2 = Math.sin(a2) * r;
+        flare.style.setProperty("--pos", `translate(${x2}px, ${y2}px)`);
+        flare.style.setProperty("--rot", `${a2}rad`);
+        flare.style.setProperty("--delay", `-${Math.random() * 6}s`);
+      });
     }
-    randomizeHueAndWaves();
-    setInterval(randomizeHueAndWaves, 5000);
+    randomizeEffects();
+    setInterval(randomizeEffects, 5000);
   </script>
 
 </body>
