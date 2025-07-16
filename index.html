@@ -8,12 +8,6 @@
     /* ─── Variables pour l’animation de teinte ─── */
     :root {
       --hue: 0deg;
-      --wave1-x: 50%;
-      --wave1-y: 50%;
-      --wave2-x: 50%;
-      --wave2-y: 50%;
-      --wave3-x: 50%;
-      --wave3-y: 50%;
     }
 
     /* ─── keyframes pour le pulse ─── */
@@ -22,9 +16,9 @@
       50%      { transform: scale(1.1); opacity: 0.7; }
     }
 
-    @keyframes waves {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+    @keyframes ripple {
+      from { transform: scale(0.3); opacity: 0.8; }
+      to   { transform: scale(1.8); opacity: 0; }
     }
 
     body {
@@ -70,38 +64,45 @@
         color: #A529FF;
       }
 
-      .gradient-ring-bg::before {
+      .wave {
         content: '';
         position: absolute;
         inset: 0;
-        border-radius: inherit;
         pointer-events: none;
-        background:
-          radial-gradient(circle at var(--wave1-x) var(--wave1-y), rgba(255,255,255,0.4), transparent 60%),
-          radial-gradient(circle at var(--wave2-x) var(--wave2-y), rgba(255,255,255,0.4), transparent 60%),
-          radial-gradient(circle at var(--wave3-x) var(--wave3-y), rgba(255,255,255,0.4), transparent 60%);
+        border-radius: inherit;
         mix-blend-mode: screen;
-        animation: waves 8s linear infinite;
+        mask: radial-gradient(circle at center, transparent 69%, #000 70%, #000 86%, transparent 87%);
+        background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.6), transparent 60%);
+        animation: ripple 4s ease-out infinite;
+        animation-delay: var(--delay, 0s);
         filter: hue-rotate(var(--hue));
       }
   </style>
 </head>
 <body>
 
-  <div class="gradient-ring-bg"></div>
+  <div class="gradient-ring-bg">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
 
   <script>
-    // Change la teinte et les positions des waves toutes les 5s
+    // Change la teinte et positionne les vagues de façon aléatoire toutes les 5 s
     const root = document.documentElement;
+    const waves = document.querySelectorAll('.wave');
     function randomizeHueAndWaves() {
       const h = Math.floor(Math.random() * 360) + 'deg';
       root.style.setProperty('--hue', h);
-      for (let i = 1; i <= 3; i++) {
-        root.style.setProperty(`--wave${i}-x`, Math.floor(Math.random() * 100) + '%');
-        root.style.setProperty(`--wave${i}-y`, Math.floor(Math.random() * 100) + '%');
-      }
+      waves.forEach(wave => {
+        const a = Math.random() * Math.PI * 2;
+        const x = 50 + Math.cos(a) * 38;
+        const y = 50 + Math.sin(a) * 38;
+        wave.style.setProperty('--x', x + '%');
+        wave.style.setProperty('--y', y + '%');
+        wave.style.setProperty('--delay', `-${Math.random() * 4}s`);
+      });
     }
-    // Lance tout de suite, puis à chaque cycle de pulse
     randomizeHueAndWaves();
     setInterval(randomizeHueAndWaves, 5000);
   </script>
