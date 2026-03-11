@@ -8,6 +8,10 @@ export function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);
 }
 
+export function getLocaleStaticParams(): Array<{ locale: Locale }> {
+  return locales.map((locale) => ({ locale }));
+}
+
 export function localizedPath(locale: Locale, href: string): string {
   if (!href.startsWith("/")) {
     return `/${locale}/${href}`;

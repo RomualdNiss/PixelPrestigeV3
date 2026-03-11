@@ -5,7 +5,7 @@ import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { PixelCursor } from "@/components/effects/PixelCursor";
 import { ParallaxBackdrop } from "@/components/effects/ParallaxBackdrop";
 import { getLocaleContent } from "@/content/site-content";
-import { locales } from "@/lib/i18n";
+import { getLocaleStaticParams } from "@/lib/i18n";
 import { organizationSchema } from "@/lib/seo";
 import { resolveLocale } from "@/lib/resolve-locale";
 
@@ -15,7 +15,7 @@ type LayoutProps = {
 };
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return getLocaleStaticParams();
 }
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {

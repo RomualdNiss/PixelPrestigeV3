@@ -1,12 +1,17 @@
 ﻿import type { Metadata } from "next";
 import { PageIntro } from "@/components/layout/PageIntro";
 import { getLocaleContent } from "@/content/site-content";
+import { getLocaleStaticParams } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/resolve-locale";
 import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export function generateStaticParams() {
+  return getLocaleStaticParams();
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = await resolveLocale(params);
