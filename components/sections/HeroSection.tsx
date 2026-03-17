@@ -108,7 +108,7 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
 
       <div className="container-default relative z-20 min-h-[560px]">
         <div className="max-w-2xl py-14 md:py-20">
-          <p className="text-xs uppercase tracking-[0.24em] text-brand">{dictionary.home.hero.kicker}</p>
+          <p className="eyebrow-badge text-xs uppercase tracking-[0.22em]">{dictionary.home.hero.kicker}</p>
           <h1 className="mt-4 max-w-2xl font-display text-5xl font-semibold leading-[1.02] text-white md:text-6xl lg:text-7xl">
             {dictionary.home.hero.title}
           </h1>

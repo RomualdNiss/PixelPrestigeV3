@@ -68,7 +68,7 @@ export function ProcessTimeline({ items, compact = false }: ProcessTimelineProps
             !compact && index === 3 ? "md:translate-y-8" : "",
           )}
         >
-          <p className="text-xs uppercase tracking-[0.16em] text-brand">Step {index + 1}</p>
+          <p className="eyebrow-badge text-xs uppercase tracking-[0.16em]">Step {index + 1}</p>
           <h3 className="mt-3 font-display text-2xl font-semibold text-white">{item.title}</h3>
           <p className="mt-3 text-sm text-text-muted">{item.detail}</p>
         </article>
