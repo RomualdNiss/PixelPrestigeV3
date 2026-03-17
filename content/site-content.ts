@@ -4,6 +4,7 @@ import type {
   Dictionary,
   GuaranteeItem,
   ProcessStep,
+  SeoContent,
   ServiceItem,
 } from "@/types/content";
 
@@ -15,6 +16,54 @@ type LocaleContent = {
   guarantees: GuaranteeItem[];
 };
 
+const frHomeSeo: SeoContent = {
+  title: "Pixel Prestige | Agence de developpement web / d'application à Rouen",
+  description:
+    "Pixel Prestige, agence de developpement à Rouen : sites web sur mesure, webapps, applications metier, SEO technique et strategie digitale pour renforcer votre presence en ligne.",
+  keywords: [
+    "agence developpement web Rouen",
+    "agence webapp Rouen",
+    "site internet sur mesure",
+    "application metier",
+    "webapp",
+    "SEO technique",
+    "strategie digitale",
+    "presence en ligne",
+    "Pixel Prestige",
+    "developpement web",
+  ],
+  openGraphTitle: "Pixel Prestige - Agence de developpement web et d'applications à Rouen",
+  openGraphDescription:
+    "Sites web sur mesure, webapps, SEO technique et strategie digitale : un partenaire technique pour construire votre presence en ligne.",
+  twitterTitle: "Pixel Prestige - Agence de developpement web",
+  twitterDescription:
+    "Sites web, webapps, applications metier et strategie digitale pour les entreprises qui veulent une presence en ligne solide.",
+  image: "/assets/img/logo_complet.png",
+};
+
+const enHomeSeo: SeoContent = {
+  title: "Pixel Prestige | Web development and app agency",
+  description:
+    "Pixel Prestige builds custom websites, web apps and digital presence strategies for companies that need clean execution and long-term support.",
+  keywords: [
+    "web development agency",
+    "web app agency",
+    "custom website development",
+    "business web app",
+    "technical SEO",
+    "digital strategy",
+    "online presence",
+    "Pixel Prestige",
+  ],
+  openGraphTitle: "Pixel Prestige - Web development and app agency",
+  openGraphDescription:
+    "Custom websites, web apps, technical SEO and digital strategy delivered as one coherent service.",
+  twitterTitle: "Pixel Prestige - Web development agency",
+  twitterDescription:
+    "A technical partner for custom websites, web apps and stronger digital presence.",
+  image: "/assets/img/logo_complet.png",
+};
+
 const frDictionary: Dictionary = {
   localeLabel: "FR",
   nav: [
@@ -24,62 +73,63 @@ const frDictionary: Dictionary = {
     { href: "/a-propos", label: "A propos" },
     { href: "/contact", label: "Contact" },
   ],
-  footerText: "Pixel Prestige - Experiences digitales premium.",
+  footerText: "Pixel Prestige - Developpement web, webapps et presence digitale.",
   home: {
     hero: {
-      kicker: "Agence web & apps haut de gamme",
-      title: "Le digital qui marque, convertit et scale.",
+      kicker: "Agence de développement de solutions et de stratégie digitale",
+      title: "Solutions digitales sur mesure",
       subtitle:
-        "Sites vitrine, applications et automatisations sur mesure avec un rendu premium, rapide et maintenable.",
-      primaryCta: "Demarrer mon projet",
-      secondaryCta: "Voir les realisations",
+        "Nous concevons des solutions web claires, performantes et utiles pour renforcer votre présence en ligne et faire avancer votre activité.",
+      primaryCta: "Parler de mon projet",
+      secondaryCta: "Voir les réalisations",
     },
-    trustLine: ["Next.js", "TypeScript", "R3F", "Automatisation API", "UX/UI"],
-    servicesTitle: "Des offres claires pour accelerer vos resultats",
+    seo: frHomeSeo,
+    trustLine: ["Sites sur mesure", "Webapps metier", "SEO technique", "Strategie digitale", "Maintenance evolutive"],
+    servicesTitle: "Un partenaire technique pour construire, lancer et faire evoluer votre presence en ligne",
     servicesLead:
-      "Chaque pack combine design, architecture propre et impact business concret.",
+      "Du site vitrine a la webapp metier, nous combinons developpement, UX et strategie digitale pour livrer des outils utiles, rapides et durables.",
     casesTitle: "Realisations recentes",
-    casesLead: "Des projets qui melangent precision technique et objectif conversion.",
-    processTitle: "Une methode structuree, sans friction",
-    processLead: "Cadrage, execution, optimisation continue: vous gardez la visibilite.",
+    casesLead: "Des projets menes avec exigence technique, lisibilite produit et impact business concret.",
+    processTitle: "Une methode claire, du cadrage a la mise en ligne",
+    processLead: "Cadrage, conception, developpement et lancement dans un flux de travail simple et transparent.",
     guaranteesTitle: "Des engagements mesurables",
-    guaranteesLead: "Qualite, performance et accompagnement long terme.",
-    finalCtaTitle: "Pret a lancer une experience digitale qui sort du lot ?",
-    finalCtaLead: "Recevez une proposition claire en 48h avec vision produit, budget et roadmap.",
-    finalCtaButton: "Parler de mon projet",
+    guaranteesLead: "Un partenaire fiable pour livrer proprement, performer et suivre dans la duree.",
+    finalCtaTitle: "Besoin d'un site, d'une webapp ou d'une strategie digitale plus claire ?",
+    finalCtaLead: "Expliquez votre contexte, vos objectifs et vos priorites. Nous revenons avec une recommandation concrete, un perimetre et une feuille de route.",
+    finalCtaButton: "Parler de votre projet",
   },
   servicesPage: {
-    title: "Services Pixel Prestige",
-    lead: "Du site vitrine a la plateforme metier, nous construisons des solutions robustes et evolutives.",
+    title: "Developpement web, webapp & strategie digitale",
+    lead: "Sites web sur mesure, applications metier, presence en ligne et optimisation continue : nous construisons des outils utiles, rapides et evolutifs.",
   },
   casesPage: {
-    title: "Realisations & cas clients",
-    lead: "Une selection de projets menes avec exigence de design, performance et ROI.",
+    title: "Realisations web & cas clients",
+    lead: "Une selection de projets web et applicatifs livres avec exigence technique, performance et impact metier.",
   },
   processPage: {
-    title: "Notre process",
-    lead: "Un cadre simple, des iterations rapides, une execution transparente.",
+    title: "Notre process de build",
+    lead: "Une methode structuree pour cadrer, developper, lancer et faire evoluer chaque projet.",
   },
   aboutPage: {
     title: "A propos de Pixel Prestige",
-    lead: "Nous combinons ambition creative et rigueur d'ingenierie pour produire des experiences digitales memorables.",
+    lead: "Pixel Prestige accompagne les entreprises qui ont besoin d'un partenaire capable de concevoir, developper et faire vivre leur presence en ligne, du site vitrine a la webapp metier.",
     values: [
-      "Precision technique et code propre",
-      "Design orienté performance business",
-      "Transparence sur les priorites et les delais",
-      "Accompagnement post-livraison",
+      "Developpement propre, fiable et maintenable",
+      "Interfaces pensees pour l'usage et la conversion",
+      "Vision business, SEO et presence en ligne",
+      "Accompagnement durable apres la mise en production",
     ],
     stackTitle: "Stack et standards",
     stackItems: [
-      "Next.js, TypeScript, R3F, Framer Motion, GSAP",
-      "Architecture composable et design tokens",
-      "SEO technique + optimisation Core Web Vitals",
-      "Maintenance continue et evolutions produit",
+      "Next.js, TypeScript et architectures web sur mesure",
+      "API, automatisation et outils metier connectes",
+      "SEO technique, performance et fondations analytics",
+      "Maintenance, evolutions produit et support continu",
     ],
   },
   contactPage: {
     title: "Parlons de votre prochain projet",
-    lead: "Decrivez votre besoin, vos objectifs, et nous revenons avec une direction claire.",
+    lead: "Decrivez le site, la webapp ou la strategie digitale que vous voulez lancer ou remettre a niveau.",
     responseInfo: "Reponse sous 48h ouvrées.",
   },
   legalPage: {
@@ -89,7 +139,7 @@ const frDictionary: Dictionary = {
     title: "Politique de confidentialite",
   },
   common: {
-    ctaProject: "Demarrer un projet",
+    ctaProject: "Explorer les services",
     ctaCases: "Voir nos cas",
     ctaContact: "Nous contacter",
     ctaCalendly: "Prendre rendez-vous",
@@ -123,61 +173,62 @@ const enDictionary: Dictionary = {
     { href: "/a-propos", label: "About" },
     { href: "/contact", label: "Contact" },
   ],
-  footerText: "Pixel Prestige - Premium digital experiences.",
+  footerText: "Pixel Prestige - Web development, web apps and digital presence.",
   home: {
     hero: {
-      kicker: "Premium web & app agency",
-      title: "Digital products that look sharp and perform harder.",
+      kicker: "Digital solutions & strategy agency",
+      title: "Custom digital solutions",
       subtitle:
-        "Websites, apps and automations crafted to ship fast, scale cleanly and convert consistently.",
-      primaryCta: "Start my project",
+        "We design clear, high-performing, and useful web solutions to strengthen your online presence and help your business move forward.",
+      primaryCta: "Discuss my project",
       secondaryCta: "See our work",
     },
-    trustLine: ["Next.js", "TypeScript", "R3F", "API automation", "UX/UI"],
-    servicesTitle: "Clear service pillars to move faster",
-    servicesLead: "Each package blends design craft, solid architecture and business outcomes.",
+    seo: enHomeSeo,
+    trustLine: ["Custom websites", "Business web apps", "Technical SEO", "Digital strategy", "Ongoing support"],
+    servicesTitle: "One technical partner for build, launch and growth",
+    servicesLead: "From showcase sites to business web apps, we combine development, UX and digital strategy to deliver useful systems that last.",
     casesTitle: "Recent case studies",
-    casesLead: "Projects built for impact, speed and long-term maintainability.",
-    processTitle: "A sharp process, no noise",
-    processLead: "Discovery, build and optimization in short focused loops.",
+    casesLead: "Projects delivered with strong technical standards, clear product thinking and measurable business impact.",
+    processTitle: "A clear process from scoping to launch",
+    processLead: "Scoping, design, development and launch handled through a structured and transparent workflow.",
     guaranteesTitle: "Commitments you can measure",
-    guaranteesLead: "Quality code, performance baseline and post-launch support.",
-    finalCtaTitle: "Ready to launch a digital experience with real edge?",
-    finalCtaLead: "Get a clear proposal in 48h with scope, budget range and timeline.",
-    finalCtaButton: "Discuss my project",
+    guaranteesLead: "Reliable delivery, measurable performance and support that continues after launch.",
+    finalCtaTitle: "Need a website, a web app or a clearer digital presence?",
+    finalCtaLead: "Share your context, goals and constraints. We will come back with a concrete recommendation, scope and roadmap.",
+    finalCtaButton: "Discuss your project",
   },
   servicesPage: {
-    title: "Pixel Prestige services",
-    lead: "From premium websites to custom products, we build digital systems made to last.",
+    title: "Web development, web apps & digital strategy",
+    lead: "Custom websites, business web apps, digital presence and ongoing optimization delivered as one coherent service.",
   },
   casesPage: {
-    title: "Work & case studies",
-    lead: "A selection of projects delivered with strong visual identity and measurable outcomes.",
+    title: "Web builds & case studies",
+    lead: "A selection of web and application projects delivered with technical rigor, performance and business impact.",
   },
   processPage: {
-    title: "How we work",
-    lead: "A pragmatic framework built for speed, clarity and quality.",
+    title: "How we build",
+    lead: "A structured method to scope, build, launch and improve every project.",
   },
   aboutPage: {
     title: "About Pixel Prestige",
-    lead: "We combine bold product vision with disciplined engineering execution.",
+    lead: "Pixel Prestige helps companies design, build and strengthen their digital presence, from marketing websites to business web apps.",
     values: [
-      "Craft-level implementation quality",
-      "Design decisions tied to business goals",
-      "Transparent project communication",
-      "Long-term product partnership",
+      "Clean, reliable and maintainable implementation",
+      "Interfaces shaped for usability and conversion",
+      "Business thinking, technical SEO and digital presence",
+      "Long-term support after launch",
     ],
     stackTitle: "Stack & standards",
     stackItems: [
-      "Next.js, TypeScript, R3F, Framer Motion, GSAP",
-      "Component-first architecture and design tokens",
-      "SEO and Core Web Vitals optimization",
-      "Maintenance, analytics and evolution roadmap",
+      "Next.js, TypeScript and tailored web architectures",
+      "APIs, automation and connected business tools",
+      "Technical SEO, performance and analytics foundations",
+      "Maintenance, product evolution and continuous support",
     ],
   },
   contactPage: {
     title: "Let us scope your next project",
-    lead: "Share your context and goals, and we will reply with a concrete direction.",
+    lead: "Tell us about the website, web app or digital strategy you want to launch or upgrade.",
     responseInfo: "Average response time: 48 business hours.",
   },
   legalPage: {
@@ -187,7 +238,7 @@ const enDictionary: Dictionary = {
     title: "Privacy policy",
   },
   common: {
-    ctaProject: "Start a project",
+    ctaProject: "Explore services",
     ctaCases: "View case studies",
     ctaContact: "Contact us",
     ctaCalendly: "Book a call",
@@ -214,55 +265,55 @@ const enDictionary: Dictionary = {
 
 const frServices: ServiceItem[] = [
   {
-    id: "web",
-    title: "Web",
-    summary: "Sites vitrine premium, corporate et landing pages orientes conversion.",
-    bullets: ["UX/UI sur mesure", "SEO technique", "Core Web Vitals"],
+    id: "site",
+    title: "Sites web sur mesure",
+    summary: "Sites vitrines, corporate et landing pages penses pour la credibilite, la performance et la conversion.",
+    bullets: ["Conception UX/UI", "Developpement sur mesure", "SEO technique"],
   },
   {
-    id: "app",
-    title: "App",
-    summary: "Applications metier web avec architecture scalable et interfaces fluides.",
-    bullets: ["Dashboard", "Espace client", "Workflows internes"],
+    id: "webapp",
+    title: "Webapps & applications metier",
+    summary: "Applications web, extranets, dashboards et outils internes concus pour vos usages quotidiens.",
+    bullets: ["Espace client", "Tableaux de bord", "Architecture evolutive"],
   },
   {
-    id: "product",
-    title: "Produit digital",
-    summary: "Conception produit, design system et iterations data-driven.",
-    bullets: ["Discovery", "Prototypage", "Systeme de composants"],
+    id: "growth",
+    title: "Presence en ligne & strategie digitale",
+    summary: "Structuration de votre presence digitale pour gagner en lisibilite, acquisition et coherence globale.",
+    bullets: ["Positionnement", "Parcours & contenu", "Strategie digitale"],
   },
   {
-    id: "automation",
-    title: "Automatisation",
-    summary: "Integrations API et automatisations pour gagner du temps operationnel.",
-    bullets: ["Connecteurs", "No-code / low-code", "Maintenance evolutive"],
+    id: "support",
+    title: "Maintenance & optimisation",
+    summary: "Suivi technique, corrections, evolutions et optimisation continue apres la mise en ligne.",
+    bullets: ["Maintenance", "Performance", "Accompagnement continu"],
   },
 ];
 
 const enServices: ServiceItem[] = [
   {
-    id: "web",
-    title: "Web",
-    summary: "Premium websites, corporate platforms and conversion-first landing pages.",
-    bullets: ["Custom UX/UI", "Technical SEO", "Core Web Vitals"],
+    id: "site",
+    title: "Custom websites",
+    summary: "Showcase sites, corporate platforms and landing pages built for credibility, speed and conversion.",
+    bullets: ["UX/UI design", "Custom development", "Technical SEO"],
   },
   {
-    id: "app",
-    title: "App",
-    summary: "Business web applications with scalable architecture and smooth UX.",
-    bullets: ["Dashboards", "Client portals", "Internal workflows"],
+    id: "webapp",
+    title: "Web apps & business applications",
+    summary: "Business web apps, client portals, dashboards and internal tools shaped around real workflows.",
+    bullets: ["Client portals", "Dashboards", "Scalable architecture"],
   },
   {
-    id: "product",
-    title: "Digital product",
-    summary: "Product design, design systems and iterative delivery loops.",
-    bullets: ["Discovery", "Prototyping", "Component systems"],
+    id: "growth",
+    title: "Digital presence & strategy",
+    summary: "A clearer online presence designed to support visibility, acquisition and overall consistency.",
+    bullets: ["Positioning", "Content & journeys", "Digital strategy"],
   },
   {
-    id: "automation",
-    title: "Automation",
-    summary: "API integrations and automated flows to reduce operational friction.",
-    bullets: ["Connectors", "No-code / low-code", "Continuous support"],
+    id: "support",
+    title: "Maintenance & optimization",
+    summary: "Technical follow-up, fixes, product iterations and ongoing optimization after launch.",
+    bullets: ["Maintenance", "Performance", "Ongoing support"],
   },
 ];
 
@@ -323,50 +374,50 @@ const enCases: CaseStudy[] = [
 const frProcess: ProcessStep[] = [
   {
     title: "Discovery",
-    detail: "Atelier de cadrage, objectifs business, priorisation produit.",
+    detail: "Atelier de cadrage, objectifs business, priorites fonctionnelles et positionnement digital.",
   },
   {
     title: "Conception",
-    detail: "Wireframes, design direction, parcours, architecture technique.",
+    detail: "Architecture, UX/UI, contenus cle et parcours de conversion.",
   },
   {
     title: "Build",
-    detail: "Developpement incremental, QA continue, demos hebdomadaires.",
+    detail: "Developpement web ou applicatif, QA continue et validations iteratives.",
   },
   {
-    title: "Scale",
-    detail: "Optimisation performance, SEO, analytics et evolutions roadmap.",
+    title: "Lancement & optimisation",
+    detail: "Mise en ligne, SEO technique, performance et evolutions continues.",
   },
 ];
 
 const enProcess: ProcessStep[] = [
   {
     title: "Discovery",
-    detail: "Alignment workshop, business goals and scope prioritization.",
+    detail: "Scoping workshop, business goals, feature priorities and digital positioning.",
   },
   {
     title: "Design",
-    detail: "Wireframes, design direction, journeys and technical architecture.",
+    detail: "Architecture, UX/UI, key content and conversion journeys.",
   },
   {
     title: "Build",
-    detail: "Incremental implementation, continuous QA and weekly demos.",
+    detail: "Website or app development, continuous QA and iterative validation.",
   },
   {
-    title: "Scale",
-    detail: "Performance tuning, SEO, analytics and roadmap iterations.",
+    title: "Launch & optimize",
+    detail: "Launch, technical SEO, performance tuning and ongoing evolution.",
   },
 ];
 
 const frGuarantees: GuaranteeItem[] = [
-  { label: "Delai moyen MVP", value: "4 a 8 semaines" },
+  { label: "Delai moyen de lancement", value: "3 a 8 semaines" },
   { label: "Performance cible", value: "Lighthouse > 90" },
   { label: "Temps de reponse", value: "< 48h" },
   { label: "Maintenance", value: "Support evolutif" },
 ];
 
 const enGuarantees: GuaranteeItem[] = [
-  { label: "Average MVP timeline", value: "4 to 8 weeks" },
+  { label: "Typical launch window", value: "3 to 8 weeks" },
   { label: "Performance target", value: "Lighthouse > 90" },
   { label: "Response time", value: "< 48h" },
   { label: "Maintenance", value: "Continuous support" },
@@ -392,4 +443,3 @@ const contentByLocale: Record<Locale, LocaleContent> = {
 export function getLocaleContent(locale: Locale): LocaleContent {
   return contentByLocale[locale];
 }
-

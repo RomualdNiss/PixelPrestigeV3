@@ -11,6 +11,17 @@ export type HeroContent = {
   secondaryCta: string;
 };
 
+export type SeoContent = {
+  title: string;
+  description: string;
+  keywords?: string[];
+  openGraphTitle?: string;
+  openGraphDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  image?: string;
+};
+
 export type ServiceItem = {
   id: string;
   title: string;
@@ -43,6 +54,7 @@ export type Dictionary = {
   footerText: string;
   home: {
     hero: HeroContent;
+    seo?: SeoContent;
     trustLine: string[];
     servicesTitle: string;
     servicesLead: string;

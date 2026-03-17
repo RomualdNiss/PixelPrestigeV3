@@ -11,15 +11,37 @@ export function buildMetadata(params: {
   title: string;
   description: string;
   path: string;
+  absoluteTitle?: boolean;
+  keywords?: string[];
+  openGraphTitle?: string;
+  openGraphDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  image?: string;
 }): Metadata {
-  const { locale, title, description, path } = params;
+  const {
+    locale,
+    title,
+    description,
+    path,
+    absoluteTitle,
+    keywords,
+    openGraphTitle,
+    openGraphDescription,
+    twitterTitle,
+    twitterDescription,
+    image,
+  } = params;
   const canonicalUrl = absoluteUrl(path);
   const altLocale = locale === "fr" ? "en" : "fr";
   const altPath = path.replace(`/${locale}`, `/${altLocale}`);
+  const socialImage = image ? absoluteUrl(image) : undefined;
+  const localeCode = locale === "fr" ? "fr_FR" : "en_US";
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
+    keywords,
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -28,17 +50,19 @@ export function buildMetadata(params: {
       },
     },
     openGraph: {
-      title,
-      description,
+      title: openGraphTitle ?? title,
+      description: openGraphDescription ?? description,
       type: "website",
-      locale,
+      locale: localeCode,
       url: canonicalUrl,
       siteName: siteConfig.name,
+      images: socialImage ? [{ url: socialImage }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: twitterTitle ?? title,
+      description: twitterDescription ?? description,
+      images: socialImage ? [socialImage] : undefined,
     },
     other: {
       "x-alt-url": absoluteUrl(altPath),

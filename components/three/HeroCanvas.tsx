@@ -34,6 +34,7 @@ type CubeControllerProps = {
 
 const SPACING = 1.04;
 const HALF_TURN = Math.PI / 2;
+const REST_ROTATION: [number, number, number] = [-1.05, -2.15, 0];
 
 const RANDOM_MOVES: Move[] = [
   { axis: "y", layer: 1, dir: 1 },
@@ -52,14 +53,10 @@ type CubieDef = {
 
 type CubeTextureKey =
   | "microNoise"
-  | "pearlNoise"
-  | "grainX"
+  | "marbleVein"
   | "grainY"
-  | "frostNoise"
-  | "plasmaNoise"
-  | "carbonWeave"
-  | "circuitLines"
-  | "lightning";
+  | "mineralNoise"
+  | "frostNoise";
 
 type FaceMaterial = {
   color: string;
@@ -212,36 +209,62 @@ function createMicroNoiseTexture(size: number): Texture | null {
 }
 
 // Replace createPearlNoiseTexture — smooth radial gradient instead of random blobs
-function createPearlNoiseTexture(size: number): Texture | null {
-  return createCanvasTexture(size, (ctx, s) => {
-    const g = ctx.createRadialGradient(s*0.35, s*0.35, 0, s*0.5, s*0.5, s*0.7);
-    g.addColorStop(0,   "rgb(255, 250, 255)");
-    g.addColorStop(0.4, "rgb(220, 200, 255)");
-    g.addColorStop(1,   "rgb(180, 150, 240)");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, s, s);
+function createMarbleVeinTexture(size: number): Texture | null {
+  return createCanvasTexture(size, (context, resolvedSize) => {
+    const base = context.createLinearGradient(0, 0, resolvedSize, resolvedSize);
+    base.addColorStop(0, "#fbfbf9");
+    base.addColorStop(0.45, "#ece9e4");
+    base.addColorStop(1, "#d7d3cd");
+    context.fillStyle = base;
+    context.fillRect(0, 0, resolvedSize, resolvedSize);
+
+    for (let vein = 0; vein < 6; vein += 1) {
+      const startY = resolvedSize * (0.12 + vein * 0.14) + (Math.random() - 0.5) * resolvedSize * 0.04;
+      context.beginPath();
+      context.moveTo(-resolvedSize * 0.05, startY);
+
+      for (let step = 1; step <= 7; step += 1) {
+        const x = (resolvedSize / 7) * step;
+        const y =
+          startY +
+          Math.sin(step * 0.95 + vein) * resolvedSize * 0.038 +
+          (Math.random() - 0.5) * resolvedSize * 0.028;
+        context.lineTo(x, y);
+      }
+
+      context.strokeStyle = vein % 2 === 0 ? "rgba(122, 124, 130, 0.16)" : "rgba(255, 255, 255, 0.11)";
+      context.lineWidth = Math.max(1, resolvedSize / 110);
+      context.stroke();
+    }
+
+    const haze = context.createLinearGradient(0, 0, 0, resolvedSize);
+    haze.addColorStop(0, "rgba(255, 255, 255, 0.12)");
+    haze.addColorStop(0.45, "rgba(255, 255, 255, 0.02)");
+    haze.addColorStop(1, "rgba(72, 74, 80, 0.05)");
+    context.fillStyle = haze;
+    context.fillRect(0, 0, resolvedSize, resolvedSize);
   });
 }
 
 // Replace createFrostNoiseTexture — smooth layered gradients instead of random ellipses
 function createFrostNoiseTexture(size: number): Texture | null {
-  return createCanvasTexture(size, (ctx, s) => {
-    ctx.fillStyle = "rgb(165, 165, 175)";
-    ctx.fillRect(0, 0, s, s);
+  return createCanvasTexture(size, (context, resolvedSize) => {
+    context.fillStyle = "rgb(188, 192, 198)";
+    context.fillRect(0, 0, resolvedSize, resolvedSize);
 
-    // Soft directional bands instead of random blobs
-    for (let i = 0; i < 6; i++) {
-      const g = ctx.createLinearGradient(0, (s / 6) * i, s, (s / 6) * (i + 1));
-      g.addColorStop(0,   `rgba(255,255,255,${0.04 + i * 0.01})`);
-      g.addColorStop(0.5, `rgba(120,120,140,${0.06})`);
-      g.addColorStop(1,   `rgba(255,255,255,${0.03})`);
-      ctx.fillStyle = g;
-      ctx.fillRect(0, (s / 6) * i, s, s / 6);
+    for (let i = 0; i < 7; i += 1) {
+      const gradient = context.createLinearGradient(0, (resolvedSize / 7) * i, resolvedSize, (resolvedSize / 7) * (i + 1));
+      gradient.addColorStop(0, `rgba(255, 255, 255, ${0.028 + i * 0.006})`);
+      gradient.addColorStop(0.5, "rgba(140, 146, 156, 0.05)");
+      gradient.addColorStop(1, "rgba(255, 255, 255, 0.024)");
+      context.fillStyle = gradient;
+      context.fillRect(0, (resolvedSize / 7) * i, resolvedSize, resolvedSize / 7);
     }
   });
 }
 
-function createLightningTexture(size: number): Texture | null {
+/* Legacy electric texture generator kept commented out during the material refactor.
+function createLightningTextureLegacy(size: number): Texture | null {
   return createCanvasTexture(size, (ctx, s) => {
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, s, s);
@@ -301,7 +324,9 @@ function createLightningTexture(size: number): Texture | null {
     ctx.fillRect(0, 0, s, s);
   });
 }
+*/
 
+/* Legacy plasma texture generator kept commented out during the material refactor.
 function createPlasmaTexture(size: number): Texture | null {
   return createCanvasTexture(size, (context, resolvedSize) => {
     const image = context.createImageData(resolvedSize, resolvedSize);
@@ -328,7 +353,9 @@ function createPlasmaTexture(size: number): Texture | null {
     context.putImageData(image, 0, 0);
   });
 }
+*/
 
+/* Legacy carbon weave texture generator kept commented out during the material refactor.
 function createCarbonWeaveTexture(size: number): Texture | null {
   return createCanvasTexture(size, (context, resolvedSize) => {
     const image = context.createImageData(resolvedSize, resolvedSize);
@@ -355,7 +382,9 @@ function createCarbonWeaveTexture(size: number): Texture | null {
     context.putImageData(image, 0, 0);
   });
 }
+*/
 
+/* Legacy circuit texture generator kept commented out during the material refactor.
 function createCircuitLinesTexture(size: number): Texture | null {
   return createCanvasTexture(size, (context, resolvedSize) => {
     context.fillStyle = "black";
@@ -398,20 +427,43 @@ function createCircuitLinesTexture(size: number): Texture | null {
     }
   });
 }
+*/
+
+function createMineralNoiseTexture(size: number): Texture | null {
+  return createCanvasTexture(size, (context, resolvedSize) => {
+    const image = context.createImageData(resolvedSize, resolvedSize);
+    const data = image.data;
+
+    for (let y = 0; y < resolvedSize; y += 1) {
+      for (let x = 0; x < resolvedSize; x += 1) {
+        const broad =
+          Math.sin(x * 0.09) * 15 +
+          Math.cos(y * 0.11) * 13 +
+          Math.sin((x - y) * 0.05) * 10;
+        const grit = (Math.random() - 0.5) * 18;
+        const value = clamp(132 + broad + grit, 74, 196);
+        const index = (y * resolvedSize + x) * 4;
+
+        data[index] = value;
+        data[index + 1] = value;
+        data[index + 2] = value;
+        data[index + 3] = 255;
+      }
+    }
+
+    context.putImageData(image, 0, 0);
+  });
+}
 
 function createCubeTextures(quality: "high" | "low"): CubeTextureSet {
   const size = quality === "high" ? 168 : 96;
 
   return {
     microNoise: createMicroNoiseTexture(size),
-    pearlNoise: createPearlNoiseTexture(size),
-    grainX: createBrushedTexture("x", size),
+    marbleVein: createMarbleVeinTexture(size),
     grainY: createBrushedTexture("y", size),
+    mineralNoise: createMineralNoiseTexture(size),
     frostNoise: createFrostNoiseTexture(size),
-    plasmaNoise: createPlasmaTexture(size),
-    carbonWeave: createCarbonWeaveTexture(size),
-    circuitLines: createCircuitLinesTexture(size),
-    lightning: createLightningTexture(size),  // add this
   };
 }
 
@@ -433,22 +485,22 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
     // the color-shift without washing everything out.
     R: {
       color: "#1a1428",           // very dark base — env map adds brightness
-      roughness: isHigh ? 0.08 : 0.12,
-      metalness: 0.92,
-      emissive: "#2a0060",
-      emissiveIntensity: isHigh ? 0.12 : 0.07,
+      roughness: isHigh ? 0.1 : 0.16,
+      metalness: 0.02,
+      emissive: "#0b0d10",
+      emissiveIntensity: 0,
       envMapIntensity: isHigh ? 1.4 : 1.1,   // was 3.2 — that was blowing it out
       clearcoat: 1,
       clearcoatRoughness: 0.04,
       roughnessMapKey: "microNoise",
-      metalnessMapKey: "microNoise",
+      metalnessMapKey: undefined,
       bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.008 : 0.004,
-      iridescence: isHigh ? 0.85 : 0.55,
+      bumpScale: isHigh ? 0.01 : 0.006,
+      iridescence: 0,
       iridescenceIOR: 1.5,                    // was 2.2 — caused white saturation
-      iridescenceThicknessRange: isHigh ? [200, 600] : [100, 300],
-      specularIntensity: 0.8,
-      specularColor: "#d0b0ff",
+      iridescenceThicknessRange: undefined,
+      specularIntensity: 0.96,
+      specularColor: "#eef2f8",
     },
 
     // ── L · CARBON NEON ──────────────────────────────────────────────────────
@@ -456,20 +508,19 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
     // Circuit line emissive map creates a PCB trace effect.
     // Moderate clearcoat so highlights glide across the weave.
     L: {
-      color: "#07040f",
-      roughness: 0.62,
-      metalness: 0.18,
-      emissive: "#9400ff",
-      emissiveIntensity: isHigh ? 0.55 : 0.32,
-      envMapIntensity: isHigh ? 0.7 : 0.52,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.18,
-      roughnessMapKey: "carbonWeave",
-      bumpMapKey: "carbonWeave",
-      bumpScale: isHigh ? 0.028 : 0.014,
-      emissiveMapKey: "circuitLines",
-      specularIntensity: 0.5,
-      specularColor: "#d4b8ff",
+      color: "#6f747a",
+      roughness: isHigh ? 0.9 : 0.92,
+      metalness: 0.02,
+      emissive: "#111317",
+      emissiveIntensity: 0,
+      envMapIntensity: isHigh ? 0.18 : 0.14,
+      clearcoat: 0.02,
+      clearcoatRoughness: 0.96,
+      roughnessMapKey: "mineralNoise",
+      bumpMapKey: "mineralNoise",
+      bumpScale: isHigh ? 0.018 : 0.011,
+      specularIntensity: 0.08,
+      specularColor: "#d4d7dc",
     },
 
     // ── U · HOLOGRAPHIC GLASS ────────────────────────────────────────────────
@@ -478,31 +529,31 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
     // sheen at grazing angles, and the pearl bump gives it micro-texture.
     U: {
       color: "#ffffff",
-      roughness: isHigh ? 0.04 : 0.1,
+      roughness: isHigh ? 0.05 : 0.1,
       metalness: 0,
-      emissive: "#7040c0",
-      emissiveIntensity: isHigh ? 0.05 : 0.03,
-      envMapIntensity: isHigh ? 1.6 : 1.1,
+      emissive: "#111317",
+      emissiveIntensity: 0,
+      envMapIntensity: isHigh ? 1.18 : 0.92,
       clearcoat: 1,
-      clearcoatRoughness: 0.02,
-      roughnessMapKey: "pearlNoise",
-      bumpMapKey: "pearlNoise",
-      bumpScale: isHigh ? 0.012 : 0.006,
-      transmission: isHigh ? 0.96 : 0.6,
-      thickness: isHigh ? 1.6 : 0.8,
-      attenuationColor: "#a040ff",
-      attenuationDistance: isHigh ? 1.0 : 0.7,
+      clearcoatRoughness: 0.03,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.003 : 0.0015,
+      transmission: isHigh ? 0.97 : 0.74,
+      thickness: isHigh ? 1.45 : 0.82,
+      attenuationColor: "#f8fafc",
+      attenuationDistance: isHigh ? 2.4 : 1.55,
       ior: 1.48,
-      iridescence: isHigh ? 0.9 : 0.5,
-      iridescenceIOR: 1.6,
-      iridescenceThicknessRange: isHigh ? [300, 900] : [150, 450],
-      sheen: isHigh ? 0.5 : 0.28,
-      sheenColor: "#ffe8ff",
-      sheenRoughness: 0.22,
-      specularIntensity: 1,
+      iridescence: 0,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: undefined,
+      sheen: 0,
+      sheenColor: "#ffffff",
+      sheenRoughness: 1,
+      specularIntensity: 0.98,
       specularColor: "#ffffff",
       transparent: true,
-      opacity: 0.97,
+      opacity: 0.93,
     },
 
     // ── D · FROSTED GLOW GLASS ───────────────────────────────────────────────
@@ -510,29 +561,29 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
     // blurs transmitted light into a soft halo. Inner purple emissive
     // leaks through the frost, making it look lit from behind.
     D: {
-      color: "#c8aeff",
-      roughness: isHigh ? 0.72 : 0.78,
+      color: "#eef1f4",
+      roughness: isHigh ? 0.78 : 0.82,
       metalness: 0,
-      emissive: "#5500bb",
-      emissiveIntensity: isHigh ? 0.22 : 0.12,
-      envMapIntensity: isHigh ? 0.5 : 0.36,
-      clearcoat: 0.2,
-      clearcoatRoughness: 0.6,
+      emissive: "#111317",
+      emissiveIntensity: 0,
+      envMapIntensity: isHigh ? 0.36 : 0.28,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.72,
       roughnessMapKey: "frostNoise",
       bumpMapKey: "frostNoise",
-      bumpScale: isHigh ? 0.04 : 0.022,
-      transmission: isHigh ? 0.68 : 0.34,
-      thickness: isHigh ? 0.8 : 0.4,
-      attenuationColor: "#c070ff",
-      attenuationDistance: isHigh ? 0.6 : 0.4,
-      ior: 1.15,
-      sheen: isHigh ? 0.28 : 0.14,
-      sheenColor: "#f0e0ff",
-      sheenRoughness: 0.8,
-      specularIntensity: 0.4,
-      specularColor: "#e8d8ff",
+      bumpScale: isHigh ? 0.022 : 0.013,
+      transmission: isHigh ? 0.46 : 0.24,
+      thickness: isHigh ? 0.68 : 0.38,
+      attenuationColor: "#f5f7fa",
+      attenuationDistance: isHigh ? 1.16 : 0.72,
+      ior: 1.16,
+      sheen: 0,
+      sheenColor: "#ffffff",
+      sheenRoughness: 1,
+      specularIntensity: 0.2,
+      specularColor: "#ffffff",
       transparent: true,
-      opacity: 0.88,
+      opacity: 0.92,
     },
 
     // ── F · NEON CORE ────────────────────────────────────────────────────────
@@ -541,39 +592,38 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
     // conducting electricity. High clearcoat creates reflective top layer
     // over the glowing surface, like epoxy over an LED panel.
     F: {
-      color: "#180a24",
-      roughness: isHigh ? 0.12 : 0.18,
-      metalness: 0.2,
-      emissive: "#bf00ff",
-      emissiveIntensity: isHigh ? 1.6 : 1.0,
-      envMapIntensity: isHigh ? 1.2 : 0.9,
-      clearcoat: 1,
-      clearcoatRoughness: 0.08,
+      color: "#f1efea",
+      roughness: isHigh ? 0.38 : 0.44,
+      metalness: 0.02,
+      emissive: "#111317",
+      emissiveIntensity: 0,
+      envMapIntensity: isHigh ? 0.52 : 0.4,
+      clearcoat: 0.22,
+      clearcoatRoughness: 0.42,
       roughnessMapKey: "microNoise",
-      bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.016 : 0.009,
-      emissiveMapKey: "circuitLines",
-      specularIntensity: 0.9,
-      specularColor: "#f8e0ff",
+      bumpMapKey: "marbleVein",
+      bumpScale: isHigh ? 0.014 : 0.008,
+      specularIntensity: 0.28,
+      specularColor: "#ffffff",
     },
 
     // ── B · ELECTRIC STORM ───────────────────────────────────────────────────────
     // Near-black void with white-blue lightning bolts crackling across it.
     // emissiveMap drives the bolt glow, clearcoat adds a glass-panel sheen.
     B: {
-      color: "#010208",
-      roughness: isHigh ? 0.18 : 0.24,
-      metalness: 0.05,
-      emissive: "#8f44ff",
-      emissiveIntensity: isHigh ? 1.1 : 0.72,
-      envMapIntensity: isHigh ? 0.5 : 0.36,
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.1,
-      bumpMapKey: "lightning",
-      bumpScale: isHigh ? 0.012 : 0.006,
-      emissiveMapKey: "lightning",
-      specularIntensity: 0.7,
-      specularColor: "#c4aaff",
+      color: "#3a4047",
+      roughness: isHigh ? 0.82 : 0.86,
+      metalness: 0.03,
+      emissive: "#101216",
+      emissiveIntensity: 0,
+      envMapIntensity: isHigh ? 0.22 : 0.18,
+      clearcoat: 0.04,
+      clearcoatRoughness: 0.92,
+      roughnessMapKey: "mineralNoise",
+      bumpMapKey: "mineralNoise",
+      bumpScale: isHigh ? 0.016 : 0.01,
+      specularIntensity: 0.1,
+      specularColor: "#cfd4da",
     },
   };
 }
@@ -584,19 +634,19 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
 
 function createInnerFaceMaterial(quality: "high" | "low"): FaceMaterial {
   return {
-    color: quality === "high" ? "#0a0712" : "#090610",
-    roughness: 0.7,
-    metalness: 0.08,
-    emissive: "#1a0040",
-    emissiveIntensity: quality === "high" ? 0.06 : 0.04,
-    envMapIntensity: quality === "high" ? 0.28 : 0.2,
-    clearcoat: 0.06,
-    clearcoatRoughness: 0.8,
+    color: quality === "high" ? "#171b21" : "#14181d",
+    roughness: 0.88,
+    metalness: 0.02,
+    emissive: "#111317",
+    emissiveIntensity: 0,
+    envMapIntensity: quality === "high" ? 0.12 : 0.1,
+    clearcoat: 0.02,
+    clearcoatRoughness: 0.95,
     roughnessMapKey: "microNoise",
     bumpMapKey: "microNoise",
-    bumpScale: quality === "high" ? 0.016 : 0.008,
-    specularIntensity: 0.18,
-    specularColor: "#a080c0",
+    bumpScale: quality === "high" ? 0.009 : 0.006,
+    specularIntensity: 0.07,
+    specularColor: "#c1c7cf",
   };
 }
 
@@ -604,14 +654,14 @@ function linearFaceTint(face: Face, coords: [number, number, number]): number {
   const [x, y, z] = coords;
 
   if (face === "F" || face === "B") {
-    return x * 0.07;
+    return x * 0.018;
   }
 
   if (face === "R" || face === "L") {
-    return y * 0.06;
+    return y * 0.014;
   }
 
-  return z * 0.05;
+  return z * 0.012;
 }
 
 function materialForFace(
@@ -621,15 +671,18 @@ function materialForFace(
 ): FaceMaterial {
   const base = presets[face];
   const tint = linearFaceTint(face, coords);
-  const color = new Color(base.color);
+  const resolvedColor = face === "R" ? "#121317" : base.color;
+  const color = new Color(resolvedColor);
+  const envMapBase = face === "R" ? 0.78 : base.envMapIntensity;
   color.offsetHSL(0, 0, tint);
 
   return {
     ...base,
     color: color.getStyle(),
-    roughness: clamp(base.roughness - tint * 0.18, 0.04, 0.96),
-    emissiveIntensity: Math.max(0.03, base.emissiveIntensity + Math.abs(tint) * 0.05),
-    envMapIntensity: Math.max(0.24, base.envMapIntensity + Math.abs(tint) * 0.12),
+    roughness: clamp(base.roughness - tint * 0.06, 0.08, 0.96),
+    emissiveIntensity:
+      base.emissiveIntensity > 0 ? Math.max(0.008, base.emissiveIntensity + Math.abs(tint) * 0.01) : 0,
+    envMapIntensity: Math.max(0.12, envMapBase + Math.abs(tint) * 0.04),
   };
 }
 
@@ -670,7 +723,7 @@ function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps)
       return;
     }
 
-    cubeGroupRef.current.rotation.set(-0.47, 0.66, 0);
+    cubeGroupRef.current.rotation.set(...REST_ROTATION);
     cubeGroupRef.current.scale.setScalar(0.84);
   }, []);
 
@@ -770,8 +823,8 @@ function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps)
 
     if (!draggingRef.current) {
       cubeGroup.rotation.y += delta * 0.18;
-      cubeGroup.rotation.x = MathUtils.lerp(cubeGroup.rotation.x, -0.47, 0.05);
-      cubeGroup.rotation.z = MathUtils.lerp(cubeGroup.rotation.z, 0, 0.05);
+      cubeGroup.rotation.x = MathUtils.lerp(cubeGroup.rotation.x, REST_ROTATION[0], 0.05);
+      cubeGroup.rotation.z = MathUtils.lerp(cubeGroup.rotation.z, REST_ROTATION[2], 0.05);
     }
 
     const activeMove = activeMoveRef.current;
@@ -952,36 +1005,41 @@ export function HeroCanvas({
               };
             }}
           >
-            <ambientLight intensity={quality === "high" ? 0.85 : 0.7} />
+            <ambientLight intensity={quality === "high" ? 0.72 : 0.58} />
             <hemisphereLight
-              intensity={quality === "high" ? 0.65 : 0.52}
-              color="#ede5ff"
-              groundColor="#120d20"
+              intensity={quality === "high" ? 0.42 : 0.34}
+              color="#f3f5f7"
+              groundColor="#181b20"
             />
             <directionalLight
               position={[5.8, 6.3, 4.4]}
-              intensity={quality === "high" ? 2.2 : 1.8}
-              color="#f5eeff"
+              intensity={quality === "high" ? 2.05 : 1.68}
+              color="#fcfdff"
             />
             <directionalLight
               position={[-4.8, 3.2, -3.8]}
-              intensity={quality === "high" ? 0.9 : 0.7}
-              color="#c8a8ff"
+              intensity={quality === "high" ? 0.56 : 0.44}
+              color="#dde3ea"
             />
             <pointLight
               position={[-4.8, -2.4, 3]}
-              intensity={quality === "high" ? 0.9 : 0.68}
-              color="#e0ccff"
+              intensity={quality === "high" ? 0.32 : 0.24}
+              color="#dfe5ec"
+            />
+            <pointLight
+              position={[3.8, 5.2, 4.6]}
+              intensity={quality === "high" ? 1.32 : 0.96}
+              color="#9052ff"
             />
             <pointLight
               position={[3.4, -1.8, -3.2]}
-              intensity={quality === "high" ? 0.6 : 0.42}
-              color="#aa00ff"
+              intensity={quality === "high" ? 0.08 : 0.06}
+              color="#6e6686"
             />
             <pointLight
               position={[0.8, 2.8, -4.6]}
-              intensity={quality === "high" ? 0.5 : 0.36}
-              color="#cc44ff"
+              intensity={quality === "high" ? 0.06 : 0.04}
+              color="#7c738f"
             />
 
             <CubeController queueRef={queueRef} draggingRef={draggingRef} quality={quality} />

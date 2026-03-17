@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnalyticsLoader } from "@/components/analytics/AnalyticsLoader";
 
 const CONSENT_KEY = "pp_analytics_consent";
+const DEFAULT_GA_MEASUREMENT_ID = "G-42P8LQBHQC";
 
 type ConsentMode = "accepted" | "declined" | null;
 
@@ -47,7 +48,7 @@ export function ConsentBanner({ locale }: ConsentBannerProps) {
     setConsent(value);
   };
 
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? DEFAULT_GA_MEASUREMENT_ID;
   const analyticsEnabled = consent === "accepted";
 
   return (

@@ -21,12 +21,20 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = await resolveLocale(params);
   const { dictionary } = getLocaleContent(locale);
+  const seo = dictionary.home.seo;
 
   return buildMetadata({
     locale,
-    title: dictionary.home.hero.title,
-    description: dictionary.home.hero.subtitle,
+    title: seo?.title ?? dictionary.home.hero.title,
+    description: seo?.description ?? dictionary.home.hero.subtitle,
     path: `/${locale}`,
+    absoluteTitle: Boolean(seo?.title),
+    keywords: seo?.keywords,
+    openGraphTitle: seo?.openGraphTitle,
+    openGraphDescription: seo?.openGraphDescription,
+    twitterTitle: seo?.twitterTitle,
+    twitterDescription: seo?.twitterDescription,
+    image: seo?.image,
   });
 }
 
