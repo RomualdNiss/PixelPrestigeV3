@@ -11,7 +11,7 @@ type SiteHeaderProps = {
 export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-bg/70 backdrop-blur-xl">
-      <div className="container-default flex h-18 items-center justify-between gap-6 py-4">
+      <div className="container-default flex h-[var(--header-height)] items-center justify-between gap-6 py-4">
         <Link href={localizedPath(locale, "/")} className="flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-sm bg-brand shadow-[0_0_20px_rgba(165,41,255,0.9)]" />
           <span className="font-display text-base font-semibold tracking-wide text-white">Pixel Prestige</span>

@@ -34,8 +34,6 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
   const reducedMotion = useReducedMotion();
   const [use3D, setUse3D] = useState(false);
   const [webglIssue, setWebglIssue] = useState(false);
-  const [cubeQuality, setCubeQuality] = useState<"high" | "low">("high");
-  const [hero3DKey, setHero3DKey] = useState(0);
 
   useEffect(() => {
     if (reducedMotion) {
@@ -60,7 +58,6 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
 
       setUse3D(hasWebGL());
       setWebglIssue(false);
-      setCubeQuality("high");
     }, 0);
 
     return () => {
@@ -69,24 +66,18 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
   }, [reducedMotion]);
 
   return (
-    <section className="relative overflow-hidden pb-16 pt-20 md:pb-24 md:pt-24">
+    <section className="relative overflow-hidden pb-16 pt-20 md:pb-24 md:pt-24 lg:min-h-[calc(100dvh-var(--header-height))]">
       <span className="glow-dot glow-a -left-28 top-6" />
       <span className="glow-dot glow-b -right-24 bottom-8" />
 
       {use3D ? (
         <HeroCanvas
-          key={hero3DKey}
           className="absolute inset-y-0 right-[1%] hidden w-[408px] md:block lg:right-[4%] lg:w-[504px] xl:right-[7%] xl:w-[592px]"
           hitAreaClassName="absolute inset-x-0 top-[53%] z-30 h-[400px] -translate-y-1/2 lg:h-[496px] xl:h-[584px]"
           frameClassName="absolute right-0 top-[53%] z-0 h-[360px] w-[360px] -translate-y-1/2 lg:h-[440px] lg:w-[440px] xl:h-[520px] xl:w-[520px]"
-          quality={cubeQuality}
+          quality="high"
           onContextLost={() => {
-            if (cubeQuality === "high") {
-              setCubeQuality("low");
-              setHero3DKey((value) => value + 1);
-              return;
-            }
-
+            // Temporary visual check: skip the low-quality retry and use the static fallback.
             setWebglIssue(true);
             setUse3D(false);
           }}
@@ -106,8 +97,8 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
         />
       )}
 
-      <div className="container-default relative z-20 min-h-[560px]">
-        <div className="max-w-2xl py-14 md:py-20">
+      <div className="container-default relative z-20 min-h-[560px] lg:flex lg:min-h-[calc(100dvh-var(--header-height)-12rem)] lg:items-center">
+        <div className="max-w-2xl py-14 md:py-20 lg:py-0">
           <p className="eyebrow-badge text-xs uppercase tracking-[0.22em]">{dictionary.home.hero.kicker}</p>
           <h1 className="mt-4 max-w-2xl font-display text-5xl font-semibold leading-[1.02] text-white md:text-6xl lg:text-7xl">
             {dictionary.home.hero.title}
@@ -137,12 +128,6 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
               {locale === "fr"
                 ? "WebGL a ete coupe par le GPU (context lost). Le fallback visuel est active."
                 : "WebGL was disabled by the GPU (context lost). Visual fallback is active."}
-            </p>
-          ) : cubeQuality === "low" ? (
-            <p className="mt-5 max-w-md text-sm text-text-muted">
-              {locale === "fr"
-                ? "Mode 3D stabilise actif : style conserve, fidelite reduite pour soulager votre GPU."
-                : "Stabilized 3D mode active: same style, reduced fidelity to ease GPU load."}
             </p>
           ) : null}
         </div>
