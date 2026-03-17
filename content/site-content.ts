@@ -90,6 +90,26 @@ const frDictionary: Dictionary = {
       "Du site vitrine a la webapp metier, nous combinons developpement, UX et strategie digitale pour livrer des outils utiles, rapides et durables.",
     casesTitle: "Realisations recentes",
     casesLead: "Des projets menes avec exigence technique, lisibilite produit et impact business concret.",
+    differentiatorsTitle: "Pourquoi travailler avec Pixel Prestige",
+    differentiatorsLead:
+      "Une agence technique a taille humaine, avec un cadre clair, des livrables propres et une attention reelle a l'impact business.",
+    differentiators: [
+      {
+        title: "Un seul partenaire pour cadrer et produire",
+        detail:
+          "Cadrage, UX, developpement, mise en ligne et suivi sont relies dans le meme flux pour eviter les pertes de contexte.",
+      },
+      {
+        title: "Des choix utiles avant des effets gratuits",
+        detail:
+          "Chaque page, composant et automatisation sert un objectif concret: clarifier l'offre, convertir ou faire gagner du temps.",
+      },
+      {
+        title: "Des fondations propres pour evoluer",
+        detail:
+          "Performance, SEO technique, analytics, maintenabilite et evolutions futures sont pris en compte des le depart.",
+      },
+    ],
     processTitle: "Une methode claire, du cadrage a la mise en ligne",
     processLead: "Cadrage, conception, developpement et lancement dans un flux de travail simple et transparent.",
     guaranteesTitle: "Des engagements mesurables",
@@ -150,7 +170,6 @@ const frDictionary: Dictionary = {
     email: "Email",
     company: "Entreprise",
     projectType: "Type de projet",
-    budget: "Budget estimatif",
     message: "Message",
     submit: "Envoyer la demande",
     success: "Message envoye. Nous revenons vers vous rapidement.",
@@ -189,6 +208,26 @@ const enDictionary: Dictionary = {
     servicesLead: "From showcase sites to business web apps, we combine development, UX and digital strategy to deliver useful systems that last.",
     casesTitle: "Recent case studies",
     casesLead: "Projects delivered with strong technical standards, clear product thinking and measurable business impact.",
+    differentiatorsTitle: "Why work with Pixel Prestige",
+    differentiatorsLead:
+      "A lean technical agency setup with clear delivery, clean execution and decisions tied to actual business outcomes.",
+    differentiators: [
+      {
+        title: "One partner from scoping to launch",
+        detail:
+          "Scoping, UX, development, launch and follow-up stay connected in one workflow, which reduces context loss and handoff friction.",
+      },
+      {
+        title: "Useful decisions over empty flair",
+        detail:
+          "Each page, component and automation should support a concrete goal: clearer positioning, better conversion or smoother operations.",
+      },
+      {
+        title: "Built on foundations that can grow",
+        detail:
+          "Performance, technical SEO, analytics, maintainability and future iteration are considered from the start.",
+      },
+    ],
     processTitle: "A clear process from scoping to launch",
     processLead: "Scoping, design, development and launch handled through a structured and transparent workflow.",
     guaranteesTitle: "Commitments you can measure",
@@ -249,7 +288,6 @@ const enDictionary: Dictionary = {
     email: "Email",
     company: "Company",
     projectType: "Project type",
-    budget: "Budget range",
     message: "Message",
     submit: "Send request",
     success: "Message sent. We will reach out quickly.",

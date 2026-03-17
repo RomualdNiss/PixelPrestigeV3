@@ -1,11 +1,10 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { PageIntro } from "@/components/layout/PageIntro";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { getLocaleContent } from "@/content/site-content";
 import { getLocaleStaticParams } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/resolve-locale";
 import { buildMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -32,28 +31,23 @@ export default async function ContactPage({ params }: PageProps) {
   const { dictionary } = getLocaleContent(locale);
 
   return (
-    <>
-      <PageIntro title={dictionary.contactPage.title} lead={dictionary.contactPage.lead} />
-      <section className="pb-24">
-        <div className="container-default grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <ContactForm locale={locale} dictionary={dictionary} />
-          <aside className="space-y-4 rounded-3xl border border-white/15 bg-bg-soft/70 p-6">
-            <p className="text-sm text-text-muted">{dictionary.contactPage.responseInfo}</p>
-            <a href={siteConfig.contact.calendly} target="_blank" rel="noreferrer" className="btn-secondary w-full">
-              {dictionary.common.ctaCalendly}
-            </a>
-            <div className="rounded-2xl border border-white/15 p-4 text-sm text-text-muted">
-              <p className="text-white">{locale === "fr" ? "Scope type" : "Typical scope"}</p>
-              <p className="mt-2">
-                {locale === "fr"
-                  ? "Site premium, app metier, automatisation, refonte UX."
-                  : "Premium websites, internal apps, automation pipelines, UX redesign."}
-              </p>
-            </div>
-          </aside>
+    <div className="lg:h-full">
+      <PageIntro
+        title={dictionary.contactPage.title}
+        lead={dictionary.contactPage.lead}
+        useDefaultSpacing={false}
+        className="contact-page-intro pt-6 pb-3 md:pt-7 md:pb-4 lg:pt-10 lg:pb-5"
+        contentClassName="mx-auto max-w-3xl px-6 md:px-8"
+        titleClassName="lg:mb-3"
+        leadClassName="lg:text-lg"
+      />
+      <section className="contact-form-section pb-8 lg:pb-8">
+        <div className="container-default">
+          <div className="mx-auto max-w-3xl">
+            <ContactForm locale={locale} dictionary={dictionary} />
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
-

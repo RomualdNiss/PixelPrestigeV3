@@ -1,5 +1,6 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { localizedPath, type Locale } from "@/lib/i18n";
+import { siteConfig } from "@/lib/site";
 import type { Dictionary } from "@/types/content";
 
 type FinalCtaSectionProps = {
@@ -18,7 +19,7 @@ export function FinalCtaSection({ locale, dictionary }: FinalCtaSectionProps) {
             <Link href={localizedPath(locale, "/contact")} className="btn-primary">
               {dictionary.home.finalCtaButton}
             </Link>
-            <a href="https://calendly.com/pixel-prestige/discovery" className="btn-secondary" target="_blank" rel="noreferrer">
+            <a href={siteConfig.contact.calendly} className="btn-secondary" target="_blank" rel="noreferrer">
               {dictionary.common.ctaCalendly}
             </a>
           </div>
@@ -27,4 +28,3 @@ export function FinalCtaSection({ locale, dictionary }: FinalCtaSectionProps) {
     </section>
   );
 }
-

@@ -255,3 +255,15 @@ a {
   }
 }
 
+@media (min-width: 1024px) and (max-height: 900px) {
+  .contact-page-intro {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  .contact-form-section {
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+

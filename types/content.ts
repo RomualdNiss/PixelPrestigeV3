@@ -48,6 +48,11 @@ export type GuaranteeItem = {
   value: string;
 };
 
+export type DifferentiatorItem = {
+  title: string;
+  detail: string;
+};
+
 export type Dictionary = {
   localeLabel: string;
   nav: NavItem[];
@@ -60,6 +65,9 @@ export type Dictionary = {
     servicesLead: string;
     casesTitle: string;
     casesLead: string;
+    differentiatorsTitle: string;
+    differentiatorsLead: string;
+    differentiators: DifferentiatorItem[];
     processTitle: string;
     processLead: string;
     guaranteesTitle: string;
@@ -110,7 +118,6 @@ export type Dictionary = {
     email: string;
     company: string;
     projectType: string;
-    budget: string;
     message: string;
     submit: string;
     success: string;

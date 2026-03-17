@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site";
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
   verification: {
     google: "uXUCfCKsPFvpl_ueg0vSlsYzxKLOfEVz-e5j9d_WTdg",
   },
-  themeColor: "#A529FF",
   icons: {
     icon: [
       { url: "/assets/img/icone.svg", type: "image/svg+xml" },
@@ -62,6 +61,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#A529FF",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -75,4 +78,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -22,7 +22,7 @@ Premium showcase website for Pixel Prestige (FR/EN), built with Next.js App Rout
 
 ## Required environment variables
 
-- `NEXT_PUBLIC_CONTACT_ENDPOINT`: external API endpoint for form submissions
+- `NEXT_PUBLIC_CONTACT_ENDPOINT`: Formspree endpoint for form submissions, e.g. `https://formspree.io/f/your_form_id`
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID`: GA4 measurement id (optional)
 
 ## Build & export
