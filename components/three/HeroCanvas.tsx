@@ -29,6 +29,7 @@ type ActiveMove = {
 type CubeControllerProps = {
   queueRef: MutableRefObject<Move[]>;
   draggingRef: MutableRefObject<boolean>;
+  motionPreset: "desktop" | "mobile";
   quality: "high" | "low";
 };
 
@@ -706,14 +707,14 @@ function randomMove(): Move {
   };
 }
 
-function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps) {
+function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeControllerProps) {
   const cubeGroupRef = useRef<Group>(null);
   const rootRef = useRef<Group>(null);
   const pivotRef = useRef<Group>(null);
   const cubieRefs = useRef<Record<string, Group>>({});
   const activeMoveRef = useRef<ActiveMove | null>(null);
   const idleTimerRef = useRef(0);
-  const nextMoveDelayRef = useRef(0.7);
+  const nextMoveDelayRef = useRef(motionPreset === "mobile" ? 1.4 : 0.7);
   const cubeTextures = useMemo(() => createCubeTextures(quality), [quality]);
   const outerFaceMaterials = useMemo(() => createOuterFaceMaterials(quality), [quality]);
   const innerFaceMaterial = useMemo(() => createInnerFaceMaterial(quality), [quality]);
@@ -809,6 +810,8 @@ function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps)
   useFrame((_, delta) => {
     const cubeGroup = cubeGroupRef.current;
     const pivot = pivotRef.current;
+    const idleRotationSpeed = motionPreset === "mobile" ? 0.09 : 0.18;
+    const moveProgressSpeed = motionPreset === "mobile" ? 2.1 : 2.5;
 
     if (!cubeGroup || !pivot) {
       return;
@@ -822,7 +825,7 @@ function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps)
     }
 
     if (!draggingRef.current) {
-      cubeGroup.rotation.y += delta * 0.18;
+      cubeGroup.rotation.y += delta * idleRotationSpeed;
       cubeGroup.rotation.x = MathUtils.lerp(cubeGroup.rotation.x, REST_ROTATION[0], 0.05);
       cubeGroup.rotation.z = MathUtils.lerp(cubeGroup.rotation.z, REST_ROTATION[2], 0.05);
     }
@@ -830,7 +833,7 @@ function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps)
     const activeMove = activeMoveRef.current;
 
     if (activeMove) {
-      activeMove.progress = Math.min(1, activeMove.progress + delta * 2.5);
+      activeMove.progress = Math.min(1, activeMove.progress + delta * moveProgressSpeed);
       const angle = activeMove.progress * HALF_TURN * activeMove.move.dir;
       pivot.rotation.set(
         activeMove.move.axis === "x" ? angle : 0,
@@ -849,7 +852,7 @@ function CubeController({ queueRef, draggingRef, quality }: CubeControllerProps)
       if (idleTimerRef.current >= nextMoveDelayRef.current) {
         queueRef.current.push(randomMove());
         idleTimerRef.current = 0;
-        nextMoveDelayRef.current = 0.5 + Math.random() * 1.1;
+        nextMoveDelayRef.current = motionPreset === "mobile" ? 1.35 + Math.random() * 1.65 : 0.5 + Math.random() * 1.1;
       }
     }
   });
@@ -927,6 +930,7 @@ type HeroCanvasProps = {
   className?: string;
   frameClassName?: string;
   hitAreaClassName?: string;
+  motionPreset?: "desktop" | "mobile";
   onContextLost?: () => void;
   quality?: "high" | "low";
 };
@@ -935,6 +939,7 @@ export function HeroCanvas({
   className,
   frameClassName,
   hitAreaClassName,
+  motionPreset = "desktop",
   onContextLost,
   quality = "high",
 }: HeroCanvasProps) {
@@ -986,7 +991,7 @@ export function HeroCanvas({
               powerPreference: "low-power",
             }}
             camera={{ position: [5.4, 4.1, 5.7], fov: 34 }}
-            dpr={quality === "high" ? [1, 1.1] : [0.8, 1]}
+            dpr={motionPreset === "mobile" ? [0.75, 0.9] : quality === "high" ? [1, 1.1] : [0.8, 1]}
             onCreated={({ gl }) => {
               cleanupContextRef.current?.();
               gl.setClearColor("#000000", 0);
@@ -1042,7 +1047,12 @@ export function HeroCanvas({
               color="#7c738f"
             />
 
-            <CubeController queueRef={queueRef} draggingRef={draggingRef} quality={quality} />
+            <CubeController
+              queueRef={queueRef}
+              draggingRef={draggingRef}
+              motionPreset={motionPreset}
+              quality={quality}
+            />
 
             <OrbitControls
               ref={controlsRef}
@@ -1051,9 +1061,10 @@ export function HeroCanvas({
               enablePan={false}
               enableZoom={false}
               enableDamping
-              dampingFactor={0.08}
+              dampingFactor={motionPreset === "mobile" ? 0.1 : 0.08}
               minDistance={6.2}
               maxDistance={9.2}
+              rotateSpeed={motionPreset === "mobile" ? 0.85 : 1}
               onStart={() => {
                 enableSelectionGuard();
                 draggingRef.current = true;

@@ -43,9 +43,9 @@ export type ProcessStep = {
   detail: string;
 };
 
-export type GuaranteeItem = {
-  label: string;
-  value: string;
+export type FitItem = {
+  title: string;
+  detail: string;
 };
 
 export type DifferentiatorItem = {
@@ -70,8 +70,8 @@ export type Dictionary = {
     differentiators: DifferentiatorItem[];
     processTitle: string;
     processLead: string;
-    guaranteesTitle: string;
-    guaranteesLead: string;
+    fitTitle: string;
+    fitLead: string;
     finalCtaTitle: string;
     finalCtaLead: string;
     finalCtaButton: string;

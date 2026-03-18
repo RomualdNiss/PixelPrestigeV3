@@ -39,7 +39,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const { dictionary } = getLocaleContent(locale);
 
   return (
-    <div className="noise relative flex min-h-dvh flex-col overflow-hidden">
+    <div className="noise relative flex min-h-dvh flex-col">
       <ParallaxBackdrop />
       <SiteHeader locale={locale} dictionary={dictionary} />
       <main className="relative z-10 flex-1">{children}</main>

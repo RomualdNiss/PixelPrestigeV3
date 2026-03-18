@@ -2,7 +2,7 @@
 import type {
   CaseStudy,
   Dictionary,
-  GuaranteeItem,
+  FitItem,
   ProcessStep,
   SeoContent,
   ServiceItem,
@@ -13,7 +13,7 @@ type LocaleContent = {
   services: ServiceItem[];
   cases: CaseStudy[];
   process: ProcessStep[];
-  guarantees: GuaranteeItem[];
+  fitItems: FitItem[];
 };
 
 const frHomeSeo: SeoContent = {
@@ -68,7 +68,7 @@ const frDictionary: Dictionary = {
   localeLabel: "FR",
   nav: [
     { href: "/services", label: "Services" },
-    { href: "/realisations", label: "Realisations" },
+    // { href: "/realisations", label: "Realisations" },
     { href: "/process", label: "Process" },
     { href: "/a-propos", label: "A propos" },
     { href: "/contact", label: "Contact" },
@@ -81,7 +81,7 @@ const frDictionary: Dictionary = {
       subtitle:
         "Nous concevons des solutions web claires, performantes et utiles pour renforcer votre présence en ligne et faire avancer votre activité.",
       primaryCta: "Parler de mon projet",
-      secondaryCta: "Voir les réalisations",
+      secondaryCta: "Voir les services",
     },
     seo: frHomeSeo,
     trustLine: ["Sites sur mesure", "Webapps metier", "SEO technique", "Strategie digitale", "Maintenance evolutive"],
@@ -112,8 +112,9 @@ const frDictionary: Dictionary = {
     ],
     processTitle: "Une methode claire, du cadrage a la mise en ligne",
     processLead: "Cadrage, conception, developpement et lancement dans un flux de travail simple et transparent.",
-    guaranteesTitle: "Des engagements mesurables",
-    guaranteesLead: "Un partenaire fiable pour livrer proprement, performer et suivre dans la duree.",
+    fitTitle: "Quand faire appel a Pixel Prestige",
+    fitLead:
+      "Quand vous avez besoin d'un partenaire technique capable de cadrer, produire et faire evoluer votre presence en ligne sans multiplier les intermediaires.",
     finalCtaTitle: "Besoin d'un site, d'une webapp ou d'une strategie digitale plus claire ?",
     finalCtaLead: "Expliquez votre contexte, vos objectifs et vos priorites. Nous revenons avec une recommandation concrete, un perimetre et une feuille de route.",
     finalCtaButton: "Parler de votre projet",
@@ -187,7 +188,7 @@ const enDictionary: Dictionary = {
   localeLabel: "EN",
   nav: [
     { href: "/services", label: "Services" },
-    { href: "/realisations", label: "Work" },
+    // { href: "/realisations", label: "Work" },
     { href: "/process", label: "Process" },
     { href: "/a-propos", label: "About" },
     { href: "/contact", label: "Contact" },
@@ -200,7 +201,7 @@ const enDictionary: Dictionary = {
       subtitle:
         "We design clear, high-performing, and useful web solutions to strengthen your online presence and help your business move forward.",
       primaryCta: "Discuss my project",
-      secondaryCta: "See our work",
+      secondaryCta: "See services",
     },
     seo: enHomeSeo,
     trustLine: ["Custom websites", "Business web apps", "Technical SEO", "Digital strategy", "Ongoing support"],
@@ -230,8 +231,9 @@ const enDictionary: Dictionary = {
     ],
     processTitle: "A clear process from scoping to launch",
     processLead: "Scoping, design, development and launch handled through a structured and transparent workflow.",
-    guaranteesTitle: "Commitments you can measure",
-    guaranteesLead: "Reliable delivery, measurable performance and support that continues after launch.",
+    fitTitle: "When to bring in Pixel Prestige",
+    fitLead:
+      "When you need one technical partner to scope, build and improve your digital presence without multiplying handoffs.",
     finalCtaTitle: "Need a website, a web app or a clearer digital presence?",
     finalCtaLead: "Share your context, goals and constraints. We will come back with a concrete recommendation, scope and roadmap.",
     finalCtaButton: "Discuss your project",
@@ -447,18 +449,45 @@ const enProcess: ProcessStep[] = [
   },
 ];
 
-const frGuarantees: GuaranteeItem[] = [
-  { label: "Delai moyen de lancement", value: "3 a 8 semaines" },
-  { label: "Performance cible", value: "Lighthouse > 90" },
-  { label: "Temps de reponse", value: "< 48h" },
-  { label: "Maintenance", value: "Support evolutif" },
+const frFitItems: FitItem[] = [
+  {
+    title: "Votre offre n'est pas assez claire en ligne",
+    detail:
+      "Positionnement flou, contenus disperses, parcours peu lisible ou site qui ne reflete plus votre niveau d'exigence.",
+  },
+  {
+    title: "Vous devez lancer ou refondre un site",
+    detail: "Besoin d'un site vitrine propre, rapide, credible et pense pour mieux presenter l'offre et convertir.",
+  },
+  {
+    title: "Vous avez un besoin metier plus specifique",
+    detail:
+      "Espace client, extranet, automatisation, outil interne ou webapp sur mesure a cadrer et developper proprement.",
+  },
+  {
+    title: "Vous cherchez un partenaire durable",
+    detail: "Maintenance, optimisation, SEO technique et evolutions continues apres la mise en ligne.",
+  },
 ];
 
-const enGuarantees: GuaranteeItem[] = [
-  { label: "Typical launch window", value: "3 to 8 weeks" },
-  { label: "Performance target", value: "Lighthouse > 90" },
-  { label: "Response time", value: "< 48h" },
-  { label: "Maintenance", value: "Continuous support" },
+const enFitItems: FitItem[] = [
+  {
+    title: "Your offer is not clear enough online",
+    detail:
+      "Unclear positioning, scattered content, confusing journeys or a site that no longer reflects your level of quality.",
+  },
+  {
+    title: "You need to launch or rebuild a website",
+    detail: "A clean, fast and credible marketing site built to present the offer clearly and convert better.",
+  },
+  {
+    title: "You have a more specific business need",
+    detail: "Client area, extranet, automation, internal tool or custom web app that needs proper scoping and execution.",
+  },
+  {
+    title: "You want a long-term technical partner",
+    detail: "Maintenance, optimisation, technical SEO and continuous evolution after launch.",
+  },
 ];
 
 const contentByLocale: Record<Locale, LocaleContent> = {
@@ -467,14 +496,14 @@ const contentByLocale: Record<Locale, LocaleContent> = {
     services: frServices,
     cases: frCases,
     process: frProcess,
-    guarantees: frGuarantees,
+    fitItems: frFitItems,
   },
   en: {
     dictionary: enDictionary,
     services: enServices,
     cases: enCases,
     process: enProcess,
-    guarantees: enGuarantees,
+    fitItems: enFitItems,
   },
 };
 

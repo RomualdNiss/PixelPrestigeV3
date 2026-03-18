@@ -12,6 +12,7 @@
   --glow: rgba(165, 41, 255, 0.36);
   --radius: 1rem;
   --header-height: 4.5rem;
+  --header-height-compact: 4rem;
 }
 
 @theme inline {

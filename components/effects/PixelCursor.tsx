@@ -18,25 +18,53 @@ export function PixelCursor() {
       return;
     }
 
-    const media = window.matchMedia("(pointer:fine)");
-
-    if (!media.matches) {
-      return;
-    }
+    const finePointerMedia = window.matchMedia("(pointer: fine)");
+    const desktopMedia = window.matchMedia("(min-width: 768px)");
+    let listening = false;
 
     const update = (event: PointerEvent) => {
       x.set(event.clientX - 14);
       y.set(event.clientY - 14);
     };
 
-    const timeoutId = window.setTimeout(() => {
+    const enableCursor = () => {
+      if (!listening) {
+        window.addEventListener("pointermove", update, { passive: true });
+        listening = true;
+      }
+
       setEnabled(true);
-    }, 0);
-    window.addEventListener("pointermove", update, { passive: true });
+    };
+
+    const disableCursor = () => {
+      if (listening) {
+        window.removeEventListener("pointermove", update);
+        listening = false;
+      }
+
+      setEnabled(false);
+    };
+
+    const syncCursorState = () => {
+      if (finePointerMedia.matches && desktopMedia.matches) {
+        enableCursor();
+        return;
+      }
+
+      disableCursor();
+    };
+
+    const timeoutId = window.setTimeout(syncCursorState, 0);
+    finePointerMedia.addEventListener("change", syncCursorState);
+    desktopMedia.addEventListener("change", syncCursorState);
 
     return () => {
-      window.removeEventListener("pointermove", update);
       window.clearTimeout(timeoutId);
+      finePointerMedia.removeEventListener("change", syncCursorState);
+      desktopMedia.removeEventListener("change", syncCursorState);
+      if (listening) {
+        window.removeEventListener("pointermove", update);
+      }
       window.setTimeout(() => {
         setEnabled(false);
       }, 0);

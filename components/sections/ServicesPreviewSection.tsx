@@ -14,7 +14,7 @@ type ServicesPreviewSectionProps = {
 
 export function ServicesPreviewSection({ locale, dictionary, services }: ServicesPreviewSectionProps) {
   return (
-    <section className="section-space">
+    <section id="services" className="section-space">
       <div className="container-default space-y-10">
         <SectionHeading title={dictionary.home.servicesTitle} lead={dictionary.home.servicesLead} />
         <Stagger className="grid gap-4 md:grid-cols-2">

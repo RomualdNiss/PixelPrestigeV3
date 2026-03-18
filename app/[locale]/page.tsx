@@ -6,9 +6,8 @@ import { resolveLocale } from "@/lib/resolve-locale";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ServicesPreviewSection } from "@/components/sections/ServicesPreviewSection";
 import { DifferentiatorsSection } from "@/components/sections/DifferentiatorsSection";
-import { CasesPreviewSection } from "@/components/sections/CasesPreviewSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
-import { GuaranteesSection } from "@/components/sections/GuaranteesSection";
+import { WhenToCallSection } from "@/components/sections/WhenToCallSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 
 type PageProps = {
@@ -48,9 +47,9 @@ export default async function LocaleHomePage({ params }: PageProps) {
       <HeroSection locale={locale} dictionary={localeContent.dictionary} />
       <ServicesPreviewSection locale={locale} dictionary={localeContent.dictionary} services={localeContent.services} />
       <DifferentiatorsSection dictionary={localeContent.dictionary} />
-      <CasesPreviewSection locale={locale} dictionary={localeContent.dictionary} cases={localeContent.cases} />
+      {/* <CasesPreviewSection locale={locale} dictionary={localeContent.dictionary} cases={localeContent.cases} /> */}
       <ProcessSection dictionary={localeContent.dictionary} steps={localeContent.process} />
-      <GuaranteesSection dictionary={localeContent.dictionary} guarantees={localeContent.guarantees} />
+      <WhenToCallSection dictionary={localeContent.dictionary} items={localeContent.fitItems} />
       <FinalCtaSection locale={locale} dictionary={localeContent.dictionary} />
     </>
   );
