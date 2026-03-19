@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { localizedPath } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import type { Dictionary } from "@/types/content";
@@ -26,7 +28,11 @@ type ContactFormProps = {
 
 export function ContactForm({ locale, dictionary, className }: ContactFormProps) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [startedAt] = useState<number>(Date.now());
+  const startedAtRef = useRef<number>(0);
+
+  useEffect(() => {
+    startedAtRef.current = Date.now();
+  }, []);
 
   const {
     register,
@@ -45,7 +51,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
   const validation = locale === "fr"
     ? {
         required: "Ce champ est requis.",
-        invalidEmail: "Email invalide.",
+        invalidEmail: "E-mail invalide.",
         shortMessage: "Votre message est trop court.",
       }
     : {
@@ -57,7 +63,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
   const onSubmit = async (values: FormValues) => {
     setStatus("submitting");
 
-    const elapsedMs = Date.now() - startedAt;
+    const elapsedMs = Date.now() - startedAtRef.current;
 
     if (elapsedMs < 2800 || (values.hp_field && values.hp_field.length > 0)) {
       setStatus("error");
@@ -182,7 +188,34 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
       </div>
 
       <p className="text-sm text-text-muted">
-        {locale === "fr" ? "Si l'envoi echoue, ecrivez a " : "If submission fails, email "}
+        {locale === "fr" ? (
+          <>
+            En envoyant ce formulaire, vous acceptez que Pixel Prestige utilise ces donn\u00E9es pour r\u00E9pondre \u00E0 votre demande.
+            Consultez la{" "}
+            <Link
+              href={localizedPath(locale, "/politique-confidentialite")}
+              className="text-white underline decoration-white/30 underline-offset-4"
+            >
+              politique de confidentialit\u00E9
+            </Link>{" "}
+            pour conna\u00EEtre la base l\u00E9gale, la conservation et vos droits.
+          </>
+        ) : (
+          <>
+            By submitting this form, you allow Pixel Prestige to use these details to answer your request. Read the{" "}
+            <Link
+              href={localizedPath(locale, "/politique-confidentialite")}
+              className="text-white underline decoration-white/30 underline-offset-4"
+            >
+              privacy policy
+            </Link>{" "}
+            for the legal basis, retention period, and your rights.
+          </>
+        )}
+      </p>
+
+      <p className="text-sm text-text-muted">
+        {locale === "fr" ? "Si l'envoi \u00E9choue, \u00E9crivez \u00E0 " : "If submission fails, email "}
         <a href={`mailto:${siteConfig.contact.email}`} className="text-white underline decoration-white/30 underline-offset-4">
           {siteConfig.contact.email}
         </a>

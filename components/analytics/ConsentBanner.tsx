@@ -1,10 +1,12 @@
-﻿"use client";
+"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { AnalyticsLoader } from "@/components/analytics/AnalyticsLoader";
+import { localizedPath } from "@/lib/i18n";
 
 const CONSENT_KEY = "pp_analytics_consent";
-const DEFAULT_GA_MEASUREMENT_ID = "G-42P8LQBHQC";
+const CONSENT_EVENT = "pp-analytics-consent-change";
 
 type ConsentMode = "accepted" | "declined" | null;
 
@@ -12,53 +14,131 @@ type ConsentBannerProps = {
   locale: "fr" | "en";
 };
 
+function getStoredConsent(): ConsentMode {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const stored = window.localStorage.getItem(CONSENT_KEY);
+  return stored === "accepted" || stored === "declined" ? stored : null;
+}
+
+function subscribeToConsent(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  const handleChange = () => {
+    onStoreChange();
+  };
+
+  window.addEventListener("storage", handleChange);
+  window.addEventListener(CONSENT_EVENT, handleChange);
+
+  return () => {
+    window.removeEventListener("storage", handleChange);
+    window.removeEventListener(CONSENT_EVENT, handleChange);
+  };
+}
+
+function subscribeToHydration() {
+  return () => {};
+}
+
 export function ConsentBanner({ locale }: ConsentBannerProps) {
-  const [consent, setConsent] = useState<ConsentMode>(null);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(CONSENT_KEY);
-
-    if (stored === "accepted" || stored === "declined") {
-      const timeoutId = window.setTimeout(() => {
-        setConsent(stored);
-      }, 0);
-
-      return () => window.clearTimeout(timeoutId);
-    }
-  }, []);
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || undefined;
+  const isHydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
+  const consent = useSyncExternalStore(subscribeToConsent, getStoredConsent, () => null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const copy = useMemo(() => {
     if (locale === "fr") {
       return {
-        text: "Nous utilisons des mesures anonymisees pour ameliorer l'experience.",
+        title: "Pr\u00E9f\u00E9rences cookies",
+        text:
+          "Pixel Prestige utilise uniquement des cookies de mesure d'audience si vous les acceptez. Vous pouvez revenir sur ce choix \u00E0 tout moment.",
+        manage: "G\u00E9rer les cookies",
         accept: "Accepter",
         decline: "Refuser",
+        close: "Fermer",
+        privacy: "Consulter la politique de confidentialit\u00E9",
+        accepted: "Consentement enregistr\u00E9 : analytics activ\u00E9s.",
+        declined: "Consentement enregistr\u00E9 : analytics d\u00E9sactiv\u00E9s.",
+        pending: "Aucun consentement enregistr\u00E9 pour le moment.",
       };
     }
 
     return {
-      text: "We use anonymized analytics to improve your experience.",
+      title: "Cookie preferences",
+      text:
+        "Pixel Prestige only uses analytics cookies if you accept them. You can change this choice at any time.",
+      manage: "Cookie settings",
       accept: "Accept",
       decline: "Decline",
+      close: "Close",
+      privacy: "View the privacy policy",
+      accepted: "Saved choice: analytics enabled.",
+      declined: "Saved choice: analytics disabled.",
+      pending: "No consent choice has been saved yet.",
     };
   }, [locale]);
 
+  if (!measurementId || !isHydrated) {
+    return null;
+  }
+
   const setChoice = (value: Exclude<ConsentMode, null>) => {
     window.localStorage.setItem(CONSENT_KEY, value);
-    setConsent(value);
+    window.dispatchEvent(new Event(CONSENT_EVENT));
+    setIsSettingsOpen(false);
   };
 
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? DEFAULT_GA_MEASUREMENT_ID;
+  const statusText = consent === "accepted" ? copy.accepted : consent === "declined" ? copy.declined : copy.pending;
   const analyticsEnabled = consent === "accepted";
+  const canClose = consent !== null;
+  const isOpen = consent === null || isSettingsOpen;
 
   return (
     <>
       <AnalyticsLoader measurementId={measurementId} enabled={analyticsEnabled} />
-      {consent !== null ? null : (
+
+      {!isOpen && canClose ? (
+        <button
+          type="button"
+          className="fixed bottom-4 right-4 z-[89] rounded-full border border-white/20 bg-bg-soft/95 px-4 py-2 text-sm text-white backdrop-blur-xl transition-colors hover:border-brand/60"
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          {copy.manage}
+        </button>
+      ) : null}
+
+      {isOpen ? (
         <aside className="fixed bottom-4 left-4 right-4 z-[90] mx-auto max-w-3xl rounded-2xl border border-white/20 bg-bg-soft/95 p-4 backdrop-blur-xl">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <p className="text-sm text-text-muted">{copy.text}</p>
-            <div className="flex gap-2">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2">
+                <p className="text-sm font-semibold text-white">{copy.title}</p>
+                <p className="text-sm text-text-muted">{copy.text}</p>
+                <p className="text-xs text-text-muted">{statusText}</p>
+                <Link
+                  href={localizedPath(locale, "/politique-confidentialite")}
+                  className="inline-flex text-sm text-white underline decoration-white/30 underline-offset-4"
+                >
+                  {copy.privacy}
+                </Link>
+              </div>
+              {canClose ? (
+                <button
+                  type="button"
+                  className="text-sm text-text-muted transition-colors hover:text-white"
+                  onClick={() => setIsSettingsOpen(false)}
+                >
+                  {copy.close}
+                </button>
+              ) : null}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
               <button type="button" className="btn-secondary text-sm" onClick={() => setChoice("declined")}>
                 {copy.decline}
               </button>
@@ -68,8 +148,7 @@ export function ConsentBanner({ locale }: ConsentBannerProps) {
             </div>
           </div>
         </aside>
-      )}
+      ) : null}
     </>
   );
 }
-

@@ -23,7 +23,12 @@ Premium showcase website for Pixel Prestige (FR/EN), built with Next.js App Rout
 ## Required environment variables
 
 - `NEXT_PUBLIC_CONTACT_ENDPOINT`: Formspree endpoint for form submissions, e.g. `https://formspree.io/f/your_form_id`
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID`: GA4 measurement id (optional)
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID`: GA4 measurement id (optional, leave empty to keep analytics disabled)
+
+## Launch checklist
+
+- Fill legal identity details in `lib/site.ts` before public launch.
+- Keep `NEXT_PUBLIC_GA_MEASUREMENT_ID` empty until you actually want analytics enabled on the deployed build.
 
 ## Build & export
 

@@ -48,9 +48,82 @@ export type FitItem = {
   detail: string;
 };
 
+export type DetailCardItem = {
+  eyebrow?: string;
+  title: string;
+  detail: string;
+  bullets?: string[];
+};
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
 export type DifferentiatorItem = {
   title: string;
   detail: string;
+};
+
+export type ServicesPageContent = {
+  seo: SeoContent;
+  catalogTitle: string;
+  catalogLead: string;
+  situationsTitle: string;
+  situationsLead: string;
+  situationItems: DetailCardItem[];
+  deliveryTitle: string;
+  deliveryLead: string;
+  deliveryItems: DetailCardItem[];
+  faqTitle: string;
+  faqLead: string;
+  faq: FaqItem[];
+  ctaTitle: string;
+  ctaLead: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+};
+
+export type ProcessPageContent = {
+  seo: SeoContent;
+  timelineTitle: string;
+  timelineLead: string;
+  phaseTitle: string;
+  phaseLead: string;
+  phaseItems: DetailCardItem[];
+  collaborationTitle: string;
+  collaborationLead: string;
+  collaborationItems: DetailCardItem[];
+  standardsTitle: string;
+  standardsLead: string;
+  standardsItems: DetailCardItem[];
+  faqTitle: string;
+  faqLead: string;
+  faq: FaqItem[];
+  ctaTitle: string;
+  ctaLead: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+};
+
+export type AboutPageContent = {
+  seo: SeoContent;
+  positioningTitle: string;
+  positioningLead: string;
+  positioningItems: DetailCardItem[];
+  standardsTitle: string;
+  standardsLead: string;
+  standardsItems: DetailCardItem[];
+  territoryTitle: string;
+  territoryLead: string;
+  territoryItems: DetailCardItem[];
+  faqTitle: string;
+  faqLead: string;
+  faq: FaqItem[];
+  ctaTitle: string;
+  ctaLead: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
 };
 
 export type Dictionary = {

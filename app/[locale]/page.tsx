@@ -48,7 +48,11 @@ export default async function LocaleHomePage({ params }: PageProps) {
       <ServicesPreviewSection locale={locale} dictionary={localeContent.dictionary} services={localeContent.services} />
       <DifferentiatorsSection dictionary={localeContent.dictionary} />
       {/* <CasesPreviewSection locale={locale} dictionary={localeContent.dictionary} cases={localeContent.cases} /> */}
-      <ProcessSection dictionary={localeContent.dictionary} steps={localeContent.process} />
+      <ProcessSection
+        dictionary={localeContent.dictionary}
+        steps={localeContent.process}
+        stepLabel={locale === "fr" ? "Étape" : "Step"}
+      />
       <WhenToCallSection dictionary={localeContent.dictionary} items={localeContent.fitItems} />
       <FinalCtaSection locale={locale} dictionary={localeContent.dictionary} />
     </>

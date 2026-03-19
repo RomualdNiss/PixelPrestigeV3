@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { isLocale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 
 const defaultSocialImage = "/assets/img/logo_complet.png";
@@ -8,12 +9,12 @@ const defaultKeywords = [
   "agence digitale Rouen",
   "site internet",
   "communication",
-  "branding",
-  "strategie reseaux sociaux",
-  "webdesign",
+  "image de marque",
+  "stratégie réseaux sociaux",
+  "conception web",
   "Pixel Prestige",
-  "developpement web",
-  "developpement",
+  "développement web",
+  "développement",
 ];
 
 const displayFont = Space_Grotesk({
@@ -65,13 +66,18 @@ export const viewport: Viewport = {
   themeColor: "#A529FF",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale?: string }>;
 }>) {
+  const resolvedParams = await params;
+  const lang = isLocale(resolvedParams?.locale ?? "") ? resolvedParams.locale : "fr";
+
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <body className={`${displayFont.variable} ${bodyFont.variable} bg-bg text-text antialiased`}>
         {children}
       </body>

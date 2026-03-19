@@ -5,14 +5,15 @@ import { ProcessTimeline } from "@/components/ui/ProcessTimeline";
 type ProcessSectionProps = {
   dictionary: Dictionary;
   steps: ProcessStep[];
+  stepLabel?: string;
 };
 
-export function ProcessSection({ dictionary, steps }: ProcessSectionProps) {
+export function ProcessSection({ dictionary, steps, stepLabel }: ProcessSectionProps) {
   return (
     <section className="section-space border-t border-white/10">
       <div className="container-default space-y-10">
         <SectionHeading title={dictionary.home.processTitle} lead={dictionary.home.processLead} />
-        <ProcessTimeline items={steps} />
+        <ProcessTimeline items={steps} stepLabel={stepLabel} />
       </div>
     </section>
   );

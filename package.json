@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/fix-export-html-lang.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:hydration": "node scripts/check-hydration-risks.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -15,11 +16,11 @@
     "framer-motion": "^12.34.5",
     "gsap": "^3.14.2",
     "lucide-react": "^0.577.0",
-    "next": "16.1.6",
+    "next": "^16.2.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.2",
-    "three": "^0.183.2",
+    "three": "0.182.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -28,9 +29,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^16.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
 }
-

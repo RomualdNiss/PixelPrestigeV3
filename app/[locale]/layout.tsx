@@ -2,6 +2,7 @@
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { ConsentBanner } from "@/components/analytics/ConsentBanner";
+import { LocaleDocumentSync } from "@/components/layout/LocaleDocumentSync";
 import { PixelCursor } from "@/components/effects/PixelCursor";
 import { ParallaxBackdrop } from "@/components/effects/ParallaxBackdrop";
 import { getLocaleContent } from "@/content/site-content";
@@ -40,6 +41,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   return (
     <div className="noise relative flex min-h-dvh flex-col">
+      <LocaleDocumentSync locale={locale} />
       <ParallaxBackdrop />
       <SiteHeader locale={locale} dictionary={dictionary} />
       <main className="relative z-10 flex-1">{children}</main>

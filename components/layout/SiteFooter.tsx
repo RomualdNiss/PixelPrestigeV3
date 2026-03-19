@@ -15,10 +15,10 @@ export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
         <p>{dictionary.footerText}</p>
         <div className="flex flex-wrap items-center gap-4">
           <Link href={localizedPath(locale, "/mentions-legales")} className="hover:text-white">
-            {locale === "fr" ? "Mentions legales" : "Legal notice"}
+            {locale === "fr" ? "Mentions légales" : "Legal notice"}
           </Link>
           <Link href={localizedPath(locale, "/politique-confidentialite")} className="hover:text-white">
-            {locale === "fr" ? "Confidentialite" : "Privacy"}
+            {locale === "fr" ? "Confidentialité" : "Privacy"}
           </Link>
           <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-white">
             {siteConfig.contact.email}
