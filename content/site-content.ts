@@ -79,7 +79,6 @@ const frDictionary: Dictionary = {
     // { href: "/realisations", label: "Réalisations" },
     { href: "/process", label: "Méthode" },
     { href: "/a-propos", label: "À propos" },
-    { href: "/contact", label: "Contact" },
   ],
   footerText: "Pixel Prestige - Développement web, applications web et présence digitale.",
   home: {
@@ -199,7 +198,6 @@ const enDictionary: Dictionary = {
     // { href: "/realisations", label: "Work" },
     { href: "/process", label: "Process" },
     { href: "/a-propos", label: "About" },
-    { href: "/contact", label: "Contact" },
   ],
   footerText: "Pixel Prestige - Web development, web apps and digital presence.",
   home: {

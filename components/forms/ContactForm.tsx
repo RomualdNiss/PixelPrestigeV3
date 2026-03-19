@@ -190,15 +190,15 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
       <p className="text-sm text-text-muted">
         {locale === "fr" ? (
           <>
-            En envoyant ce formulaire, vous acceptez que Pixel Prestige utilise ces donn\u00E9es pour r\u00E9pondre \u00E0 votre demande.
+            En envoyant ce formulaire, vous acceptez que Pixel Prestige utilise ces données pour répondre à votre demande.
             Consultez la{" "}
             <Link
               href={localizedPath(locale, "/politique-confidentialite")}
               className="text-white underline decoration-white/30 underline-offset-4"
             >
-              politique de confidentialit\u00E9
+              politique de confidentialité
             </Link>{" "}
-            pour conna\u00EEtre la base l\u00E9gale, la conservation et vos droits.
+            pour conna\u00EEtre la base légale, la conservation et vos droits.
           </>
         ) : (
           <>
@@ -215,7 +215,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
       </p>
 
       <p className="text-sm text-text-muted">
-        {locale === "fr" ? "Si l'envoi \u00E9choue, \u00E9crivez \u00E0 " : "If submission fails, email "}
+        {locale === "fr" ? "Si l'envoi échoue, écrivez à " : "If submission fails, email "}
         <a href={`mailto:${siteConfig.contact.email}`} className="text-white underline decoration-white/30 underline-offset-4">
           {siteConfig.contact.email}
         </a>

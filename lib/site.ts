@@ -25,7 +25,7 @@ export const siteConfig = {
   shortName: "Pixel Prestige",
   url: "https://pixelprestige.fr",
   description:
-    "Agence digitale premium : sites web, applications, automatisations et exp\u00E9riences immersives performantes.",
+    "Agence digitale premium : sites web, applications, automatisations et expériences immersives performantes.",
   contact: {
     email: "contact@pixelprestige.fr",
     phone: "0665184249",
@@ -59,22 +59,22 @@ export const siteConfig = {
   privacy: {
     controllerName: "Pixel Prestige",
     contactFormRetention:
-      "Les demandes envoy\u00E9es via le formulaire sont conserv\u00E9es le temps n\u00E9cessaire au traitement de la demande, puis supprim\u00E9es au plus tard 12 mois apr\u00E8s le dernier \u00E9change utile, sauf obligation l\u00E9gale contraire.",
+      "Les demandes envoyées via le formulaire sont conservées le temps nécessaire au traitement de la demande, puis supprimées au plus tard 12 mois après le dernier échange utile, sauf obligation légale contraire.",
     contactPurposes: [
-      "R\u00E9pondre \u00E0 votre demande de contact.",
-      "Pr\u00E9parer un \u00E9change commercial ou technique li\u00E9 \u00E0 votre projet.",
+      "Répondre à votre demande de contact.",
+      "Préparer un échange commercial ou technique lié à votre projet.",
       "Assurer un suivi si vous poursuivez la discussion avec Pixel Prestige.",
     ],
     legalBasis:
-      "Mesures pr\u00E9contractuelles prises \u00E0 votre demande et int\u00E9r\u00EAt l\u00E9gitime \u00E0 traiter les demandes entrantes de mani\u00E8re structur\u00E9e.",
+      "Mesures précontractuelles prises à votre demande et intérêt légitime à traiter les demandes entrantes de manière structurée.",
     requiredFields: ["Nom", "E-mail", "Type de projet", "Message"],
     optionalFields: ["Entreprise"],
     recipients: [
       "Pixel Prestige",
-      "Le prestataire de traitement du formulaire configur\u00E9 sur le site (Formspree au moment de ce d\u00E9p\u00F4t)",
-      "Le prestataire de mesure d'audience si Google Analytics est activ\u00E9 apr\u00E8s consentement",
+      "Le prestataire de traitement du formulaire configuré sur le site (Formspree au moment de ce dépôt)",
+      "Le prestataire de mesure d'audience si Google Analytics est activé après consentement",
     ],
     internationalTransfers:
-      "Le prestataire de formulaire et, le cas \u00E9ch\u00E9ant, le prestataire d'analytics peuvent traiter certaines donn\u00E9es hors de l'Union europ\u00E9enne selon leur propre infrastructure. V\u00E9rifiez leurs garanties contractuelles et leurs param\u00E8tres avant la mise en ligne.",
+      "Le prestataire de formulaire et, le cas échéant, le prestataire d'analytics peuvent traiter certaines données hors de l'Union européenne selon leur propre infrastructure. Vérifiez leurs garanties contractuelles et leurs paramètres avant la mise en ligne.",
   },
 };

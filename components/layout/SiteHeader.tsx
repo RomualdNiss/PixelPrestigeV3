@@ -50,9 +50,6 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
   const headerVars = {
     "--active-header-height": isCondensed ? "var(--header-height-compact)" : "var(--header-height)",
   } as CSSProperties;
-  const mobilePanelStyle = {
-    top: isCondensed ? "calc(var(--header-height-compact) + 1rem)" : "calc(var(--header-height) + 1rem)",
-  } as CSSProperties;
   const panelTransition = reducedMotion
     ? ({ duration: 0.14 } as const)
     : ({ type: "spring" as const, stiffness: 310, damping: 30, mass: 0.9 } as const);
@@ -198,132 +195,133 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
               transition={{ duration: reducedMotion ? 0.14 : 0.22, ease: "easeOut" }}
             />
 
-            <motion.div
-              key="mobile-menu-panel"
-              id="mobile-navigation"
-              role="dialog"
-              aria-modal="true"
-              aria-label={labels.mobileMenu}
-              style={mobilePanelStyle}
-              className="fixed inset-x-4 bottom-4 z-[97] overflow-hidden rounded-[1.6rem] border border-white/12 bg-bg-soft/92 shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
-              initial={
-                reducedMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: -12, clipPath: "inset(0 0 100% 0 round 1.6rem)" }
-              }
-              animate={
-                reducedMotion
-                  ? { opacity: 1 }
-                  : { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0 round 1.6rem)" }
-              }
-              exit={
-                reducedMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: -8, clipPath: "inset(0 0 100% 0 round 1.6rem)" }
-              }
-              transition={panelTransition}
-            >
+            <div className="fixed inset-0 z-[97] flex items-center justify-center px-4 py-4 pointer-events-none">
               <motion.div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-brand/80 to-transparent"
-                initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scaleX: 0.35 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                exit={{ opacity: 0 }}
-                transition={reducedMotion ? { duration: 0.14 } : { duration: 0.28, delay: 0.06, ease: "easeOut" }}
-              />
-              <motion.div
-                className="flex h-full flex-col overflow-y-auto p-5"
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                variants={{
-                  hidden: {},
-                  visible: {},
-                }}
-                transition={staggerTransition}
+                key="mobile-menu-panel"
+                id="mobile-navigation"
+                role="dialog"
+                aria-modal="true"
+                aria-label={labels.mobileMenu}
+                className="pointer-events-auto relative w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[1.6rem] border border-white/12 bg-bg-soft/92 shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
+                initial={
+                  reducedMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: -12, clipPath: "inset(0 0 100% 0 round 1.6rem)" }
+                }
+                animate={
+                  reducedMotion
+                    ? { opacity: 1 }
+                    : { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0 round 1.6rem)" }
+                }
+                exit={
+                  reducedMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: -8, clipPath: "inset(0 0 100% 0 round 1.6rem)" }
+                }
+                transition={panelTransition}
               >
                 <motion.div
-                  className="flex items-center justify-between gap-4 border-b border-white/10 pb-4"
-                  variants={{
-                    hidden: reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: reducedMotion ? 0.14 : 0.24, ease: "easeOut" }}
-                >
-                  <p className="text-[0.7rem] uppercase tracking-[0.22em] text-text-muted">{labels.mobileMenu}</p>
-                  <button
-                    ref={closeButtonRef}
-                    type="button"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white transition-colors hover:border-brand/60 hover:bg-white/10"
-                  >
-                    <X className="h-[18px] w-[18px]" />
-                  </button>
-                </motion.div>
-
-                <motion.nav
-                  aria-label={labels.navigation}
-                  className="mt-6 flex flex-col gap-2"
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-brand/80 to-transparent"
+                  initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scaleX: 0.35 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={reducedMotion ? { duration: 0.14 } : { duration: 0.28, delay: 0.06, ease: "easeOut" }}
+                />
+                <motion.div
+                  className="flex flex-col p-5"
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
                   variants={{
                     hidden: {},
                     visible: {},
                   }}
                   transition={staggerTransition}
                 >
-                  {dictionary.nav.map((item) => {
-                    const href = localizedPath(locale, item.href);
-                    const isActive = pathname === href;
-
-                    return (
-                      <motion.div
-                        key={item.href}
-                        className="relative w-full"
-                        variants={{
-                          hidden: { opacity: 0 },
-                          visible: { opacity: 1 },
-                        }}
-                        transition={{ duration: reducedMotion ? 0.14 : 0.22, ease: "easeOut" }}
-                      >
-                        <Link
-                          href={href}
-                          onClick={() => setIsMenuOpen(false)}
-                          className={cn(
-                            "flex w-full items-center rounded-[1.15rem] border px-4 py-4 text-lg font-medium leading-[1.15] transition-colors",
-                            isActive
-                              ? "border-brand/40 bg-brand/18 text-white"
-                              : "border-white/10 bg-white/3 text-text-muted hover:border-brand/35 hover:text-white",
-                          )}
-                        >
-                          {item.label}
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </motion.nav>
-
-                <motion.div
-                  className="mt-auto flex flex-col gap-4 pt-6"
-                  variants={{
-                    hidden: reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: reducedMotion ? 0.14 : 0.24, ease: "easeOut", delay: reducedMotion ? 0 : 0.06 }}
-                >
-                  <LocaleSwitcher
-                    locale={locale}
-                    label={dictionary.common.localeSwitch}
-                    onNavigate={() => setIsMenuOpen(false)}
-                  />
-                  <Link
-                    href={localizedPath(locale, "/contact")}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="btn-primary w-full justify-center"
+                  <motion.div
+                    className="flex items-center justify-between gap-4 border-b border-white/10 pb-4"
+                    variants={{
+                      hidden: reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ duration: reducedMotion ? 0.14 : 0.24, ease: "easeOut" }}
                   >
-                    {dictionary.common.ctaContact}
-                  </Link>
+                    <p className="text-[0.7rem] uppercase tracking-[0.22em] text-text-muted">{labels.mobileMenu}</p>
+                    <button
+                      ref={closeButtonRef}
+                      type="button"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white transition-colors hover:border-brand/60 hover:bg-white/10"
+                    >
+                      <X className="h-[18px] w-[18px]" />
+                    </button>
+                  </motion.div>
+
+                  <motion.nav
+                    aria-label={labels.navigation}
+                    className="mt-6 flex flex-col gap-2"
+                    variants={{
+                      hidden: {},
+                      visible: {},
+                    }}
+                    transition={staggerTransition}
+                  >
+                    {dictionary.nav.map((item) => {
+                      const href = localizedPath(locale, item.href);
+                      const isActive = pathname === href;
+
+                      return (
+                        <motion.div
+                          key={item.href}
+                          className="relative w-full"
+                          variants={{
+                            hidden: { opacity: 0 },
+                            visible: { opacity: 1 },
+                          }}
+                          transition={{ duration: reducedMotion ? 0.14 : 0.22, ease: "easeOut" }}
+                        >
+                          <Link
+                            href={href}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={cn(
+                              "flex w-full items-center rounded-[1.15rem] border px-4 py-4 text-lg font-medium leading-[1.15] transition-colors",
+                              isActive
+                                ? "border-brand/40 bg-brand/18 text-white"
+                                : "border-white/10 bg-white/3 text-text-muted hover:border-brand/35 hover:text-white",
+                            )}
+                          >
+                            {item.label}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.nav>
+
+                  <motion.div
+                    className="mt-5 flex flex-col gap-4 pt-5"
+                    variants={{
+                      hidden: reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
+                    transition={{ duration: reducedMotion ? 0.14 : 0.24, ease: "easeOut", delay: reducedMotion ? 0 : 0.06 }}
+                  >
+                    <LocaleSwitcher
+                      locale={locale}
+                      label={dictionary.common.localeSwitch}
+                      onNavigate={() => setIsMenuOpen(false)}
+                    />
+                    <Link
+                      href={localizedPath(locale, "/contact")}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="btn-primary w-full justify-center"
+                    >
+                      {dictionary.common.ctaContact}
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </motion.div>
-            </motion.div>
+            </div>
           </div>
         ) : null}
       </AnimatePresence>

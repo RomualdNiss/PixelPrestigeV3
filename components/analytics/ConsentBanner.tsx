@@ -54,17 +54,17 @@ export function ConsentBanner({ locale }: ConsentBannerProps) {
   const copy = useMemo(() => {
     if (locale === "fr") {
       return {
-        title: "Pr\u00E9f\u00E9rences cookies",
+        title: "Préférences cookies",
         text:
-          "Pixel Prestige utilise uniquement des cookies de mesure d'audience si vous les acceptez. Vous pouvez revenir sur ce choix \u00E0 tout moment.",
-        manage: "G\u00E9rer les cookies",
+          "Pixel Prestige utilise uniquement des cookies de mesure d'audience si vous les acceptez. Vous pouvez revenir sur ce choix à tout moment.",
+        manage: "Gérer les cookies",
         accept: "Accepter",
         decline: "Refuser",
         close: "Fermer",
-        privacy: "Consulter la politique de confidentialit\u00E9",
-        accepted: "Consentement enregistr\u00E9 : analytics activ\u00E9s.",
-        declined: "Consentement enregistr\u00E9 : analytics d\u00E9sactiv\u00E9s.",
-        pending: "Aucun consentement enregistr\u00E9 pour le moment.",
+        privacy: "Consulter la politique de confidentialité",
+        accepted: "Consentement enregistré : analytics activés.",
+        declined: "Consentement enregistré : analytics désactivés.",
+        pending: "Aucun consentement enregistré pour le moment.",
       };
     }
 
