@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PrivacyPage({ params }: PageProps) {
   const locale = await resolveLocale(params);
   const analyticsConfigured = Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim());
-  const sectionClassName = "rounded-3xl border border-white/15 bg-bg-soft/70 p-6";
-  const sectionTitleClassName = "text-base font-semibold text-white";
+  const sectionClassName = "rounded-3xl border border-border bg-surface p-6";
+  const sectionTitleClassName = "text-base font-semibold text-text";
   const missingIdentity =
     !hasSiteValue(siteConfig.legal.entityName) || !hasSiteValue(siteConfig.legal.address.street) || !hasSiteValue(siteConfig.contact.phone);
 
@@ -62,8 +62,8 @@ export default async function PrivacyPage({ params }: PageProps) {
       <section className="pb-24">
         <div className="container-default grid gap-6">
           {missingIdentity ? (
-            <div className="rounded-3xl border border-amber-400/30 bg-amber-500/10 p-6 text-sm text-amber-100">
-              <p className="font-semibold text-white">
+            <div className="theme-warning-panel rounded-3xl p-6 text-sm">
+              <p className="font-semibold text-text">
                 {locale === "fr"
                   ? "Les informations d'identité du responsable de traitement doivent encore être complétées."
                   : "The controller identity details still need to be completed."}
@@ -80,17 +80,17 @@ export default async function PrivacyPage({ params }: PageProps) {
             <h2 className={sectionTitleClassName}>{locale === "fr" ? "Responsable du traitement" : "Data controller"}</h2>
             <div className="mt-4 space-y-3 text-sm text-text-muted">
               <p>
-                <span className="font-medium text-white">{locale === "fr" ? "Organisme" : "Entity"}:</span>{" "}
+                <span className="font-medium text-text">{locale === "fr" ? "Organisme" : "Entity"}:</span>{" "}
                 {formatValue(locale, siteConfig.legal.entityName || siteConfig.privacy.controllerName)}
               </p>
               <p>
-                <span className="font-medium text-white">{locale === "fr" ? "Adresse" : "Address"}:</span> {formatAddress(locale)}
+                <span className="font-medium text-text">{locale === "fr" ? "Adresse" : "Address"}:</span> {formatAddress(locale)}
               </p>
               <p>
-                <span className="font-medium text-white">{locale === "fr" ? "E-mail" : "Email"}:</span> {siteConfig.contact.email}
+                <span className="font-medium text-text">{locale === "fr" ? "E-mail" : "Email"}:</span> {siteConfig.contact.email}
               </p>
               <p>
-                <span className="font-medium text-white">{locale === "fr" ? "Téléphone" : "Phone"}:</span>{" "}
+                <span className="font-medium text-text">{locale === "fr" ? "Téléphone" : "Phone"}:</span>{" "}
                 {formatValue(locale, siteConfig.contact.phone)}
               </p>
             </div>
@@ -100,7 +100,7 @@ export default async function PrivacyPage({ params }: PageProps) {
             <h2 className={sectionTitleClassName}>{locale === "fr" ? "Données collectées" : "Collected data"}</h2>
             <div className="mt-4 grid gap-4 text-sm text-text-muted md:grid-cols-2">
               <div>
-                <p className="font-medium text-white">{locale === "fr" ? "Champs obligatoires" : "Required fields"}</p>
+                <p className="font-medium text-text">{locale === "fr" ? "Champs obligatoires" : "Required fields"}</p>
                 <ul className="mt-2 space-y-2">
                   {siteConfig.privacy.requiredFields.map((field) => (
                     <li key={field}>{field}</li>
@@ -108,7 +108,7 @@ export default async function PrivacyPage({ params }: PageProps) {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-white">{locale === "fr" ? "Champs facultatifs" : "Optional fields"}</p>
+                <p className="font-medium text-text">{locale === "fr" ? "Champs facultatifs" : "Optional fields"}</p>
                 <ul className="mt-2 space-y-2">
                   {siteConfig.privacy.optionalFields.map((field) => (
                     <li key={field}>{field}</li>
@@ -122,7 +122,7 @@ export default async function PrivacyPage({ params }: PageProps) {
             <h2 className={sectionTitleClassName}>{locale === "fr" ? "Finalités et base légale" : "Purposes and legal basis"}</h2>
             <div className="mt-4 space-y-4 text-sm text-text-muted">
               <div>
-                <p className="font-medium text-white">{locale === "fr" ? "Finalités" : "Purposes"}</p>
+                <p className="font-medium text-text">{locale === "fr" ? "Finalités" : "Purposes"}</p>
                 <ul className="mt-2 space-y-2">
                   {siteConfig.privacy.contactPurposes.map((purpose) => (
                     <li key={purpose}>{purpose}</li>
@@ -130,7 +130,7 @@ export default async function PrivacyPage({ params }: PageProps) {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-white">{locale === "fr" ? "Base légale" : "Legal basis"}</p>
+                <p className="font-medium text-text">{locale === "fr" ? "Base légale" : "Legal basis"}</p>
                 <p className="mt-2">{siteConfig.privacy.legalBasis}</p>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default async function PrivacyPage({ params }: PageProps) {
             <h2 className={sectionTitleClassName}>{locale === "fr" ? "Destinataires et conservation" : "Recipients and retention"}</h2>
             <div className="mt-4 space-y-4 text-sm text-text-muted">
               <div>
-                <p className="font-medium text-white">{locale === "fr" ? "Destinataires" : "Recipients"}</p>
+                <p className="font-medium text-text">{locale === "fr" ? "Destinataires" : "Recipients"}</p>
                 <ul className="mt-2 space-y-2">
                   {siteConfig.privacy.recipients.map((recipient) => (
                     <li key={recipient}>{recipient}</li>
@@ -148,7 +148,7 @@ export default async function PrivacyPage({ params }: PageProps) {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-white">{locale === "fr" ? "Durée de conservation" : "Retention period"}</p>
+                <p className="font-medium text-text">{locale === "fr" ? "Durée de conservation" : "Retention period"}</p>
                 <p className="mt-2">{siteConfig.privacy.contactFormRetention}</p>
               </div>
             </div>

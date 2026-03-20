@@ -1,8 +1,9 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { isLocale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
+import { THEME_META_ID, themeInitScript } from "@/lib/theme";
 
 const defaultSocialImage = "/assets/img/logo_complet.png";
 const defaultKeywords = [
@@ -62,10 +63,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#A529FF",
-};
-
 export default async function RootLayout({
   children,
   params,
@@ -77,7 +74,11 @@ export default async function RootLayout({
   const lang = isLocale(resolvedParams?.locale ?? "") ? resolvedParams.locale : "fr";
 
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning data-theme="dark">
+      <head>
+        <meta id={THEME_META_ID} name="theme-color" content="#07070b" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className={`${displayFont.variable} ${bodyFont.variable} bg-bg text-text antialiased`}>
         {children}
       </body>

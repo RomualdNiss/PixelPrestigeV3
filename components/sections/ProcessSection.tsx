@@ -10,7 +10,7 @@ type ProcessSectionProps = {
 
 export function ProcessSection({ dictionary, steps, stepLabel }: ProcessSectionProps) {
   return (
-    <section className="section-space border-t border-white/10">
+    <section className="section-space border-t border-border-soft">
       <div className="container-default space-y-10">
         <SectionHeading title={dictionary.home.processTitle} lead={dictionary.home.processLead} />
         <ProcessTimeline items={steps} stepLabel={stepLabel} />

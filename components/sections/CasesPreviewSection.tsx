@@ -13,7 +13,7 @@ type CasesPreviewSectionProps = {
 
 export function CasesPreviewSection({ locale, dictionary, cases }: CasesPreviewSectionProps) {
   return (
-    <section className="section-space border-t border-white/10">
+    <section className="section-space border-t border-border-soft">
       <div className="container-default space-y-10">
         <SectionHeading title={dictionary.home.casesTitle} lead={dictionary.home.casesLead} />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

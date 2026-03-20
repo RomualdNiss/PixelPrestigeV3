@@ -24,9 +24,9 @@ export function ServiceCard({ item }: ServiceCardProps) {
       className="glass-panel h-full rounded-3xl p-6"
     >
       <p className="eyebrow-badge text-xs uppercase tracking-[0.18em]">{item.id}</p>
-      <h3 className="mt-3 font-display text-2xl font-semibold text-white">{item.title}</h3>
+      <h3 className="mt-3 font-display text-2xl font-semibold text-text">{item.title}</h3>
       <p className="mt-3 text-sm text-text-muted">{item.summary}</p>
-      <ul className="mt-4 space-y-2 text-sm text-white/90">
+      <ul className="mt-4 space-y-2 text-sm text-text">
         {item.bullets.map((bullet) => (
           <li key={bullet} className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" />

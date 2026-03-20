@@ -36,9 +36,9 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
   const [use3D, setUse3D] = useState(false);
   const [webglIssue, setWebglIssue] = useState(false);
   const fallbackGlowClassName =
-    "pointer-events-none absolute right-[2%] top-[53%] z-0 hidden h-[340px] w-[340px] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(165,41,255,0.34),rgba(140,0,255,0.18)_42%,transparent_70%)] blur-xl md:block lg:right-[5%] lg:h-[420px] lg:w-[420px] xl:right-[8%] xl:h-[500px] xl:w-[500px]";
+    "hero-fallback-glow pointer-events-none absolute right-[2%] top-[53%] z-0 hidden h-[340px] w-[340px] -translate-y-1/2 rounded-full blur-xl md:block lg:right-[5%] lg:h-[420px] lg:w-[420px] xl:right-[8%] xl:h-[500px] xl:w-[500px]";
   const mobileFallbackGlowClassName =
-    "pointer-events-none mx-auto mt-10 h-[240px] w-full max-w-[320px] rounded-full bg-[radial-gradient(circle,rgba(165,41,255,0.34),rgba(140,0,255,0.18)_42%,transparent_70%)] blur-xl sm:h-[280px] sm:max-w-[380px]";
+    "hero-fallback-glow pointer-events-none mx-auto mt-10 h-[240px] w-full max-w-[320px] rounded-full blur-xl sm:h-[280px] sm:max-w-[380px]";
   const mobileCubeHitAreaClassName =
     "absolute left-1/2 top-[58%] z-30 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 sm:h-[250px] sm:w-[250px]";
   const showDesktopCube = use3D && isCoarsePointer === false;
@@ -107,7 +107,7 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
       <div className="container-default relative z-20 min-h-[560px] lg:flex lg:min-h-[calc(100dvh-var(--header-height)-12rem)] lg:items-center">
         <div className="max-w-2xl py-14 md:py-20 lg:py-0">
           <p className="eyebrow-badge text-xs uppercase tracking-[0.22em]">{dictionary.home.hero.kicker}</p>
-          <h1 className="mt-4 max-w-2xl font-display text-5xl font-semibold leading-[1.02] text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-4 max-w-2xl font-display text-5xl font-semibold leading-[1.02] text-text md:text-6xl lg:text-7xl">
             {dictionary.home.hero.title}
           </h1>
           <p className="mt-5 max-w-xl text-base text-text-muted md:text-lg">{dictionary.home.hero.subtitle}</p>
@@ -124,7 +124,7 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
 
           <ul className="mt-8 flex flex-wrap items-center gap-2">
             {dictionary.home.trustLine.map((item) => (
-              <li key={item} className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-text-muted">
+              <li key={item} className="rounded-full border border-border bg-surface-subtle px-3 py-1 text-xs text-text-muted">
                 {item}
               </li>
             ))}

@@ -10,17 +10,17 @@ type SiteFooterProps = {
 
 export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
   return (
-    <footer className="border-t border-white/10 py-10">
+    <footer className="border-t border-border-soft py-10">
       <div className="container-default flex flex-col gap-6 text-sm text-text-muted md:flex-row md:items-center md:justify-between">
         <p>{dictionary.footerText}</p>
         <div className="flex flex-wrap items-center gap-4">
-          <Link href={localizedPath(locale, "/mentions-legales")} className="hover:text-white">
+          <Link href={localizedPath(locale, "/mentions-legales")} className="hover:text-text">
             {locale === "fr" ? "Mentions légales" : "Legal notice"}
           </Link>
-          <Link href={localizedPath(locale, "/politique-confidentialite")} className="hover:text-white">
+          <Link href={localizedPath(locale, "/politique-confidentialite")} className="hover:text-text">
             {locale === "fr" ? "Confidentialité" : "Privacy"}
           </Link>
-          <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-white">
+          <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-text">
             {siteConfig.contact.email}
           </a>
         </div>

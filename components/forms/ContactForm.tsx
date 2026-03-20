@@ -111,7 +111,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
 
   return (
     <form
-      className={cn("flex flex-col gap-5 rounded-3xl border border-white/15 bg-bg-soft/70 p-6 md:p-8", className)}
+      className={cn("flex flex-col gap-5 rounded-3xl border border-border bg-surface p-6 md:p-8", className)}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
@@ -121,22 +121,22 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
         <label className="space-y-2 text-sm">
           <span>{labels.name}</span>
           <input
-            className="w-full rounded-xl border border-white/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-brand"
+            className="w-full rounded-xl border border-border bg-transparent px-3 py-2 text-sm outline-none focus:border-brand"
             {...register("name", { required: true })}
             autoComplete="name"
           />
-          {errors.name ? <span className="text-xs text-red-300">{validation.required}</span> : null}
+          {errors.name ? <span className="text-xs text-danger">{validation.required}</span> : null}
         </label>
 
         <label className="space-y-2 text-sm">
           <span>{labels.email}</span>
           <input
-            className="w-full rounded-xl border border-white/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-brand lg:py-1.5"
+            className="w-full rounded-xl border border-border bg-transparent px-3 py-2 text-sm outline-none focus:border-brand lg:py-1.5"
             {...register("email", { required: true })}
             autoComplete="email"
             type="email"
           />
-          {errors.email ? <span className="text-xs text-red-300">{validation.invalidEmail}</span> : null}
+          {errors.email ? <span className="text-xs text-danger">{validation.invalidEmail}</span> : null}
         </label>
       </div>
 
@@ -144,7 +144,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
         <label className="space-y-2 text-sm">
           <span>{labels.company}</span>
           <input
-            className="w-full rounded-xl border border-white/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-brand"
+            className="w-full rounded-xl border border-border bg-transparent px-3 py-2 text-sm outline-none focus:border-brand"
             {...register("company")}
             autoComplete="organization"
           />
@@ -153,7 +153,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
         <label className="space-y-2 text-sm">
           <span>{labels.projectType}</span>
           <select
-            className="w-full rounded-xl border border-white/15 bg-bg px-3 py-2 text-sm outline-none focus:border-brand"
+            className="w-full rounded-xl border border-border bg-bg px-3 py-2 text-sm outline-none focus:border-brand"
             {...register("projectType", { required: true })}
           >
             {Object.entries(labels.projectTypes).map(([key, value]) => (
@@ -168,10 +168,10 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
       <label className="space-y-2 text-sm">
         <span>{labels.message}</span>
         <textarea
-          className="min-h-[160px] w-full rounded-xl border border-white/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-brand"
+          className="min-h-[160px] w-full rounded-xl border border-border bg-transparent px-3 py-2 text-sm outline-none focus:border-brand"
           {...register("message", { required: true })}
         />
-        {errors.message ? <span className="text-xs text-red-300">{validation.shortMessage}</span> : null}
+        {errors.message ? <span className="text-xs text-danger">{validation.shortMessage}</span> : null}
       </label>
 
       <label className="hidden" aria-hidden>
@@ -183,8 +183,8 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
         <button type="submit" className="btn-primary" disabled={status === "submitting"}>
           {status === "submitting" ? "..." : labels.submit}
         </button>
-        {status === "success" ? <span className="text-sm text-emerald-300">{labels.success}</span> : null}
-        {status === "error" ? <span className="text-sm text-red-300">{labels.error}</span> : null}
+        {status === "success" ? <span className="text-sm text-success">{labels.success}</span> : null}
+        {status === "error" ? <span className="text-sm text-danger">{labels.error}</span> : null}
       </div>
 
       <p className="text-sm text-text-muted">
@@ -194,7 +194,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
             Consultez la{" "}
             <Link
               href={localizedPath(locale, "/politique-confidentialite")}
-              className="text-white underline decoration-white/30 underline-offset-4"
+              className="theme-link"
             >
               politique de confidentialité
             </Link>{" "}
@@ -205,7 +205,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
             By submitting this form, you allow Pixel Prestige to use these details to answer your request. Read the{" "}
             <Link
               href={localizedPath(locale, "/politique-confidentialite")}
-              className="text-white underline decoration-white/30 underline-offset-4"
+              className="theme-link"
             >
               privacy policy
             </Link>{" "}
@@ -216,7 +216,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
 
       <p className="text-sm text-text-muted">
         {locale === "fr" ? "Si l'envoi échoue, écrivez à " : "If submission fails, email "}
-        <a href={`mailto:${siteConfig.contact.email}`} className="text-white underline decoration-white/30 underline-offset-4">
+        <a href={`mailto:${siteConfig.contact.email}`} className="theme-link">
           {siteConfig.contact.email}
         </a>
         .

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { localizedPath, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import type { Dictionary } from "@/types/content";
@@ -114,8 +115,8 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
         className={cn(
           "sticky top-0 z-[95] border-b transition-[background-color,border-color,box-shadow] duration-200",
           isCondensed
-            ? "border-white/12 bg-bg/82 shadow-[0_18px_50px_rgba(0,0,0,0.32)] backdrop-blur-2xl"
-            : "border-white/10 bg-bg/68 backdrop-blur-xl",
+            ? "border-border bg-bg/82 shadow-[0_18px_50px_rgba(0,0,0,0.32)] backdrop-blur-2xl"
+            : "border-border-soft bg-bg/68 backdrop-blur-xl",
         )}
       >
         <div
@@ -148,8 +149,8 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                   key={item.href}
                   href={href}
                   className={cn(
-                    "text-sm transition-colors hover:text-white",
-                    isActive ? "text-white" : "text-text-muted",
+                    "text-sm transition-colors hover:text-text",
+                    isActive ? "text-text" : "text-text-muted",
                   )}
                 >
                   {item.label}
@@ -160,6 +161,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
 
           <div className="hidden items-center gap-3 md:flex">
             <LocaleSwitcher locale={locale} label={dictionary.common.localeSwitch} />
+            <ThemeToggle locale={locale} />
             <Link href={localizedPath(locale, "/contact")} className="btn-primary text-sm md:inline-flex">
               {dictionary.common.ctaContact}
             </Link>
@@ -172,7 +174,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? labels.closeMenu : labels.openMenu}
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/6 text-white transition-colors hover:border-brand/60 hover:bg-white/10"
+              className="theme-icon-button h-11 w-11"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -188,7 +190,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
               type="button"
               aria-label={labels.closeMenu}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 z-[96] bg-black/58 backdrop-blur-sm"
+              className="fixed inset-0 z-[96] bg-overlay backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -202,7 +204,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                 role="dialog"
                 aria-modal="true"
                 aria-label={labels.mobileMenu}
-                className="pointer-events-auto relative w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[1.6rem] border border-white/12 bg-bg-soft/92 shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
+                className="pointer-events-auto relative w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[1.6rem] border border-border bg-surface-strong shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
                 initial={
                   reducedMotion
                     ? { opacity: 0 }
@@ -240,7 +242,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                   transition={staggerTransition}
                 >
                   <motion.div
-                    className="flex items-center justify-between gap-4 border-b border-white/10 pb-4"
+                    className="flex items-center justify-between gap-4 border-b border-border-soft pb-4"
                     variants={{
                       hidden: reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 },
                       visible: { opacity: 1, y: 0 },
@@ -252,7 +254,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                       ref={closeButtonRef}
                       type="button"
                       onClick={() => setIsMenuOpen(false)}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white transition-colors hover:border-brand/60 hover:bg-white/10"
+                      className="theme-icon-button h-10 w-10"
                     >
                       <X className="h-[18px] w-[18px]" />
                     </button>
@@ -288,7 +290,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                               "flex w-full items-center rounded-[1.15rem] border px-4 py-4 text-lg font-medium leading-[1.15] transition-colors",
                               isActive
                                 ? "border-brand/40 bg-brand/18 text-white"
-                                : "border-white/10 bg-white/3 text-text-muted hover:border-brand/35 hover:text-white",
+                                : "border-border-soft bg-surface-subtle text-text-muted hover:border-brand/35 hover:text-text",
                             )}
                           >
                             {item.label}
@@ -306,11 +308,14 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                     }}
                     transition={{ duration: reducedMotion ? 0.14 : 0.24, ease: "easeOut", delay: reducedMotion ? 0 : 0.06 }}
                   >
-                    <LocaleSwitcher
-                      locale={locale}
-                      label={dictionary.common.localeSwitch}
-                      onNavigate={() => setIsMenuOpen(false)}
-                    />
+                    <div className="flex items-center gap-3">
+                      <LocaleSwitcher
+                        locale={locale}
+                        label={dictionary.common.localeSwitch}
+                        onNavigate={() => setIsMenuOpen(false)}
+                      />
+                      <ThemeToggle locale={locale} />
+                    </div>
                     <Link
                       href={localizedPath(locale, "/contact")}
                       onClick={() => setIsMenuOpen(false)}

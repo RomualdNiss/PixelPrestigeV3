@@ -10,7 +10,7 @@ type DifferentiatorsSectionProps = {
 
 export function DifferentiatorsSection({ dictionary }: DifferentiatorsSectionProps) {
   return (
-    <section className="section-space border-t border-white/10">
+    <section className="section-space border-t border-border-soft">
       <div className="container-default space-y-10">
         <SectionHeading
           title={dictionary.home.differentiatorsTitle}
@@ -23,7 +23,7 @@ export function DifferentiatorsSection({ dictionary }: DifferentiatorsSectionPro
                 <p className="text-xs uppercase tracking-[0.16em] text-text-muted">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-3 font-display text-2xl font-semibold text-white">
+                <h3 className="mt-3 font-display text-2xl font-semibold text-text">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-text-muted">{item.detail}</p>

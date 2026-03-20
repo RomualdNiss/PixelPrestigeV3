@@ -42,7 +42,7 @@ export function LocaleSwitcher({ locale, label, onNavigate }: LocaleSwitcherProp
             "rounded-full border px-2 py-1 transition-colors",
             item === locale
               ? "border-brand bg-brand/25 text-white"
-              : "border-white/20 text-text-muted hover:border-brand/70 hover:text-white",
+              : "border-border-strong text-text-muted hover:border-brand/70 hover:text-text",
           )}
         >
           {item.toUpperCase()}

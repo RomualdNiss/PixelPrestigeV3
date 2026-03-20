@@ -86,7 +86,7 @@ export function PixelCursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[70] h-7 w-7 rounded-md border border-white/50 bg-brand/25 mix-blend-screen"
+      className="pixel-cursor pointer-events-none fixed left-0 top-0 z-[70] h-7 w-7 rounded-md border"
       style={style}
     />
   );

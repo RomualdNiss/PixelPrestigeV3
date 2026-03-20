@@ -131,8 +131,8 @@ export default async function LegalPage({ params }: PageProps) {
     !hasSiteValue(siteConfig.legal.publicationDirector) ? (locale === "fr" ? "directeur de la publication" : "publishing director") : null,
   ].filter(Boolean);
 
-  const sectionTitleClassName = "text-base font-semibold text-white";
-  const sectionClassName = "rounded-3xl border border-white/15 bg-bg-soft/70 p-6";
+  const sectionTitleClassName = "text-base font-semibold text-text";
+  const sectionClassName = "rounded-3xl border border-border bg-surface p-6";
 
   return (
     <>
@@ -144,8 +144,8 @@ export default async function LegalPage({ params }: PageProps) {
       <section className="pb-24">
         <div className="container-default grid gap-6">
           {missingLegalItems.length > 0 ? (
-            <div className="rounded-3xl border border-amber-400/30 bg-amber-500/10 p-6 text-sm text-amber-100">
-              <p className="font-semibold text-white">
+            <div className="theme-warning-panel rounded-3xl p-6 text-sm">
+              <p className="font-semibold text-text">
                 {locale === "fr"
                   ? "Cette page n'est pas encore totalement conforme pour une mise en ligne publique."
                   : "This page is not fully compliant for public launch yet."}
@@ -163,7 +163,7 @@ export default async function LegalPage({ params }: PageProps) {
             <dl className="mt-4 grid gap-4 text-sm text-text-muted md:grid-cols-2">
               {editorItems.map((item) => (
                 <div key={item.label} className="space-y-1">
-                  <dt className="font-medium text-white">{item.label}</dt>
+                  <dt className="font-medium text-text">{item.label}</dt>
                   <dd>{item.value}</dd>
                 </div>
               ))}
@@ -175,7 +175,7 @@ export default async function LegalPage({ params }: PageProps) {
             <dl className="mt-4 grid gap-4 text-sm text-text-muted md:grid-cols-2">
               {publicationItems.map((item) => (
                 <div key={item.label} className="space-y-1">
-                  <dt className="font-medium text-white">{item.label}</dt>
+                  <dt className="font-medium text-text">{item.label}</dt>
                   <dd>{item.value}</dd>
                 </div>
               ))}
@@ -187,10 +187,10 @@ export default async function LegalPage({ params }: PageProps) {
             <dl className="mt-4 grid gap-4 text-sm text-text-muted md:grid-cols-2">
               {hostingItems.map((item) => (
                 <div key={item.label} className="space-y-1">
-                  <dt className="font-medium text-white">{item.label}</dt>
+                  <dt className="font-medium text-text">{item.label}</dt>
                   <dd>
                     {item.value.startsWith("http") ? (
-                      <a href={item.value} target="_blank" rel="noreferrer" className="text-white underline decoration-white/30 underline-offset-4">
+                      <a href={item.value} target="_blank" rel="noreferrer" className="theme-link">
                         {item.value}
                       </a>
                     ) : item.value}

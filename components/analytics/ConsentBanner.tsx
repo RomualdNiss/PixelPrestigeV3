@@ -105,7 +105,7 @@ export function ConsentBanner({ locale }: ConsentBannerProps) {
       {!isOpen && canClose ? (
         <button
           type="button"
-          className="fixed bottom-4 right-4 z-[89] rounded-full border border-white/20 bg-bg-soft/95 px-4 py-2 text-sm text-white backdrop-blur-xl transition-colors hover:border-brand/60"
+          className="fixed bottom-4 right-4 z-[89] rounded-full border border-border-strong bg-surface-strong px-4 py-2 text-sm text-text backdrop-blur-xl transition-colors hover:border-brand/60"
           onClick={() => setIsSettingsOpen(true)}
         >
           {copy.manage}
@@ -113,24 +113,21 @@ export function ConsentBanner({ locale }: ConsentBannerProps) {
       ) : null}
 
       {isOpen ? (
-        <aside className="fixed bottom-4 left-4 right-4 z-[90] mx-auto max-w-3xl rounded-2xl border border-white/20 bg-bg-soft/95 p-4 backdrop-blur-xl">
+        <aside className="fixed bottom-4 left-4 right-4 z-[90] mx-auto max-w-3xl rounded-2xl border border-border-strong bg-surface-strong p-4 backdrop-blur-xl">
           <div className="flex flex-col gap-4">
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-white">{copy.title}</p>
+                <p className="text-sm font-semibold text-text">{copy.title}</p>
                 <p className="text-sm text-text-muted">{copy.text}</p>
                 <p className="text-xs text-text-muted">{statusText}</p>
-                <Link
-                  href={localizedPath(locale, "/politique-confidentialite")}
-                  className="inline-flex text-sm text-white underline decoration-white/30 underline-offset-4"
-                >
+                <Link href={localizedPath(locale, "/politique-confidentialite")} className="theme-link inline-flex text-sm">
                   {copy.privacy}
                 </Link>
               </div>
               {canClose ? (
                 <button
                   type="button"
-                  className="text-sm text-text-muted transition-colors hover:text-white"
+                  className="text-sm text-text-muted transition-colors hover:text-text"
                   onClick={() => setIsSettingsOpen(false)}
                 >
                   {copy.close}
