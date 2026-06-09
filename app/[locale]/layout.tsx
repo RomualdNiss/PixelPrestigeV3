@@ -6,7 +6,7 @@ import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { LocaleDocumentSync } from "@/components/layout/LocaleDocumentSync";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { PixelCursor } from "@/components/effects/PixelCursor";
-import { ParallaxBackdrop } from "@/components/effects/ParallaxBackdrop";
+import { ArcadeBackground } from "@/components/effects/ArcadeBackground";
 import { CRTOverlay } from "@/components/effects/CRTOverlay";
 import { getLocaleContent } from "@/content/site-content";
 import { getLocaleStaticParams } from "@/lib/i18n";
@@ -46,7 +46,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     <div className="noise relative flex min-h-dvh flex-col">
       <LocaleDocumentSync locale={locale} />
       <SmoothScroll />
-      <ParallaxBackdrop />
+      <ArcadeBackground />
       <SiteHeader locale={locale} dictionary={dictionary} />
       <main className="relative z-10 flex-1">
         <PageTransition>{children}</PageTransition>
