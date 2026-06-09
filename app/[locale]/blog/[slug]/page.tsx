@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { ArticleBody } from "@/components/blog/ArticleBody";
 import { BlogPostCard } from "@/components/ui/BlogPostCard";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { getLocaleContent } from "@/content/site-content";
 import { getBlogPost, getBlogSlugs, getRelatedPosts } from "@/content/blog-content";
 import { isLocale, locales, localizedPath, type Locale } from "@/lib/i18n";
@@ -37,7 +38,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     path: `/${locale}/blog/${slug}`,
     absoluteTitle: true,
     keywords: post.keywords,
-    image: post.image,
+    // PNG généré par opengraph-image.tsx puis copié avec extension .png par
+    // scripts/copy-og-images.mjs (MIME correct en hébergement statique).
+    image: `/${locale}/blog/${slug}/opengraph-image.png`,
   });
 }
 
@@ -98,9 +101,18 @@ export default async function BlogPostPage({ params }: PageProps) {
           <aside className="mt-14 glass-panel rounded-3xl p-8">
             <h2 className="font-display text-2xl font-semibold text-text">{dictionary.blogPage.ctaTitle}</h2>
             <p className="mt-3 text-text-muted">{dictionary.blogPage.ctaText}</p>
-            <Link href={localizedPath(typedLocale, "/contact")} className="btn-primary mt-6 inline-flex">
-              {dictionary.common.ctaContact}
-            </Link>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <TrackedLink
+                href={localizedPath(typedLocale, "/contact")}
+                className="btn-primary inline-flex"
+                location={`blog_article:${slug}`}
+              >
+                {dictionary.common.ctaContact}
+              </TrackedLink>
+              <Link href={localizedPath(typedLocale, "/services")} className="btn-secondary inline-flex">
+                {dictionary.common.ctaProject}
+              </Link>
+            </div>
           </aside>
         </div>
 

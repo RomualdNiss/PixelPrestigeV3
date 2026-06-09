@@ -6,7 +6,7 @@ import { getLocaleContent } from "@/content/site-content";
 import { getBlogPosts } from "@/content/blog-content";
 import { getLocaleStaticParams } from "@/lib/i18n";
 import { resolveLocale } from "@/lib/resolve-locale";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbSchema, buildMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -32,9 +32,14 @@ export default async function BlogPage({ params }: PageProps) {
   const locale = await resolveLocale(params);
   const { dictionary } = getLocaleContent(locale);
   const posts = getBlogPosts(locale);
+  const breadcrumbs = breadcrumbSchema([
+    { name: locale === "fr" ? "Accueil" : "Home", path: `/${locale}` },
+    { name: dictionary.blogPage.title, path: `/${locale}/blog` },
+  ]);
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <PageIntro title={dictionary.blogPage.title} lead={dictionary.blogPage.lead} />
       <section className="pb-24">
         <div className="container-default">

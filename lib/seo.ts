@@ -19,6 +19,7 @@ export function buildMetadata(params: {
   twitterTitle?: string;
   twitterDescription?: string;
   image?: string;
+  skipDefaultImage?: boolean;
 }): Metadata {
   const {
     locale,
@@ -32,11 +33,14 @@ export function buildMetadata(params: {
     twitterTitle,
     twitterDescription,
     image,
+    skipDefaultImage,
   } = params;
   const canonicalUrl = absoluteUrl(path);
   const altLocale = locale === "fr" ? "en" : "fr";
   const altPath = path.replace(`/${locale}`, `/${altLocale}`);
-  const socialImage = absoluteUrl(image ?? siteConfig.defaultOgImage);
+  // skipDefaultImage : laisser la convention `opengraph-image` fournir le visuel
+  // (évite un doublon og:image).
+  const socialImage = skipDefaultImage ? undefined : absoluteUrl(image ?? siteConfig.defaultOgImage);
   const localeCode = locale === "fr" ? "fr_FR" : "en_US";
 
   return {
@@ -48,6 +52,7 @@ export function buildMetadata(params: {
       languages: {
         fr: path.replace(`/${locale}`, "/fr"),
         en: path.replace(`/${locale}`, "/en"),
+        "x-default": path.replace(`/${locale}`, "/fr"),
       },
     },
     openGraph: {

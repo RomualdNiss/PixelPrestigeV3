@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/fix-export-html-lang.mjs",
+    "build": "next build && node scripts/fix-export-html-lang.mjs && node scripts/copy-og-images.mjs",
     "start": "next start",
     "lint": "eslint",
     "test:hydration": "node scripts/check-hydration-risks.mjs"

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { localizedPath } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { Dictionary } from "@/types/content";
 
@@ -96,6 +97,7 @@ export function ContactForm({ locale, dictionary, className }: ContactFormProps)
       }
 
       setStatus("success");
+      trackEvent("generate_lead", { project_type: parsed.data.projectType });
       reset({
         projectType: "web",
         hp_field: "",
