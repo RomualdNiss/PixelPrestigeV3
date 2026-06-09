@@ -4,10 +4,12 @@ import { getLocaleStaticParams } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
 import { resolveLocale } from "@/lib/resolve-locale";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { LogosStrip } from "@/components/sections/LogosStrip";
 import { ServicesPreviewSection } from "@/components/sections/ServicesPreviewSection";
 import { DifferentiatorsSection } from "@/components/sections/DifferentiatorsSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { WhenToCallSection } from "@/components/sections/WhenToCallSection";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 
 type PageProps = {
@@ -45,6 +47,7 @@ export default async function LocaleHomePage({ params }: PageProps) {
   return (
     <>
       <HeroSection locale={locale} dictionary={localeContent.dictionary} />
+      <LogosStrip title={localeContent.dictionary.home.logosTitle} logos={localeContent.clientLogos} />
       <ServicesPreviewSection locale={locale} dictionary={localeContent.dictionary} services={localeContent.services} />
       <DifferentiatorsSection dictionary={localeContent.dictionary} />
       {/* <CasesPreviewSection locale={locale} dictionary={localeContent.dictionary} cases={localeContent.cases} /> */}
@@ -54,6 +57,11 @@ export default async function LocaleHomePage({ params }: PageProps) {
         stepLabel={locale === "fr" ? "Étape" : "Step"}
       />
       <WhenToCallSection dictionary={localeContent.dictionary} items={localeContent.fitItems} />
+      <TestimonialsSection
+        title={localeContent.dictionary.home.testimonialsTitle}
+        lead={localeContent.dictionary.home.testimonialsLead}
+        testimonials={localeContent.testimonials}
+      />
       <FinalCtaSection locale={locale} dictionary={localeContent.dictionary} />
     </>
   );

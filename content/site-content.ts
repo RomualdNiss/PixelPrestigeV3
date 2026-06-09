@@ -2,6 +2,7 @@
 import type {
   AboutPageContent,
   CaseStudy,
+  ClientLogo,
   DetailCardItem,
   Dictionary,
   FaqItem,
@@ -11,6 +12,7 @@ import type {
   SeoContent,
   ServiceItem,
   ServicesPageContent,
+  Testimonial,
 } from "@/types/content";
 
 type LocaleContent = {
@@ -19,6 +21,8 @@ type LocaleContent = {
   cases: CaseStudy[];
   process: ProcessStep[];
   fitItems: FitItem[];
+  testimonials: Testimonial[];
+  clientLogos: ClientLogo[];
   servicesPageContent: ServicesPageContent;
   processPageContent: ProcessPageContent;
   aboutPageContent: AboutPageContent;
@@ -79,6 +83,7 @@ const frDictionary: Dictionary = {
     // { href: "/realisations", label: "Réalisations" },
     { href: "/process", label: "Méthode" },
     { href: "/a-propos", label: "À propos" },
+    { href: "/blog", label: "Blog" },
   ],
   footerText: "Pixel Prestige - Développement web, applications web et présence digitale.",
   home: {
@@ -97,6 +102,9 @@ const frDictionary: Dictionary = {
       "Du site vitrine à l'application web métier, nous combinons développement, expérience utilisateur et stratégie digitale pour livrer des outils utiles, rapides et durables.",
     casesTitle: "Réalisations récentes",
     casesLead: "Des projets menés avec exigence technique, lisibilité produit et impact business concret.",
+    logosTitle: "Ils nous font confiance",
+    testimonialsTitle: "Ce que disent nos clients",
+    testimonialsLead: "Des retours authentiques laissés par les entreprises avec lesquelles nous travaillons.",
     differentiatorsTitle: "Pourquoi travailler avec Pixel Prestige",
     differentiatorsLead:
       "Une agence technique à taille humaine, avec un cadre clair, des livrables propres et une attention réelle à l'impact business.",
@@ -134,6 +142,14 @@ const frDictionary: Dictionary = {
     title: "Réalisations web et cas clients",
     lead: "Une sélection de projets web et applicatifs livrés avec exigence technique, performance et impact métier.",
   },
+  blogPage: {
+    title: "Le blog Pixel Prestige",
+    lead: "Conseils concrets sur le développement web, la performance, le référencement et l'automatisation pour faire avancer votre présence en ligne.",
+    readMore: "Lire l'article",
+    backToList: "Tous les articles",
+    minutesLabel: "min de lecture",
+    empty: "Les premiers articles arrivent bientôt.",
+  },
   processPage: {
     title: "Notre méthode de travail",
     lead: "Une méthode structurée pour cadrer, développer, lancer et faire évoluer chaque projet.",
@@ -170,7 +186,6 @@ const frDictionary: Dictionary = {
     ctaProject: "Explorer les services",
     ctaCases: "Voir nos cas",
     ctaContact: "Nous contacter",
-    ctaCalendly: "Prendre rendez-vous",
     localeSwitch: "Langue",
   },
   form: {
@@ -198,6 +213,7 @@ const enDictionary: Dictionary = {
     // { href: "/realisations", label: "Work" },
     { href: "/process", label: "Process" },
     { href: "/a-propos", label: "About" },
+    { href: "/blog", label: "Blog" },
   ],
   footerText: "Pixel Prestige - Web development, web apps and digital presence.",
   home: {
@@ -213,6 +229,9 @@ const enDictionary: Dictionary = {
     trustLine: ["Custom websites", "Business web apps", "Technical SEO", "Digital strategy", "Ongoing support"],
     servicesTitle: "One technical partner for build, launch and growth",
     servicesLead: "From showcase sites to business web apps, we combine development, UX and digital strategy to deliver useful systems that last.",
+    logosTitle: "Trusted by",
+    testimonialsTitle: "What our clients say",
+    testimonialsLead: "Authentic feedback from the companies we work with.",
     casesTitle: "Recent case studies",
     casesLead: "Projects delivered with strong technical standards, clear product thinking and measurable business impact.",
     differentiatorsTitle: "Why work with Pixel Prestige",
@@ -252,6 +271,14 @@ const enDictionary: Dictionary = {
     title: "Web builds & case studies",
     lead: "A selection of web and application projects delivered with technical rigor, performance and business impact.",
   },
+  blogPage: {
+    title: "The Pixel Prestige blog",
+    lead: "Practical advice on web development, performance, SEO and automation to move your online presence forward.",
+    readMore: "Read the article",
+    backToList: "All articles",
+    minutesLabel: "min read",
+    empty: "The first articles are coming soon.",
+  },
   processPage: {
     title: "How we build",
     lead: "A structured method to scope, build, launch and improve every project.",
@@ -288,7 +315,6 @@ const enDictionary: Dictionary = {
     ctaProject: "Explore services",
     ctaCases: "View case studies",
     ctaContact: "Contact us",
-    ctaCalendly: "Book a call",
     localeSwitch: "Lang",
   },
   form: {
@@ -414,6 +440,43 @@ const enCases: CaseStudy[] = [
     challenge: "Connect CRM, billing and support without manual errors.",
     impact: "12h saved per team/week.",
     stack: ["APIs", "Automations", "Monitoring"],
+  },
+];
+
+// Logos clients réels (fournis par le client). Partagés entre les locales.
+// Le `name` sert de texte alternatif accessible — ajuster l'orthographe exacte si besoin.
+const clientLogos: ClientLogo[] = [
+  { name: "Consult Rénov", src: "/assets/img/clients/consult_renov.svg" },
+  { name: "Wirton", src: "/assets/img/clients/logo-wirton.svg" },
+  { name: "Ostéo Mille-Pattes", src: "/assets/img/clients/osteo_mille_patte.png" },
+  { name: "BR VTC", src: "/assets/img/clients/br_vtc.svg" },
+  { name: "Resoi", src: "/assets/img/clients/logo_resoi.svg" },
+];
+
+// Témoignages réels (avis Google). Partagés entre les locales : on n'affiche que de
+// vrais avis, sans les traduire. La section se masque automatiquement tant que ce
+// tableau est vide. À remplir avec le texte exact des avis fournis par le client.
+const testimonials: Testimonial[] = [
+  {
+    author: "Ostéo Mille-Pattes",
+    quote:
+      "Professionnel très sérieux et bienveillant. Romuald a été vraiment à l’écoute. N’y connaissant rien en site web et ayant grandement besoin d’un site pour mon entreprise, j’ai eu le contact de Romuald par une amie. Et il a été extra ! Un site fait très rapidement, au delà de mes espérances. Je lui ai donné que très peu d’infos et il a su faire ce que je souhaitais et même plus ! Tout y est, c’est clair, accueillant. Il répond à n’importe quelle interrogation même si cela va au delà du site (page Google ect). De plus, si nous avons besoin de changement par la suite il reste disponible et encore et toujours, à l’écoute ! Je recommande fortement, sans aucune hésitation 😌",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    author: "Wirton",
+    quote:
+      "Romuald a su mettre mes exigences à profit, il est professionnel et a l’écoute du client, je le recommande vivement !",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    author: "BR VTC",
+    quote:
+      "Superbe expérience auprès de Romuald. Très attentif à ma demande, il a su creuser et développer mes idées naissantes. Création de ma web app avec réservation etc. Rendu très rapide et excellent. Je recommande fortement. Encore merci Romuald !",
+    rating: 5,
+    source: "Google",
   },
 ];
 
@@ -1264,6 +1327,8 @@ const contentByLocale: Record<Locale, LocaleContent> = {
     cases: frCases,
     process: frProcess,
     fitItems: frFitItems,
+    testimonials,
+    clientLogos,
     servicesPageContent: frServicesPageContent,
     processPageContent: frProcessPageContent,
     aboutPageContent: frAboutPageContent,
@@ -1274,6 +1339,8 @@ const contentByLocale: Record<Locale, LocaleContent> = {
     cases: enCases,
     process: enProcess,
     fitItems: enFitItems,
+    testimonials,
+    clientLogos,
     servicesPageContent: enServicesPageContent,
     processPageContent: enProcessPageContent,
     aboutPageContent: enAboutPageContent,

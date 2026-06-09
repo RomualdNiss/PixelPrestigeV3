@@ -26,10 +26,17 @@ export const siteConfig = {
   url: "https://pixelprestige.fr",
   description:
     "Agence digitale premium : sites web, applications, automatisations et expériences immersives performantes.",
+  logo: "/assets/img/logo_complet.png",
+  // Visuel utilisé pour les partages sociaux (Open Graph / Twitter) quand une page
+  // ne fournit pas d'image dédiée. Idéalement un PNG 1200x630 ; à remplacer par un
+  // visuel dédié quand il sera prêt.
+  defaultOgImage: "/assets/img/logo_complet.png",
+  // Profils sociaux officiels (LinkedIn, etc.). Renseigner les URLs réelles pour
+  // alimenter `sameAs` dans les données structurées. Laisser vide tant qu'inconnu.
+  social: [] as string[],
   contact: {
     email: "contact@pixelprestige.fr",
     phone: "0665184249",
-    calendly: "https://calendly.com/pixel-prestige/discovery",
   },
   legal: {
     entityName: "Pixel Prestige",

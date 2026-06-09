@@ -19,8 +19,8 @@ export function FinalCtaSection({ locale, dictionary }: FinalCtaSectionProps) {
             <Link href={localizedPath(locale, "/contact")} className="btn-primary">
               {dictionary.home.finalCtaButton}
             </Link>
-            <a href={siteConfig.contact.calendly} className="btn-secondary" target="_blank" rel="noreferrer">
-              {dictionary.common.ctaCalendly}
+            <a href={`mailto:${siteConfig.contact.email}`} className="btn-secondary">
+              {siteConfig.contact.email}
             </a>
           </div>
         </div>

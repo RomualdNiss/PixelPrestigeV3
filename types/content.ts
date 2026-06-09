@@ -43,6 +43,38 @@ export type ProcessStep = {
   detail: string;
 };
 
+export type Testimonial = {
+  author: string;
+  role?: string; // fonction et/ou société, ex. "Gérant, Consult Rénov"
+  quote: string;
+  rating?: number; // note sur 5
+  source?: string; // ex. "Google"
+  sourceUrl?: string; // lien vers l'avis d'origine
+};
+
+export type ClientLogo = {
+  name: string; // nom du client (sert d'alt accessible)
+  src: string; // chemin du logo dans /public
+};
+
+export type ArticleBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string } // rendu en <h2>
+  | { type: "subheading"; text: string } // rendu en <h3>
+  | { type: "list"; items: string[] }
+  | { type: "quote"; text: string };
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  description: string; // chapô + meta description
+  date: string; // ISO, ex. "2026-06-02"
+  readingMinutes?: number;
+  keywords?: string[];
+  image?: string; // visuel OG dédié (optionnel ; sinon fallback global)
+  body: ArticleBlock[];
+};
+
 export type FitItem = {
   title: string;
   detail: string;
@@ -138,6 +170,9 @@ export type Dictionary = {
     servicesLead: string;
     casesTitle: string;
     casesLead: string;
+    logosTitle: string;
+    testimonialsTitle: string;
+    testimonialsLead: string;
     differentiatorsTitle: string;
     differentiatorsLead: string;
     differentiators: DifferentiatorItem[];
@@ -156,6 +191,14 @@ export type Dictionary = {
   casesPage: {
     title: string;
     lead: string;
+  };
+  blogPage: {
+    title: string;
+    lead: string;
+    readMore: string;
+    backToList: string;
+    minutesLabel: string; // ex. "min de lecture"
+    empty: string; // message quand aucun article
   };
   processPage: {
     title: string;
@@ -183,7 +226,6 @@ export type Dictionary = {
     ctaProject: string;
     ctaCases: string;
     ctaContact: string;
-    ctaCalendly: string;
     localeSwitch: string;
   };
   form: {
