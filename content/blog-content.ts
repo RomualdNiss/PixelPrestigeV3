@@ -7,6 +7,181 @@ import type { BlogPost } from "@/types/content";
 
 const frPosts: BlogPost[] = [
   {
+    slug: "combien-coute-site-internet",
+    title: "Combien coûte un site internet professionnel ?",
+    description:
+      "La vraie réponse dépend de vos objectifs, pas d'un tarif unique. Voici ce qui fait varier le prix d'un site et comment éviter les mauvaises surprises.",
+    date: "2026-06-09",
+    readingMinutes: 6,
+    keywords: [
+      "prix site internet",
+      "coût site web",
+      "tarif création site vitrine",
+      "devis site web",
+    ],
+    body: [
+      {
+        type: "paragraph",
+        text: "« Combien coûte un site internet ? » est la question la plus fréquente, et celle dont la réponse « ça dépend » est la plus frustrante. Pourtant, elle est honnête : un site n'a pas de prix fixe parce qu'il ne répond pas toujours au même besoin. Comprendre ce qui fait varier le coût vous aide à savoir où investir.",
+      },
+      {
+        type: "heading",
+        text: "Ce qui fait vraiment varier le prix",
+      },
+      {
+        type: "list",
+        items: [
+          "Le nombre de pages et la complexité du contenu à structurer.",
+          "Le sur-mesure du design par rapport à un modèle préexistant.",
+          "Les fonctionnalités : formulaire simple, réservation, espace client, paiement…",
+          "Le travail de référencement et de performance intégré dès le départ.",
+          "La création de contenu (textes, photos) si elle n'est pas fournie.",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "Un site vitrine clair de quelques pages n'a pas le même coût qu'une application web avec réservation et comptes utilisateurs. Ce n'est pas une question de « cher » ou « pas cher », mais d'adéquation entre l'outil et l'objectif.",
+      },
+      {
+        type: "heading",
+        text: "Le piège du prix le plus bas",
+      },
+      {
+        type: "paragraph",
+        text: "Un site très peu cher cache souvent un coût différé : lenteur, absence de référencement, impossibilité d'évoluer, ou dépendance à une plateforme que vous ne maîtrisez pas. À l'inverse, payer cher ne garantit rien si le prestataire ne part pas de vos objectifs. Le bon repère n'est pas le tarif, mais ce que le site vous rapporte.",
+      },
+      {
+        type: "quote",
+        text: "Un site n'est pas une dépense ponctuelle : c'est un outil qui doit générer des contacts ou faire gagner du temps.",
+      },
+      {
+        type: "heading",
+        text: "Comment obtenir un devis fiable",
+      },
+      {
+        type: "paragraph",
+        text: "Un bon devis ne se résume pas à un montant : il décrit le périmètre, les livrables, ce qui est inclus (référencement, formation, maintenance) et ce qui ne l'est pas. Plus vous exprimez clairement vos objectifs, plus le chiffrage est juste. Présentez votre activité, vos priorités et votre échéance : c'est la base d'une estimation honnête.",
+      },
+      {
+        type: "paragraph",
+        text: "Vous voulez une estimation adaptée à votre projet plutôt qu'un tarif générique ? Décrivez-nous votre besoin, nous revenons avec un périmètre et une recommandation concrète.",
+      },
+    ],
+  },
+  {
+    slug: "referencement-local-google",
+    title: "Référencement local : être visible sur Google dans votre ville",
+    description:
+      "Pour une entreprise locale, apparaître dans les recherches « près de chez moi » change tout. Voici les leviers concrets du référencement local.",
+    date: "2026-05-05",
+    readingMinutes: 6,
+    keywords: [
+      "référencement local",
+      "SEO local",
+      "fiche Google Business",
+      "être visible sur Google",
+    ],
+    body: [
+      {
+        type: "paragraph",
+        text: "Quand un client cherche « ostéopathe Rouen » ou « plombier près de chez moi », Google met en avant des entreprises proches et bien renseignées. Pour une activité locale, ce référencement de proximité est souvent plus rentable que de viser des mots-clés nationaux très concurrentiels.",
+      },
+      {
+        type: "heading",
+        text: "1. Votre fiche d'établissement Google",
+      },
+      {
+        type: "paragraph",
+        text: "C'est le point de départ. Une fiche Google complète, à jour et vérifiée (adresse, horaires, téléphone, photos, description) augmente fortement vos chances d'apparaître dans la carte locale et le « pack » de résultats. C'est gratuit et l'impact est immédiat.",
+      },
+      {
+        type: "list",
+        items: [
+          "Renseignez précisément votre activité et votre zone géographique.",
+          "Ajoutez de vraies photos et gardez les horaires à jour.",
+          "Répondez aux avis : cela renforce la confiance et le signal local.",
+        ],
+      },
+      {
+        type: "heading",
+        text: "2. Un site cohérent avec votre zone",
+      },
+      {
+        type: "paragraph",
+        text: "Votre site doit indiquer clairement où vous intervenez. Mentionner votre ville et votre région dans les titres, les textes et les coordonnées aide Google à associer votre activité à un territoire. Une page de contact avec adresse et carte renforce ce lien.",
+      },
+      {
+        type: "quote",
+        text: "Le référencement local récompense la cohérence : mêmes nom, adresse et téléphone partout où vous apparaissez.",
+      },
+      {
+        type: "heading",
+        text: "3. Les avis et la réputation",
+      },
+      {
+        type: "paragraph",
+        text: "Les avis clients ne servent pas qu'à rassurer les visiteurs : leur nombre et leur régularité sont un signal pour le référencement local. Encourager vos clients satisfaits à laisser un avis, simplement et sans forcer, construit votre visibilité dans la durée.",
+      },
+      {
+        type: "paragraph",
+        text: "Bien fait, le référencement local apporte des contacts qualifiés, proches de vous et prêts à passer à l'action. Si vous voulez être mieux trouvé dans votre ville, parlons-en.",
+      },
+    ],
+  },
+  {
+    slug: "automatiser-taches-repetitives",
+    title: "Automatiser les tâches répétitives : par où commencer ?",
+    description:
+      "Devis, relances, saisies, transferts d'informations… Beaucoup de tâches manuelles peuvent être automatisées. Voici comment identifier les bonnes.",
+    date: "2026-04-21",
+    readingMinutes: 5,
+    keywords: [
+      "automatisation entreprise",
+      "automatiser tâches",
+      "gain de temps",
+      "automatisation no-code",
+    ],
+    body: [
+      {
+        type: "paragraph",
+        text: "Chaque semaine, une partie de votre temps part dans des tâches répétitives : recopier des informations d'un outil à un autre, envoyer les mêmes e-mails, relancer manuellement. Ces tâches sont rarement difficiles, mais elles s'accumulent. La bonne nouvelle : beaucoup peuvent être automatisées.",
+      },
+      {
+        type: "heading",
+        text: "Repérer ce qui mérite d'être automatisé",
+      },
+      {
+        type: "paragraph",
+        text: "Toutes les tâches ne se valent pas. Les meilleures candidates à l'automatisation sont répétitives, suivent des règles claires et n'exigent pas de jugement humain à chaque étape.",
+      },
+      {
+        type: "list",
+        items: [
+          "Elle revient souvent (chaque jour, chaque commande, chaque client).",
+          "Elle suit toujours les mêmes étapes prévisibles.",
+          "Une erreur de saisie y a des conséquences coûteuses.",
+          "Elle vous empêche de vous concentrer sur des tâches à plus forte valeur.",
+        ],
+      },
+      {
+        type: "quote",
+        text: "Automatiser, ce n'est pas remplacer votre savoir-faire : c'est supprimer les frottements autour.",
+      },
+      {
+        type: "heading",
+        text: "Commencer petit, puis étendre",
+      },
+      {
+        type: "paragraph",
+        text: "Inutile de tout automatiser d'un coup. On commence par une tâche bien délimitée — par exemple connecter votre formulaire à votre messagerie et à un tableau de suivi — on vérifie que le gain est réel, puis on étend. Cette approche progressive limite les risques et montre vite des résultats concrets.",
+      },
+      {
+        type: "paragraph",
+        text: "Vous avez une tâche manuelle qui vous coûte du temps chaque semaine ? Décrivez-la nous : souvent, quelques heures de mise en place suffisent à en récupérer beaucoup d'autres.",
+      },
+    ],
+  },
+  {
     slug: "refondre-son-site-vitrine",
     title: "Refondre son site vitrine : par où commencer ?",
     description:
@@ -146,6 +321,181 @@ const frPosts: BlogPost[] = [
 ];
 
 const enPosts: BlogPost[] = [
+  {
+    slug: "combien-coute-site-internet",
+    title: "How much does a professional website cost?",
+    description:
+      "The real answer depends on your goals, not on a single price tag. Here's what makes a website's cost vary and how to avoid bad surprises.",
+    date: "2026-06-09",
+    readingMinutes: 6,
+    keywords: [
+      "website cost",
+      "website price",
+      "marketing website pricing",
+      "web project quote",
+    ],
+    body: [
+      {
+        type: "paragraph",
+        text: "\"How much does a website cost?\" is the most common question, and \"it depends\" is the most frustrating answer. Yet it's an honest one: a website has no fixed price because it doesn't always answer the same need. Understanding what drives the cost helps you know where to invest.",
+      },
+      {
+        type: "heading",
+        text: "What actually drives the price",
+      },
+      {
+        type: "list",
+        items: [
+          "The number of pages and the complexity of the content to structure.",
+          "How custom the design is versus a pre-existing template.",
+          "Features: simple form, booking, customer area, payment…",
+          "The SEO and performance work built in from the start.",
+          "Content creation (copy, photos) if it isn't provided.",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "A clear few-page marketing site doesn't cost the same as a web app with booking and user accounts. It's not about \"expensive\" or \"cheap\", but about fit between the tool and the goal.",
+      },
+      {
+        type: "heading",
+        text: "The lowest-price trap",
+      },
+      {
+        type: "paragraph",
+        text: "A very cheap site often hides a deferred cost: slowness, no SEO, inability to evolve, or lock-in to a platform you don't control. Conversely, paying a lot guarantees nothing if the provider doesn't start from your goals. The right benchmark isn't the price, but what the site brings you.",
+      },
+      {
+        type: "quote",
+        text: "A website isn't a one-off expense: it's a tool that should generate leads or save you time.",
+      },
+      {
+        type: "heading",
+        text: "How to get a reliable quote",
+      },
+      {
+        type: "paragraph",
+        text: "A good quote isn't just an amount: it describes the scope, the deliverables, what's included (SEO, training, maintenance) and what isn't. The more clearly you express your goals, the more accurate the estimate. Share your business, your priorities and your timeline: that's the basis for an honest estimate.",
+      },
+      {
+        type: "paragraph",
+        text: "Want an estimate tailored to your project rather than a generic price? Describe your need and we'll come back with a scope and a concrete recommendation.",
+      },
+    ],
+  },
+  {
+    slug: "referencement-local-google",
+    title: "Local SEO: being visible on Google in your city",
+    description:
+      "For a local business, showing up in \"near me\" searches changes everything. Here are the concrete levers of local SEO.",
+    date: "2026-05-05",
+    readingMinutes: 6,
+    keywords: [
+      "local SEO",
+      "Google Business Profile",
+      "being visible on Google",
+      "local search",
+    ],
+    body: [
+      {
+        type: "paragraph",
+        text: "When a customer searches for \"osteopath Rouen\" or \"plumber near me\", Google highlights nearby, well-documented businesses. For a local activity, this proximity ranking is often more profitable than chasing highly competitive national keywords.",
+      },
+      {
+        type: "heading",
+        text: "1. Your Google Business Profile",
+      },
+      {
+        type: "paragraph",
+        text: "This is the starting point. A complete, up-to-date and verified Google profile (address, hours, phone, photos, description) strongly increases your chances of appearing in the local map and results \"pack\". It's free and the impact is immediate.",
+      },
+      {
+        type: "list",
+        items: [
+          "Describe your activity and service area precisely.",
+          "Add real photos and keep your opening hours current.",
+          "Reply to reviews: it builds trust and the local signal.",
+        ],
+      },
+      {
+        type: "heading",
+        text: "2. A site consistent with your area",
+      },
+      {
+        type: "paragraph",
+        text: "Your site should clearly state where you operate. Mentioning your city and region in titles, copy and contact details helps Google associate your business with a territory. A contact page with an address and map reinforces that link.",
+      },
+      {
+        type: "quote",
+        text: "Local SEO rewards consistency: the same name, address and phone everywhere you appear.",
+      },
+      {
+        type: "heading",
+        text: "3. Reviews and reputation",
+      },
+      {
+        type: "paragraph",
+        text: "Customer reviews don't only reassure visitors: their number and regularity are a signal for local SEO. Encouraging satisfied customers to leave a review, simply and without pressure, builds your visibility over time.",
+      },
+      {
+        type: "paragraph",
+        text: "Done well, local SEO brings qualified, nearby leads ready to take action. If you want to be found better in your city, let's talk.",
+      },
+    ],
+  },
+  {
+    slug: "automatiser-taches-repetitives",
+    title: "Automating repetitive tasks: where to start?",
+    description:
+      "Quotes, follow-ups, data entry, information transfers… Many manual tasks can be automated. Here's how to spot the right ones.",
+    date: "2026-04-21",
+    readingMinutes: 5,
+    keywords: [
+      "business automation",
+      "automate tasks",
+      "save time",
+      "no-code automation",
+    ],
+    body: [
+      {
+        type: "paragraph",
+        text: "Every week, part of your time goes into repetitive tasks: copying information from one tool to another, sending the same emails, following up manually. These tasks are rarely hard, but they add up. The good news: many can be automated.",
+      },
+      {
+        type: "heading",
+        text: "Spotting what's worth automating",
+      },
+      {
+        type: "paragraph",
+        text: "Not all tasks are equal. The best automation candidates are repetitive, follow clear rules and don't require human judgment at every step.",
+      },
+      {
+        type: "list",
+        items: [
+          "It comes up often (every day, every order, every customer).",
+          "It always follows the same predictable steps.",
+          "A data-entry error there has costly consequences.",
+          "It keeps you from focusing on higher-value work.",
+        ],
+      },
+      {
+        type: "quote",
+        text: "Automating isn't about replacing your expertise: it's about removing the friction around it.",
+      },
+      {
+        type: "heading",
+        text: "Start small, then expand",
+      },
+      {
+        type: "paragraph",
+        text: "There's no need to automate everything at once. Start with one well-defined task — for example connecting your form to your inbox and a tracking sheet — check that the gain is real, then expand. This gradual approach limits risk and shows concrete results quickly.",
+      },
+      {
+        type: "paragraph",
+        text: "Do you have a manual task that costs you time every week? Describe it to us: often, a few hours of setup are enough to recover many more.",
+      },
+    ],
+  },
   {
     slug: "refondre-son-site-vitrine",
     title: "Redesigning your marketing website: where to start",
