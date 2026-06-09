@@ -709,6 +709,8 @@ function randomMove(): Move {
 
 function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeControllerProps) {
   const cubeGroupRef = useRef<Group>(null);
+  const scrollGroupRef = useRef<Group>(null);
+  const scrollProgressRef = useRef(0);
   const rootRef = useRef<Group>(null);
   const pivotRef = useRef<Group>(null);
   const cubieRefs = useRef<Record<string, Group>>({});
@@ -808,6 +810,20 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
   };
 
   useFrame((_, delta) => {
+    // Réaction au scroll : pilote un groupe parent dédié (n'interfère pas avec la
+    // mécanique interne du cube). La progression est lissée pour rester fluide.
+    const scrollGroup = scrollGroupRef.current;
+    if (scrollGroup && typeof window !== "undefined") {
+      const viewport = window.innerHeight || 1;
+      const raw = clamp(window.scrollY / viewport, 0, 1);
+      scrollProgressRef.current = MathUtils.lerp(scrollProgressRef.current, raw, 0.08);
+      const p = scrollProgressRef.current;
+      scrollGroup.rotation.y = p * 0.9;
+      scrollGroup.rotation.x = p * 0.22;
+      scrollGroup.position.y = p * 0.7;
+      scrollGroup.scale.setScalar(MathUtils.lerp(1, 0.82, p));
+    }
+
     const cubeGroup = cubeGroupRef.current;
     const pivot = pivotRef.current;
     const idleRotationSpeed = motionPreset === "mobile" ? 0.09 : 0.18;
@@ -858,7 +874,8 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
   });
 
   return (
-    <group ref={cubeGroupRef}>
+    <group ref={scrollGroupRef}>
+      <group ref={cubeGroupRef}>
       <group ref={rootRef}>
         {CUBIES.map((cubie) => (
           <group
@@ -922,6 +939,7 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
         ))}
       </group>
       <group ref={pivotRef} />
+      </group>
     </group>
   );
 }
