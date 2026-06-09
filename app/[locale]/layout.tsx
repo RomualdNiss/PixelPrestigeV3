@@ -7,6 +7,7 @@ import { LocaleDocumentSync } from "@/components/layout/LocaleDocumentSync";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { PixelCursor } from "@/components/effects/PixelCursor";
 import { ArcadeBackground } from "@/components/effects/ArcadeBackground";
+import { ParallaxGlow } from "@/components/effects/ParallaxGlow";
 import { CRTOverlay } from "@/components/effects/CRTOverlay";
 import { IntroLoader } from "@/components/effects/IntroLoader";
 import { getLocaleContent } from "@/content/site-content";
@@ -48,6 +49,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <LocaleDocumentSync locale={locale} />
       <SmoothScroll />
       <ArcadeBackground />
+      <ParallaxGlow />
       <SiteHeader locale={locale} dictionary={dictionary} />
       <main className="relative z-10 flex-1">
         <PageTransition>{children}</PageTransition>
