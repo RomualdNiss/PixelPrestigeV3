@@ -20,7 +20,7 @@ export function DifferentiatorsSection({ dictionary }: DifferentiatorsSectionPro
           {dictionary.home.differentiators.map((item, index) => (
             <StaggerItem key={item.title}>
               <article className="glass-panel rounded-3xl p-6">
-                <p className="text-xs uppercase tracking-[0.16em] text-text-muted">
+                <p className="pixel-label text-sm text-brand">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-3 font-display text-2xl font-semibold text-text">

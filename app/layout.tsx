@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import { Manrope, Space_Grotesk, Silkscreen } from "next/font/google";
 import "./globals.css";
 import { isLocale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
@@ -26,6 +26,14 @@ const displayFont = Space_Grotesk({
 const bodyFont = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
+});
+
+// Police pixel d'accent (univers "arcade") — utilisée uniquement sur de courts
+// labels / numéros via la classe `.pixel-label`, jamais sur le texte courant.
+const pixelFont = Silkscreen({
+  variable: "--font-pixel",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -79,7 +87,7 @@ export default async function RootLayout({
         <meta id={THEME_META_ID} name="theme-color" content="#07070b" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${displayFont.variable} ${bodyFont.variable} bg-bg text-text antialiased`}>
+      <body className={`${displayFont.variable} ${bodyFont.variable} ${pixelFont.variable} bg-bg text-text antialiased`}>
         {children}
       </body>
     </html>

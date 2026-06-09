@@ -108,6 +108,7 @@ html[data-theme="light"] {
 @theme inline {
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --font-pixel: var(--font-pixel);
   --color-bg: var(--bg);
   --color-bg-soft: var(--bg-soft);
   --color-surface: var(--surface);
@@ -460,4 +461,51 @@ a {
   to {
     transform: translateX(-50%);
   }
+}
+
+/* ===== Univers "Pixel Prestige Arcade" ===== */
+
+/* Label/numéro en police pixel — uniquement sur du texte court. */
+.pixel-label {
+  font-family: var(--font-pixel), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  font-feature-settings: normal;
+}
+
+/* Ombre "blocky" rétro qui se décale au survol. */
+.pixel-shadow {
+  box-shadow: 4px 4px 0 0 color-mix(in srgb, var(--brand) 65%, transparent);
+  transition: box-shadow 160ms steps(3, end), transform 160ms steps(3, end);
+}
+.pixel-shadow:hover {
+  box-shadow: 6px 6px 0 0 var(--brand);
+  transform: translate(-1px, -1px);
+}
+
+/* Overlay scanlines CRT — statique, très subtil, ne gêne pas la lisibilité. */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+}
+html[data-theme="light"] .crt-overlay {
+  opacity: 0.3;
+}
+
+/* Texture de dithering réutilisable (damier fin de points). */
+.dither {
+  background-image: radial-gradient(var(--noise-dot) 0.5px, transparent 0.6px);
+  background-size: 3px 3px;
 }

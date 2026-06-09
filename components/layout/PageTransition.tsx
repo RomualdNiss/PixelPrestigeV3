@@ -2,22 +2,24 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
+
+// Devient vrai après le tout premier montage (persistant entre navigations car le
+// layout reste monté). Permet de NE PAS animer le 1er rendu (protège le LCP du hero
+// et évite tout flash sans JS) tout en animant les navigations suivantes — sans
+// lire de ref ni appeler setState pendant le rendu.
+let hasMounted = false;
 
 // Transition d'entrée subtile à chaque navigation client (fondu + léger glissement).
-// IMPORTANT : on n'anime PAS le premier rendu (chargement initial) pour ne pas
-// masquer le hero (élément LCP) ni créer de flash sans JS — `initial={false}` rend
-// le contenu visible immédiatement. L'animation ne se déclenche qu'aux navigations
-// suivantes. Désactivée si l'utilisateur préfère réduire les animations.
+// Désactivée si l'utilisateur préfère réduire les animations.
 export function PageTransition({ children }: { children: ReactNode }) {
   const reduced = useReducedMotion();
   const pathname = usePathname();
-  const firstRender = useRef(true);
-  const isFirstRender = firstRender.current;
+  const animateOnMount = hasMounted;
 
   useEffect(() => {
-    firstRender.current = false;
-  }, [pathname]);
+    hasMounted = true;
+  }, []);
 
   if (reduced) {
     return <>{children}</>;
@@ -26,7 +28,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   return (
     <motion.div
       key={pathname}
-      initial={isFirstRender ? false : { opacity: 0, y: 8 }}
+      initial={animateOnMount ? { opacity: 0, y: 8 } : false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
     >

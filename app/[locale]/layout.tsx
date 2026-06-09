@@ -6,6 +6,7 @@ import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { LocaleDocumentSync } from "@/components/layout/LocaleDocumentSync";
 import { PixelCursor } from "@/components/effects/PixelCursor";
 import { ParallaxBackdrop } from "@/components/effects/ParallaxBackdrop";
+import { CRTOverlay } from "@/components/effects/CRTOverlay";
 import { getLocaleContent } from "@/content/site-content";
 import { getLocaleStaticParams } from "@/lib/i18n";
 import { organizationSchema } from "@/lib/seo";
@@ -50,6 +51,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       </main>
       <SiteFooter locale={locale} dictionary={dictionary} />
       <PixelCursor />
+      <CRTOverlay />
       <ConsentBanner locale={locale} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }} />
     </div>
