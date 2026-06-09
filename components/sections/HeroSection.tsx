@@ -9,6 +9,7 @@ import type { Locale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/i18n";
 import type { Dictionary } from "@/types/content";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ScrambleText } from "@/components/effects/ScrambleText";
 
 const HeroCanvas = dynamic(() => import("@/components/three/HeroCanvas").then((mod) => mod.HeroCanvas), {
   ssr: false,
@@ -106,7 +107,9 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
 
       <div className="container-default relative z-20 min-h-[560px] lg:flex lg:min-h-[calc(100dvh-var(--header-height)-12rem)] lg:items-center">
         <div className="max-w-2xl py-14 md:py-20 lg:py-0">
-          <p className="eyebrow-badge text-xs uppercase tracking-[0.22em]">{dictionary.home.hero.kicker}</p>
+          <p className="eyebrow-badge text-xs uppercase tracking-[0.22em]">
+            <ScrambleText text={dictionary.home.hero.kicker} />
+          </p>
           <h1 className="mt-4 max-w-2xl font-display text-5xl font-semibold leading-[1.02] text-text md:text-6xl lg:text-7xl">
             {dictionary.home.hero.title}
           </h1>
