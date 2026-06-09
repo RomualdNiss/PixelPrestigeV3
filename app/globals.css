@@ -524,3 +524,26 @@ html[data-theme="light"] .crt-overlay {
   background-image: radial-gradient(var(--noise-dot) 0.5px, transparent 0.6px);
   background-size: 3px 3px;
 }
+
+/* Transition de page "arcade" : balayage pixelisé (steps) qui se retire vers le haut.
+   Joué à chaque navigation (clé = pathname). Sous prefers-reduced-motion, la règle
+   globale réduit la durée à ~0 → invisible. */
+@keyframes arcade-wipe {
+  0% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+.arcade-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--brand) 0.7px, transparent 0.9px);
+  background-size: 5px 5px;
+  box-shadow: inset 0 -4px 0 0 var(--brand);
+  animation: arcade-wipe 0.5s steps(12, end) forwards;
+}
