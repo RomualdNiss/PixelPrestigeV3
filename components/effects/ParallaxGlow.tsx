@@ -14,8 +14,10 @@ export function ParallaxGlow() {
   const yB = useTransform(scrollY, [0, 3000], [0, 220]);
   const yC = useTransform(scrollY, [0, 3000], [0, -150]);
 
+  // z-index auto : par ordre DOM, le calque est rendu après le fond (shader) donc
+  // au-dessus, mais avant main/footer donc sous le contenu.
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
+    <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
       <motion.div className="parallax-glow parallax-glow-a" style={reduced ? undefined : { y: yA, x: xA }} />
       <motion.div className="parallax-glow parallax-glow-b" style={reduced ? undefined : { y: yB }} />
       <motion.div className="parallax-glow parallax-glow-c" style={reduced ? undefined : { y: yC }} />

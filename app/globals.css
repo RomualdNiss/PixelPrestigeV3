@@ -583,37 +583,35 @@ html[data-theme="light"] .crt-overlay {
 .parallax-glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(90px);
-  mix-blend-mode: screen;
+  filter: blur(80px);
   pointer-events: none;
 }
 .parallax-glow-a {
-  top: 6%;
-  left: -6%;
-  width: 38rem;
-  height: 38rem;
-  background: radial-gradient(circle, rgba(165, 41, 255, 0.5), transparent 68%);
-  opacity: 0.5;
-}
-.parallax-glow-b {
-  top: 44%;
-  right: -10%;
-  width: 44rem;
-  height: 44rem;
-  background: radial-gradient(circle, rgba(140, 0, 255, 0.42), transparent 70%);
-  opacity: 0.42;
-}
-.parallax-glow-c {
-  bottom: -10%;
-  left: 28%;
+  top: 2%;
+  left: 1%;
   width: 34rem;
   height: 34rem;
-  background: radial-gradient(circle, rgba(130, 60, 255, 0.36), transparent 72%);
-  opacity: 0.4;
+  background: radial-gradient(circle, rgba(165, 41, 255, 0.6), transparent 66%);
+  opacity: 0.6;
+}
+.parallax-glow-b {
+  top: 40%;
+  right: -2%;
+  width: 40rem;
+  height: 40rem;
+  background: radial-gradient(circle, rgba(140, 0, 255, 0.5), transparent 68%);
+  opacity: 0.55;
+}
+.parallax-glow-c {
+  bottom: -6%;
+  left: 30%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle, rgba(130, 60, 255, 0.46), transparent 70%);
+  opacity: 0.5;
 }
 html[data-theme="light"] .parallax-glow {
-  mix-blend-mode: normal;
-  opacity: 0.2;
+  opacity: 0.22;
 }
 
 /* Texture de dithering réutilisable (damier fin de points). */
