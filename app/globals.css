@@ -465,29 +465,18 @@ a {
   mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 
+/* Piste pilotée en JS (drag + inertie + reprise auto) — cf. LogoMarquee.tsx. */
 .logo-marquee__track {
   display: flex;
   width: max-content;
-  animation: logo-marquee 32s linear infinite;
-}
-
-.logo-marquee:hover .logo-marquee__track {
-  animation-play-state: paused;
+  will-change: transform;
+  cursor: grab;
 }
 
 .logo-marquee__group {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-}
-
-@keyframes logo-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 /* Lenis (smooth scroll) — CSS recommandée. */
