@@ -3,10 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { ArticleBody } from "@/components/blog/ArticleBody";
+import { BlogPostCard } from "@/components/ui/BlogPostCard";
 import { getLocaleContent } from "@/content/site-content";
-import { getBlogPost, getBlogSlugs } from "@/content/blog-content";
+import { getBlogPost, getBlogSlugs, getRelatedPosts } from "@/content/blog-content";
 import { isLocale, locales, localizedPath, type Locale } from "@/lib/i18n";
-import { articleSchema, buildMetadata } from "@/lib/seo";
+import { articleSchema, breadcrumbSchema, buildMetadata } from "@/lib/seo";
 import { formatPostDate } from "@/lib/format-date";
 
 type PageProps = {
@@ -52,7 +53,13 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   const { dictionary } = getLocaleContent(typedLocale);
+  const related = getRelatedPosts(typedLocale, slug);
   const schema = articleSchema({ post, locale: typedLocale, path: `/${typedLocale}/blog/${slug}` });
+  const breadcrumbs = breadcrumbSchema([
+    { name: typedLocale === "fr" ? "Accueil" : "Home", path: `/${typedLocale}` },
+    { name: dictionary.blogPage.title, path: `/${typedLocale}/blog` },
+    { name: post.title, path: `/${typedLocale}/blog/${slug}` },
+  ]);
 
   return (
     <article className="section-space">
@@ -87,10 +94,30 @@ export default async function BlogPostPage({ params }: PageProps) {
           <div className="mt-10">
             <ArticleBody blocks={post.body} />
           </div>
+
+          <aside className="mt-14 glass-panel rounded-3xl p-8">
+            <h2 className="font-display text-2xl font-semibold text-text">{dictionary.blogPage.ctaTitle}</h2>
+            <p className="mt-3 text-text-muted">{dictionary.blogPage.ctaText}</p>
+            <Link href={localizedPath(typedLocale, "/contact")} className="btn-primary mt-6 inline-flex">
+              {dictionary.common.ctaContact}
+            </Link>
+          </aside>
         </div>
+
+        {related.length > 0 ? (
+          <div className="mx-auto mt-16 max-w-5xl border-t border-border-soft pt-12">
+            <h2 className="section-title mb-8">{dictionary.blogPage.related}</h2>
+            <div className="grid gap-4 md:grid-cols-2">
+              {related.map((item) => (
+                <BlogPostCard key={item.slug} locale={typedLocale} post={item} dictionary={dictionary} />
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
     </article>
   );
 }

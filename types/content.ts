@@ -199,6 +199,9 @@ export type Dictionary = {
     backToList: string;
     minutesLabel: string; // ex. "min de lecture"
     empty: string; // message quand aucun article
+    related: string; // titre section "À lire aussi"
+    ctaTitle: string; // CTA de fin d'article
+    ctaText: string;
   };
   processPage: {
     title: string;

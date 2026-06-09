@@ -652,6 +652,13 @@ export function getBlogPost(locale: Locale, slug: string): BlogPost | undefined 
   return postsByLocale[locale].find((post) => post.slug === slug);
 }
 
+// Articles suggérés (maillage interne) : les plus récents hors article courant.
+export function getRelatedPosts(locale: Locale, slug: string, limit = 2): BlogPost[] {
+  return getBlogPosts(locale)
+    .filter((post) => post.slug !== slug)
+    .slice(0, limit);
+}
+
 // Slugs partagés entre les locales — sert à generateStaticParams.
 export function getBlogSlugs(): string[] {
   return frPosts.map((post) => post.slug);

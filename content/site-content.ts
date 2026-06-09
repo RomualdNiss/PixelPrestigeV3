@@ -149,6 +149,9 @@ const frDictionary: Dictionary = {
     backToList: "Tous les articles",
     minutesLabel: "min de lecture",
     empty: "Les premiers articles arrivent bientôt.",
+    related: "À lire aussi",
+    ctaTitle: "Un projet web en tête ?",
+    ctaText: "Parlons-en. Décrivez votre besoin, nous revenons avec une recommandation concrète.",
   },
   processPage: {
     title: "Notre méthode de travail",
@@ -278,6 +281,9 @@ const enDictionary: Dictionary = {
     backToList: "All articles",
     minutesLabel: "min read",
     empty: "The first articles are coming soon.",
+    related: "Read next",
+    ctaTitle: "Got a web project in mind?",
+    ctaText: "Let's talk. Describe your need and we'll come back with a concrete recommendation.",
   },
   processPage: {
     title: "How we build",
