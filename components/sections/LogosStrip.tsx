@@ -14,15 +14,13 @@ function MarqueeGroup({ logos }: { logos: ClientLogo[] }) {
   return (
     <ul className="logo-marquee__group">
       {repeated.map((logo, index) => (
-        <li key={`${logo.src}-${index}`} className="flex items-center px-8 md:px-12">
-          {/* Export statique : next/image indisponible (images.unoptimized). */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={logo.src}
-            alt=""
-            loading="lazy"
-            className="h-10 w-auto opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 md:h-12"
-          />
+        <li key={`${logo.src}-${index}`} className="flex items-center px-4 md:px-5">
+          {/* Tuile claire : contraste garanti quels que soient les logos (clairs, sombres, colorés). */}
+          <span className="flex h-16 min-w-[132px] items-center justify-center rounded-[3px] border border-black/10 bg-white px-6 shadow-[3px_3px_0_0_rgba(165,41,255,0.35)] md:h-[72px]">
+            {/* Export statique : next/image indisponible (images.unoptimized). */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={logo.src} alt="" loading="lazy" className="h-8 w-auto md:h-9" />
+          </span>
         </li>
       ))}
     </ul>
@@ -37,7 +35,7 @@ export function LogosStrip({ title, logos }: LogosStripProps) {
   return (
     <section className="section-space border-t border-border-soft" aria-label={title}>
       <div className="space-y-8">
-        <p className="container-default text-center text-xs uppercase tracking-[0.22em] text-text-muted">
+        <p className="pixel-label container-default text-center text-[0.7rem] tracking-[0.16em] text-text-muted">
           {title}
         </p>
 

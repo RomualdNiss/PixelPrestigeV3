@@ -69,7 +69,7 @@ function ShaderPlane() {
       uRes: { value: new THREE.Vector2(size.width, size.height) },
       uColorA: { value: new THREE.Color("#a529ff") },
       uColorB: { value: new THREE.Color("#8c00ff") },
-      uBg: { value: new THREE.Color("#07070b") },
+      uBg: { value: new THREE.Color("#0e0f15") },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],

@@ -4,7 +4,7 @@ export const THEME_STORAGE_KEY = "pp_theme";
 export const THEME_CHANGE_EVENT = "pp-theme-change";
 export const THEME_META_ID = "pp-theme-color";
 
-const DARK_THEME_COLOR = "#07070b";
+const DARK_THEME_COLOR = "#0e0f15";
 const LIGHT_THEME_COLOR = "#ffffff";
 
 function isTheme(value: string | null): value is Theme {

@@ -2,19 +2,19 @@
 
 :root,
 html[data-theme="dark"] {
-  --bg: #07070b;
-  --bg-soft: #11131a;
-  --surface: rgba(17, 19, 26, 0.7);
-  --surface-strong: rgba(17, 19, 26, 0.92);
-  --surface-subtle: rgba(245, 247, 250, 0.06);
-  --surface-hover: rgba(245, 247, 250, 0.1);
+  --bg: #0e0f15;
+  --bg-soft: #181a22;
+  --surface: rgba(30, 33, 44, 0.72);
+  --surface-strong: rgba(30, 33, 44, 0.94);
+  --surface-subtle: rgba(245, 247, 250, 0.08);
+  --surface-hover: rgba(245, 247, 250, 0.13);
   --text: #f5f7fa;
-  --text-muted: #b8c0cc;
+  --text-muted: #c6ccd6;
   --brand: #a529ff;
   --brand-2: #8c00ff;
-  --border-soft: rgba(245, 247, 250, 0.1);
-  --border: rgba(245, 247, 250, 0.18);
-  --border-strong: rgba(245, 247, 250, 0.28);
+  --border-soft: rgba(245, 247, 250, 0.14);
+  --border: rgba(245, 247, 250, 0.24);
+  --border-strong: rgba(245, 247, 250, 0.34);
   --overlay: rgba(4, 6, 12, 0.58);
   --link-decoration: rgba(245, 247, 250, 0.3);
   --success: #6ee7b7;
@@ -39,7 +39,7 @@ html[data-theme="dark"] {
   --parallax-base-a: rgba(165, 41, 255, 0.2);
   --parallax-base-b: rgba(140, 0, 255, 0.2);
   --parallax-base-start: #06060a;
-  --parallax-base-mid: #07070b;
+  --parallax-base-mid: #0e0f15;
   --parallax-base-end: #05050a;
   --parallax-layer-a-color: rgba(165, 41, 255, 0.27);
   --parallax-layer-b-color: rgba(140, 0, 255, 0.23);

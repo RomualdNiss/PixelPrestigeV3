@@ -84,7 +84,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning data-theme="dark">
       <head>
-        <meta id={THEME_META_ID} name="theme-color" content="#07070b" />
+        <meta id={THEME_META_ID} name="theme-color" content="#0e0f15" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className={`${displayFont.variable} ${bodyFont.variable} ${pixelFont.variable} bg-bg text-text antialiased`}>
