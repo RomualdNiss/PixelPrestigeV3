@@ -12,7 +12,7 @@ export function FinalCtaSection({ locale, dictionary }: FinalCtaSectionProps) {
   return (
     <section className="section-space">
       <div className="container-default">
-        <div className="glass-panel rounded-3xl p-8 md:p-10">
+        <div className="glass-panel pixel-frame rounded-3xl p-8 md:p-10">
           <h2 className="section-title max-w-3xl">{dictionary.home.finalCtaTitle}</h2>
           <p className="section-lead">{dictionary.home.finalCtaLead}</p>
           <div className="mt-7 flex flex-wrap gap-3">

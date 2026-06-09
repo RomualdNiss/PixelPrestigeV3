@@ -57,6 +57,9 @@ export default async function LocaleHomePage({ params }: PageProps) {
         stepLabel={locale === "fr" ? "Étape" : "Step"}
       />
       <WhenToCallSection dictionary={localeContent.dictionary} items={localeContent.fitItems} />
+      <div className="container-default">
+        <hr className="pixel-divider" />
+      </div>
       <TestimonialsSection
         title={localeContent.dictionary.home.testimonialsTitle}
         lead={localeContent.dictionary.home.testimonialsLead}

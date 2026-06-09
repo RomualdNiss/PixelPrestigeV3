@@ -17,9 +17,9 @@ export function BlogPostCard({ locale, post, dictionary }: BlogPostCardProps) {
     <article className="group h-full">
       <Link
         href={href}
-        className="flex h-full flex-col rounded-3xl border border-border bg-surface p-6 transition-colors hover:border-brand/60"
+        className="pixel-frame flex h-full flex-col rounded-3xl border border-border bg-surface p-6 transition-colors hover:border-brand/60"
       >
-        <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-text-muted">
+        <div className="pixel-label flex items-center gap-2 text-[0.65rem] text-text-muted">
           <time dateTime={post.date}>{formatPostDate(post.date, locale)}</time>
           {post.readingMinutes ? (
             <>

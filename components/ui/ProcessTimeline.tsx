@@ -64,12 +64,12 @@ export function ProcessTimeline({ items, compact = false, stepLabel = "Step" }: 
           key={item.title}
           data-step-card
           className={cn(
-            "rounded-3xl border border-border bg-surface p-6",
+            "pixel-frame rounded-3xl border border-border bg-surface p-6",
             !compact && index === 1 ? "md:translate-y-8" : "",
             !compact && index === 3 ? "md:translate-y-8" : "",
           )}
         >
-          <p className="eyebrow-badge text-xs uppercase tracking-[0.16em]">
+          <p className="eyebrow-badge pixel-label text-[0.7rem]">
             {stepLabel} {index + 1}
           </p>
           <h3 className="mt-3 font-display text-2xl font-semibold text-text">{item.title}</h3>

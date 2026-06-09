@@ -21,9 +21,9 @@ export function ServiceCard({ item }: ServiceCardProps) {
             }
       }
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      className="glass-panel h-full rounded-3xl p-6"
+      className="glass-panel pixel-frame h-full rounded-3xl p-6"
     >
-      <p className="eyebrow-badge text-xs uppercase tracking-[0.18em]">{item.id}</p>
+      <p className="eyebrow-badge pixel-label text-[0.7rem]">{item.id}</p>
       <h3 className="mt-3 font-display text-2xl font-semibold text-text">{item.title}</h3>
       <p className="mt-3 text-sm text-text-muted">{item.summary}</p>
       <ul className="mt-4 space-y-2 text-sm text-text">

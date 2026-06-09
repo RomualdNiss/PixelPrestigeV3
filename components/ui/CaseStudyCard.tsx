@@ -20,9 +20,9 @@ export function CaseStudyCard({ item }: CaseStudyCardProps) {
             }
       }
       transition={{ type: "spring", stiffness: 260, damping: 24 }}
-      className="group rounded-3xl border border-border bg-surface p-6 transition-colors hover:border-brand/60"
+      className="group pixel-frame rounded-3xl border border-border bg-surface p-6 transition-colors hover:border-brand/60"
     >
-      <p className="text-xs uppercase tracking-[0.17em] text-text-muted">{item.domain}</p>
+      <p className="pixel-label text-[0.7rem] text-text-muted">{item.domain}</p>
       <h3 className="mt-2 font-display text-2xl font-semibold text-text">{item.title}</h3>
       <p className="mt-3 text-sm text-text-muted">{item.challenge}</p>
       <p className="mt-4 text-sm font-medium text-text">{item.impact}</p>

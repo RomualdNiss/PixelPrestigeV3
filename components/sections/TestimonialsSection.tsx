@@ -31,13 +31,13 @@ export function TestimonialsSection({ title, lead, testimonials }: TestimonialsS
   }
 
   return (
-    <section className="section-space border-t border-border-soft">
+    <section className="dither-panel section-space border-t border-border-soft">
       <div className="container-default space-y-10">
         <SectionHeading title={title} lead={lead} />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {testimonials.map((item, index) => (
             <Reveal key={`${item.author}-${index}`} delay={index * 0.06}>
-              <figure className="flex h-full flex-col gap-4 rounded-3xl border border-border bg-surface p-6">
+              <figure className="pixel-frame flex h-full flex-col gap-4 rounded-3xl border border-border bg-surface p-6">
                 {typeof item.rating === "number" ? <Rating value={item.rating} /> : null}
                 <blockquote className="flex-1 text-sm leading-6 text-text">
                   &ldquo;{item.quote}&rdquo;
