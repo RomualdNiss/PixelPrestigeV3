@@ -818,10 +818,11 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
       const raw = clamp(window.scrollY / viewport, 0, 1);
       scrollProgressRef.current = MathUtils.lerp(scrollProgressRef.current, raw, 0.08);
       const p = scrollProgressRef.current;
-      scrollGroup.rotation.y = p * 0.9;
-      scrollGroup.rotation.x = p * 0.22;
-      scrollGroup.position.y = p * 0.7;
-      scrollGroup.scale.setScalar(MathUtils.lerp(1, 0.82, p));
+      scrollGroup.rotation.y = p * 1.3;
+      scrollGroup.rotation.x = p * 0.35;
+      scrollGroup.rotation.z = p * 0.2;
+      scrollGroup.position.y = p * 1.0;
+      scrollGroup.scale.setScalar(MathUtils.lerp(1, 0.72, p));
     }
 
     const cubeGroup = cubeGroupRef.current;

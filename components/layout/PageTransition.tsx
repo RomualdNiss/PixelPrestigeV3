@@ -28,9 +28,9 @@ export function PageTransition({ children }: { children: ReactNode }) {
   return (
     <>
       {/* Balayage pixelisé rejoué à chaque navigation (pas au 1er chargement). */}
-      {animateOnMount ? <span key={pathname} className="arcade-wipe" aria-hidden /> : null}
+      {animateOnMount ? <span key={`wipe-${pathname}`} className="arcade-wipe" aria-hidden /> : null}
       <motion.div
-        key={pathname}
+        key={`page-${pathname}`}
         initial={animateOnMount ? { opacity: 0, y: 8 } : false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
