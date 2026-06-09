@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { PageTransition } from "@/components/layout/PageTransition";
 import { ConsentBanner } from "@/components/analytics/ConsentBanner";
 import { LocaleDocumentSync } from "@/components/layout/LocaleDocumentSync";
 import { PixelCursor } from "@/components/effects/PixelCursor";
@@ -44,7 +45,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <LocaleDocumentSync locale={locale} />
       <ParallaxBackdrop />
       <SiteHeader locale={locale} dictionary={dictionary} />
-      <main className="relative z-10 flex-1">{children}</main>
+      <main className="relative z-10 flex-1">
+        <PageTransition>{children}</PageTransition>
+      </main>
       <SiteFooter locale={locale} dictionary={dictionary} />
       <PixelCursor />
       <ConsentBanner locale={locale} />
