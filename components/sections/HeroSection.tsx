@@ -127,7 +127,7 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
 
           <ul className="mt-8 flex flex-wrap items-center gap-2">
             {dictionary.home.trustLine.map((item) => (
-              <li key={item} className="rounded-full border border-border bg-surface-subtle px-3 py-1 text-xs text-text-muted">
+              <li key={item} className="eyebrow-badge pixel-label text-[0.7rem]">
                 {item}
               </li>
             ))}
