@@ -31,7 +31,7 @@ export function LocaleSwitcher({ locale, label, onNavigate }: LocaleSwitcherProp
   const pathname = usePathname() || `/${locale}`;
 
   return (
-    <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.16em] text-text-muted">
+    <div className="pixel-label flex flex-wrap items-center gap-2 text-[0.62rem] text-text-muted">
       <span>{label}</span>
       {locales.map((item) => (
         <Link
@@ -39,9 +39,9 @@ export function LocaleSwitcher({ locale, label, onNavigate }: LocaleSwitcherProp
           href={toLocalePath(pathname, item)}
           onClick={onNavigate}
           className={cn(
-            "rounded-full border px-2 py-1 transition-colors",
+            "rounded-[3px] border px-2 py-1.5 transition-colors",
             item === locale
-              ? "border-brand bg-brand/25 text-white"
+              ? "border-brand bg-brand/25 text-white shadow-[2px_2px_0_0_rgba(165,41,255,0.55)]"
               : "border-border-strong text-text-muted hover:border-brand/70 hover:text-text",
           )}
         >

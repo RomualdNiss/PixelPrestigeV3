@@ -204,21 +204,21 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                 role="dialog"
                 aria-modal="true"
                 aria-label={labels.mobileMenu}
-                className="pointer-events-auto relative w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[1.6rem] border border-border bg-surface-strong shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
+                className="pointer-events-auto relative w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[4px] border border-border bg-surface-strong shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-2xl"
                 initial={
                   reducedMotion
                     ? { opacity: 0 }
-                    : { opacity: 0, y: -12, clipPath: "inset(0 0 100% 0 round 1.6rem)" }
+                    : { opacity: 0, y: -12, clipPath: "inset(0 0 100% 0 round 4px)" }
                 }
                 animate={
                   reducedMotion
                     ? { opacity: 1 }
-                    : { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0 round 1.6rem)" }
+                    : { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0 round 4px)" }
                 }
                 exit={
                   reducedMotion
                     ? { opacity: 0 }
-                    : { opacity: 0, y: -8, clipPath: "inset(0 0 100% 0 round 1.6rem)" }
+                    : { opacity: 0, y: -8, clipPath: "inset(0 0 100% 0 round 4px)" }
                 }
                 transition={panelTransition}
               >
@@ -249,7 +249,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                     }}
                     transition={{ duration: reducedMotion ? 0.14 : 0.24, ease: "easeOut" }}
                   >
-                    <p className="text-[0.7rem] uppercase tracking-[0.22em] text-text-muted">{labels.mobileMenu}</p>
+                    <p className="pixel-label text-[0.65rem] text-text-muted">{labels.mobileMenu}</p>
                     <button
                       ref={closeButtonRef}
                       type="button"
@@ -287,7 +287,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
                             href={href}
                             onClick={() => setIsMenuOpen(false)}
                             className={cn(
-                              "flex w-full items-center rounded-[1.15rem] border px-4 py-4 text-lg font-medium leading-[1.15] transition-colors",
+                              "flex w-full items-center rounded-[3px] border px-4 py-4 text-lg font-medium leading-[1.15] transition-colors",
                               isActive
                                 ? "border-brand/40 bg-brand/18 text-white"
                                 : "border-border-soft bg-surface-subtle text-text-muted hover:border-brand/35 hover:text-text",

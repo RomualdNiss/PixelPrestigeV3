@@ -388,19 +388,28 @@ a {
   justify-content: center;
   gap: 0.45rem;
   padding: 0;
-  border-radius: 999px;
-  border: 1px solid var(--border);
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
   background: var(--surface-subtle);
   color: var(--text);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 3px 3px 0 0 var(--border);
   backdrop-filter: blur(18px);
-  transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease, transform 160ms ease;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease,
+    transform 120ms steps(2, end), box-shadow 120ms steps(2, end);
 }
 
 .theme-icon-button:hover,
 .theme-toggle:hover {
   border-color: color-mix(in srgb, var(--brand) 58%, var(--border));
   background: var(--surface-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--brand);
+}
+
+.theme-icon-button:active,
+.theme-toggle:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 0 var(--brand);
 }
 
 .theme-toggle {
