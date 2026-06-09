@@ -109,6 +109,11 @@ html[data-theme="light"] {
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-pixel: var(--font-pixel);
+  /* Rayons compressés → coins nets "blocky" partout (rounded-lg/xl/2xl/3xl). */
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 4px;
+  --radius-3xl: 4px;
   --color-bg: var(--bg);
   --color-bg-soft: var(--bg-soft);
   --color-surface: var(--surface);
@@ -222,7 +227,7 @@ a {
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  border-radius: 999px;
+  border-radius: 4px;
   border: 1px solid var(--eyebrow-border);
   background: var(--eyebrow-bg);
   padding: 0.42rem 0.78rem;
@@ -238,33 +243,46 @@ a {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  border-radius: 999px;
+  border-radius: 4px;
   padding: 0.8rem 1.4rem;
   font-weight: 600;
-  transition: transform 160ms ease, box-shadow 220ms ease, background-color 220ms ease;
+  transition: transform 120ms steps(3, end), box-shadow 120ms steps(3, end), background-color 200ms ease;
   border: 1px solid transparent;
 }
 
+/* Boutons "arcade" : ombre pixel dure décalée + effet press. */
 .btn-primary {
   background: linear-gradient(130deg, var(--brand), var(--brand-2));
   color: white;
-  box-shadow: 0 10px 36px var(--glow);
+  box-shadow: 4px 4px 0 0 rgba(140, 0, 255, 0.55);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 48px rgba(165, 41, 255, 0.5);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--brand-2);
+}
+
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--brand-2);
 }
 
 .btn-secondary {
-  border-color: var(--border);
+  border-color: var(--border-strong);
   background: var(--btn-secondary-bg);
   color: var(--text);
+  box-shadow: 4px 4px 0 0 var(--border);
 }
 
 .btn-secondary:hover {
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--border-strong);
   background: var(--btn-secondary-hover);
+}
+
+.btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--border);
 }
 
 .glow-dot {
@@ -512,11 +530,55 @@ html.lenis body {
     transparent 1px,
     transparent 3px
   );
-  opacity: 0.55;
+  opacity: 0.7;
   mix-blend-mode: multiply;
 }
 html[data-theme="light"] .crt-overlay {
-  opacity: 0.3;
+  opacity: 0.32;
+}
+
+/* Encadré pixel : crochets d'angle en couleur de marque (cartes). */
+.pixel-frame {
+  position: relative;
+}
+.pixel-frame::before,
+.pixel-frame::after {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-color: var(--brand);
+  border-style: solid;
+  pointer-events: none;
+}
+.pixel-frame::before {
+  top: 7px;
+  left: 7px;
+  border-width: 2px 0 0 2px;
+}
+.pixel-frame::after {
+  right: 7px;
+  bottom: 7px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Séparateur pixel : tirets de marque. */
+.pixel-divider {
+  height: 4px;
+  border: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--brand) 0 4px,
+    transparent 4px 9px
+  );
+  opacity: 0.45;
+}
+
+/* Fond dithered pour blocs de relief. */
+.dither-panel {
+  background-color: var(--surface-subtle);
+  background-image: radial-gradient(var(--noise-dot) 0.6px, transparent 0.8px);
+  background-size: 4px 4px;
 }
 
 /* Texture de dithering réutilisable (damier fin de points). */
