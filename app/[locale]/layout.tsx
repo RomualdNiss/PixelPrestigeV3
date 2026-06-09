@@ -8,6 +8,7 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { PixelCursor } from "@/components/effects/PixelCursor";
 import { ArcadeBackground } from "@/components/effects/ArcadeBackground";
 import { CRTOverlay } from "@/components/effects/CRTOverlay";
+import { IntroLoader } from "@/components/effects/IntroLoader";
 import { getLocaleContent } from "@/content/site-content";
 import { getLocaleStaticParams } from "@/lib/i18n";
 import { organizationSchema } from "@/lib/seo";
@@ -54,6 +55,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <SiteFooter locale={locale} dictionary={dictionary} />
       <PixelCursor />
       <CRTOverlay />
+      <IntroLoader />
       <ConsentBanner locale={locale} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }} />
     </div>
