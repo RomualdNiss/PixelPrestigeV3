@@ -105,7 +105,7 @@ export function ConsentBanner({ locale }: ConsentBannerProps) {
       {!isOpen && canClose ? (
         <button
           type="button"
-          className="fixed bottom-4 right-4 z-[89] rounded-full border border-border-strong bg-surface-strong px-4 py-2 text-sm text-text backdrop-blur-xl transition-colors hover:border-brand/60"
+          className="fixed bottom-4 right-4 z-[89] rounded-[3px] border border-border-strong bg-surface-strong px-4 py-2 text-sm text-text backdrop-blur-xl transition-colors hover:border-brand/60"
           onClick={() => setIsSettingsOpen(true)}
         >
           {copy.manage}

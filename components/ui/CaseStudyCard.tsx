@@ -28,7 +28,7 @@ export function CaseStudyCard({ item }: CaseStudyCardProps) {
       <p className="mt-4 text-sm font-medium text-text">{item.impact}</p>
       <div className="mt-4 flex flex-wrap gap-2">
         {item.stack.map((tag) => (
-          <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs text-text-muted">
+          <span key={tag} className="rounded-[3px] border border-border px-3 py-1 text-xs text-text-muted">
             {tag}
           </span>
         ))}

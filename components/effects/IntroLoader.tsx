@@ -67,7 +67,7 @@ export function IntroLoader() {
             <ScrambleText text="PIXEL PRESTIGE" durationMs={1000} />
           </motion.p>
 
-          <div className="mt-6 h-1 w-40 overflow-hidden rounded-full bg-surface-subtle">
+          <div className="mt-6 h-1 w-40 overflow-hidden rounded-[2px] bg-surface-subtle">
             <motion.div
               className="h-full bg-brand"
               initial={{ width: "0%" }}
