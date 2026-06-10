@@ -812,16 +812,25 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
     activeMoveRef.current = null;
   };
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     // Réaction au scroll : pilote un groupe parent dédié (n'interfère pas avec la
     // mécanique interne du cube). La progression est lissée pour rester fluide.
     let p = 0;
     const scrollGroup = scrollGroupRef.current;
     if (scrollGroup && typeof window !== "undefined") {
       const viewport = window.innerHeight || 1;
-      // Déclenchement précoce : effet complet en ~45 % d'un écran, pendant que le
-      // cube est encore visible.
-      const raw = clamp(window.scrollY / (viewport * 0.45), 0, 1);
+      let raw: number;
+      if (motionPreset === "mobile") {
+        // Sur mobile le cube est plus bas dans le hero : on base la progression sur
+        // sa position réelle à l'écran → il s'éclate seulement quand il est visible
+        // et qu'on le dépasse (pas déjà éclaté à l'arrivée).
+        const rect = state.gl.domElement.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        raw = clamp((viewport * 0.62 - center) / (viewport * 0.5), 0, 1);
+      } else {
+        // PC : déclenchement précoce (cube en haut du hero, visible dès scrollY ≈ 0).
+        raw = clamp(window.scrollY / (viewport * 0.45), 0, 1);
+      }
       scrollProgressRef.current = MathUtils.lerp(scrollProgressRef.current, raw, 0.12);
       p = scrollProgressRef.current;
       // Drift/rotation légers (l'éclatement est l'effet principal).
