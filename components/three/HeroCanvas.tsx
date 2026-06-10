@@ -1,13 +1,26 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer, OrbitControls } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type MutableRefObject } from "react";
 import type { Group, Texture } from "three";
 import { ACESFilmicToneMapping, Color, Euler, MathUtils } from "three";
 import { CanvasTexture, RepeatWrapping } from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { getThemeSnapshot, subscribeToTheme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
+
+// Applique l'exposition au runtime (onCreated ne s'exécute qu'une fois) → permet
+// d'éclaircir la scène quand on passe en mode clair.
+function ToneSync({ exposure }: { exposure: number }) {
+  const gl = useThree((state) => state.gl);
+  useEffect(() => {
+    // Mutation impérative du renderer three.js (pattern r3f standard).
+    // eslint-disable-next-line react-hooks/immutability
+    gl.toneMappingExposure = exposure;
+  }, [gl, exposure]);
+  return null;
+}
 
 type Axis = "x" | "y" | "z";
 type TurnDir = 1 | -1;
@@ -970,6 +983,13 @@ export function HeroCanvas({
   onContextLost,
   quality = "high",
 }: HeroCanvasProps) {
+  // Thème réactif : la scène s'éclaircit en mode clair, garde le rendu sombre sinon.
+  const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, () => "dark");
+  const light = theme === "light";
+  const fill = light ? 1.6 : 1; // boost des lumières de remplissage
+  const exposure = light ? 1.5 : 1.16;
+  const envBoost = light ? 1.45 : 1; // intensité de l'environnement
+
   const queueRef = useRef<Move[]>([]);
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const draggingRef = useRef(false);
@@ -1023,7 +1043,7 @@ export function HeroCanvas({
               cleanupContextRef.current?.();
               gl.setClearColor("#000000", 0);
               gl.toneMapping = ACESFilmicToneMapping;
-              gl.toneMappingExposure = quality === "high" ? 1.16 : 1.08;
+              gl.toneMappingExposure = exposure;
 
               const canvas = gl.domElement;
               const handleLost = (event: Event) => {
@@ -1037,20 +1057,21 @@ export function HeroCanvas({
               };
             }}
           >
-            <ambientLight intensity={quality === "high" ? 0.5 : 0.42} />
+            <ToneSync exposure={exposure} />
+            <ambientLight intensity={(quality === "high" ? 0.5 : 0.42) * fill} />
             <hemisphereLight
-              intensity={quality === "high" ? 0.38 : 0.3}
-              color="#e9ddff"
-              groundColor="#160f24"
+              intensity={(quality === "high" ? 0.38 : 0.3) * fill}
+              color={light ? "#ffffff" : "#e9ddff"}
+              groundColor={light ? "#cdbce8" : "#160f24"}
             />
             <directionalLight
               position={[5.8, 6.3, 4.4]}
-              intensity={quality === "high" ? 1.45 : 1.2}
+              intensity={(quality === "high" ? 1.45 : 1.2) * (light ? 1.3 : 1)}
               color="#f3ecff"
             />
             <directionalLight
               position={[-4.8, 3.2, -3.8]}
-              intensity={quality === "high" ? 0.56 : 0.44}
+              intensity={(quality === "high" ? 0.56 : 0.44) * fill}
               color="#dde3ea"
             />
             <pointLight
@@ -1076,14 +1097,20 @@ export function HeroCanvas({
 
             {/* Environnement réfléchissant (panneaux colorés) : donne de vraies
                 réflexions au métal/clearcoat sans HDR à télécharger. Bake unique. */}
-            <Environment resolution={quality === "high" ? 256 : 128} frames={1}>
-              <Lightformer color="#a529ff" intensity={3.4} form="rect" position={[4, 3, 4]} scale={[8, 8, 1]} />
-              <Lightformer color="#4b1fff" intensity={2.3} form="rect" position={[-5, 1, 2]} scale={[7, 9, 1]} />
-              <Lightformer color="#ffffff" intensity={2.8} form="ring" position={[0, 5, -2]} scale={[3.5, 3.5, 1]} />
-              <Lightformer color="#ff3df0" intensity={1.6} form="circle" position={[2, -3, 3]} scale={[5, 5, 1]} />
-              <Lightformer color="#c77bff" intensity={1.8} form="rect" position={[-3, -2, -4]} scale={[6, 6, 1]} />
-              <Lightformer color="#ffffff" intensity={1.4} form="rect" position={[5, -1, -2]} scale={[2, 6, 1]} />
-              <Lightformer color="#1f0c46" intensity={0.7} form="rect" position={[0, -5, -3]} scale={[12, 12, 1]} />
+            <Environment key={theme} resolution={quality === "high" ? 256 : 128} frames={1}>
+              <Lightformer color="#a529ff" intensity={3.4 * envBoost} form="rect" position={[4, 3, 4]} scale={[8, 8, 1]} />
+              <Lightformer color="#4b1fff" intensity={2.3 * envBoost} form="rect" position={[-5, 1, 2]} scale={[7, 9, 1]} />
+              <Lightformer color="#ffffff" intensity={2.8 * envBoost} form="ring" position={[0, 5, -2]} scale={[3.5, 3.5, 1]} />
+              <Lightformer color="#ff3df0" intensity={1.6 * envBoost} form="circle" position={[2, -3, 3]} scale={[5, 5, 1]} />
+              <Lightformer color="#c77bff" intensity={1.8 * envBoost} form="rect" position={[-3, -2, -4]} scale={[6, 6, 1]} />
+              <Lightformer color="#ffffff" intensity={1.4 * envBoost} form="rect" position={[5, -1, -2]} scale={[2, 6, 1]} />
+              <Lightformer
+                color={light ? "#c4a8ff" : "#1f0c46"}
+                intensity={light ? 1.8 : 0.7}
+                form="rect"
+                position={[0, -5, -3]}
+                scale={[12, 12, 1]}
+              />
             </Environment>
 
             <CubeController
