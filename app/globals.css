@@ -586,32 +586,10 @@ html[data-theme="light"] .crt-overlay {
   filter: blur(80px);
   pointer-events: none;
 }
-.parallax-glow-a {
-  top: 2%;
-  left: 1%;
-  width: 34rem;
-  height: 34rem;
-  background: radial-gradient(circle, rgba(165, 41, 255, 0.6), transparent 66%);
-  opacity: 0.6;
-}
-.parallax-glow-b {
-  top: 40%;
-  right: -2%;
-  width: 40rem;
-  height: 40rem;
-  background: radial-gradient(circle, rgba(140, 0, 255, 0.5), transparent 68%);
-  opacity: 0.55;
-}
-.parallax-glow-c {
-  bottom: -6%;
-  left: 30%;
-  width: 32rem;
-  height: 32rem;
-  background: radial-gradient(circle, rgba(130, 60, 255, 0.46), transparent 70%);
-  opacity: 0.5;
-}
-html[data-theme="light"] .parallax-glow {
-  opacity: 0.22;
+/* Le dimming du thème clair s'applique au calque entier (l'opacité inline par
+   halo l'emporterait sinon). */
+html[data-theme="light"] .parallax-glow-layer {
+  opacity: 0.4;
 }
 
 /* Texture de dithering réutilisable (damier fin de points). */
