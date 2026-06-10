@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Environment, Lightformer, OrbitControls } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import type { Group, Texture } from "three";
 import { ACESFilmicToneMapping, Color, Euler, MathUtils } from "three";
@@ -482,134 +482,131 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
 
   return {
 
-    // ── R · MÉTAL VIOLET IRIDESCENT ──────────────────────────────────────────
-    // Base très sombre violette, finition métal brillante + iridescence violette.
+    // ── R · MIROIR MÉTAL VIOLET ───────────────────────────────────────────────
+    // Métal poli quasi-miroir : reflète franchement les panneaux de l'environnement.
     R: {
-      color: "#181024",
-      roughness: isHigh ? 0.16 : 0.22,
-      metalness: 0.55,
-      emissive: "#6a1fc0",
-      emissiveIntensity: 0.28,
-      envMapIntensity: isHigh ? 1.1 : 0.85,
+      color: "#140d22",
+      roughness: isHigh ? 0.07 : 0.14,
+      metalness: 0.96,
+      emissive: "#2a0c55",
+      emissiveIntensity: 0.07,
+      envMapIntensity: isHigh ? 1.7 : 1.3,
+      clearcoat: 1,
+      clearcoatRoughness: 0.04,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.014 : 0.009,
+      iridescence: 0.5,
+      iridescenceIOR: 1.35,
+      iridescenceThicknessRange: [100, 440],
+      specularIntensity: 1,
+      specularColor: "#dcc6ff",
+    },
+
+    // ── L · VIOLET MAT ────────────────────────────────────────────────────────
+    // Surface mate granuleuse : peu de reflets, contraste avec les faces brillantes.
+    L: {
+      color: "#1a1228",
+      roughness: isHigh ? 0.66 : 0.74,
+      metalness: 0.25,
+      emissive: "#220a44",
+      emissiveIntensity: 0.05,
+      envMapIntensity: isHigh ? 0.55 : 0.42,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.6,
+      roughnessMapKey: "mineralNoise",
+      bumpMapKey: "mineralNoise",
+      bumpScale: isHigh ? 0.026 : 0.017,
+      specularIntensity: 0.4,
+      specularColor: "#a98fe0",
+    },
+
+    // ── U · VERRE VIOLET TRANSMISSIF ──────────────────────────────────────────
+    U: {
+      color: "#241636",
+      roughness: isHigh ? 0.06 : 0.12,
+      metalness: 0,
+      emissive: "#4a13a0",
+      emissiveIntensity: 0.1,
+      envMapIntensity: isHigh ? 1.4 : 1.05,
+      clearcoat: 1,
+      clearcoatRoughness: 0.04,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.004 : 0.002,
+      transmission: isHigh ? 0.92 : 0.6,
+      thickness: isHigh ? 1.4 : 0.85,
+      attenuationColor: "#9a3dff",
+      attenuationDistance: isHigh ? 1.4 : 0.9,
+      ior: 1.46,
+      iridescence: 0.4,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [120, 440],
+      specularIntensity: 1,
+      specularColor: "#efe2ff",
+      transparent: true,
+      opacity: 0.95,
+    },
+
+    // ── D · SATIN MÉTAL VIOLET ────────────────────────────────────────────────
+    D: {
+      color: "#1a1130",
+      roughness: isHigh ? 0.34 : 0.42,
+      metalness: 0.6,
+      emissive: "#3c1184",
+      emissiveIntensity: 0.12,
+      envMapIntensity: isHigh ? 1.15 : 0.9,
+      clearcoat: 0.7,
+      clearcoatRoughness: 0.18,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.012 : 0.008,
+      iridescence: 0.3,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [120, 400],
+      specularIntensity: 0.75,
+      specularColor: "#cdb0ff",
+    },
+
+    // ── F · CŒUR NÉON GLOSSY ──────────────────────────────────────────────────
+    // Émissif violet de marque (modéré) sous un vernis brillant réfléchissant.
+    F: {
+      color: "#20123c",
+      roughness: isHigh ? 0.16 : 0.24,
+      metalness: 0.2,
+      emissive: "#a529ff",
+      emissiveIntensity: 0.4,
+      envMapIntensity: isHigh ? 1.0 : 0.8,
       clearcoat: 1,
       clearcoatRoughness: 0.06,
       roughnessMapKey: "microNoise",
       bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.009 : 0.006,
-      iridescence: 0.4,
-      iridescenceIOR: 1.3,
-      iridescenceThicknessRange: [120, 420],
-      specularIntensity: 0.7,
-      specularColor: "#cba6ff",
+      bumpScale: isHigh ? 0.012 : 0.008,
+      iridescence: 0.5,
+      iridescenceIOR: 1.32,
+      iridescenceThicknessRange: [140, 480],
+      specularIntensity: 0.85,
+      specularColor: "#ecd9ff",
     },
 
-    // ── L · MÉTAL VIOLET MAT ──────────────────────────────────────────────────
-    L: {
-      color: "#140d20",
-      roughness: isHigh ? 0.4 : 0.48,
-      metalness: 0.35,
-      emissive: "#581aa6",
-      emissiveIntensity: 0.24,
-      envMapIntensity: isHigh ? 0.7 : 0.55,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.3,
-      roughnessMapKey: "mineralNoise",
-      bumpMapKey: "mineralNoise",
-      bumpScale: isHigh ? 0.016 : 0.01,
-      iridescence: 0.25,
-      iridescenceIOR: 1.3,
-      iridescenceThicknessRange: [140, 400],
-      specularIntensity: 0.5,
-      specularColor: "#b489ff",
-    },
-
-    // ── U · VERRE VIOLET TRANSMISSIF ──────────────────────────────────────────
-    // Cristal violet translucide pour la profondeur (laisse passer la lumière).
-    U: {
-      color: "#2a1840",
-      roughness: isHigh ? 0.08 : 0.14,
-      metalness: 0,
-      emissive: "#7d24d6",
-      emissiveIntensity: 0.16,
-      envMapIntensity: isHigh ? 1.0 : 0.8,
-      clearcoat: 1,
-      clearcoatRoughness: 0.05,
-      roughnessMapKey: "microNoise",
-      bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.003 : 0.0015,
-      transmission: isHigh ? 0.9 : 0.6,
-      thickness: isHigh ? 1.3 : 0.8,
-      attenuationColor: "#a855ff",
-      attenuationDistance: isHigh ? 1.6 : 1.1,
-      ior: 1.45,
-      iridescence: 0.35,
-      iridescenceIOR: 1.3,
-      iridescenceThicknessRange: [120, 420],
-      specularIntensity: 0.8,
-      specularColor: "#e6d4ff",
-      transparent: true,
-      opacity: 0.96,
-    },
-
-    // ── D · VIOLET BRILLANT ÉMISSIF ───────────────────────────────────────────
-    D: {
-      color: "#160f24",
-      roughness: isHigh ? 0.24 : 0.3,
-      metalness: 0.3,
-      emissive: "#7d24d6",
-      emissiveIntensity: 0.42,
-      envMapIntensity: isHigh ? 0.8 : 0.62,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.12,
-      roughnessMapKey: "microNoise",
-      bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.01 : 0.006,
-      iridescence: 0.3,
-      iridescenceIOR: 1.3,
-      iridescenceThicknessRange: [120, 400],
-      specularIntensity: 0.6,
-      specularColor: "#cba6ff",
-    },
-
-    // ── F · CŒUR NÉON ─────────────────────────────────────────────────────────
-    // La face la plus lumineuse : émissif violet de marque intense.
-    F: {
-      color: "#1b1032",
-      roughness: isHigh ? 0.18 : 0.26,
-      metalness: 0.25,
-      emissive: "#a529ff",
-      emissiveIntensity: 0.72,
-      envMapIntensity: isHigh ? 0.85 : 0.65,
-      clearcoat: 1,
-      clearcoatRoughness: 0.08,
-      roughnessMapKey: "microNoise",
-      bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.012 : 0.007,
-      iridescence: 0.45,
-      iridescenceIOR: 1.3,
-      iridescenceThicknessRange: [140, 460],
-      specularIntensity: 0.7,
-      specularColor: "#e0c8ff",
-    },
-
-    // ── B · VIOLET SOMBRE PROFOND ─────────────────────────────────────────────
+    // ── B · MÉTAL BROSSÉ VIOLET ───────────────────────────────────────────────
     B: {
-      color: "#120c1e",
-      roughness: isHigh ? 0.46 : 0.54,
-      metalness: 0.3,
-      emissive: "#581aa6",
-      emissiveIntensity: 0.26,
-      envMapIntensity: isHigh ? 0.6 : 0.46,
-      clearcoat: 0.5,
-      clearcoatRoughness: 0.32,
+      color: "#150e26",
+      roughness: isHigh ? 0.5 : 0.58,
+      metalness: 0.55,
+      emissive: "#220a44",
+      emissiveIntensity: 0.06,
+      envMapIntensity: isHigh ? 0.85 : 0.65,
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.4,
       roughnessMapKey: "mineralNoise",
       bumpMapKey: "mineralNoise",
-      bumpScale: isHigh ? 0.014 : 0.009,
-      iridescence: 0.22,
+      bumpScale: isHigh ? 0.022 : 0.014,
+      iridescence: 0.2,
       iridescenceIOR: 1.3,
       iridescenceThicknessRange: [140, 400],
-      specularIntensity: 0.45,
-      specularColor: "#b489ff",
+      specularIntensity: 0.6,
+      specularColor: "#b69aea",
     },
   };
 }
@@ -1026,7 +1023,7 @@ export function HeroCanvas({
               cleanupContextRef.current?.();
               gl.setClearColor("#000000", 0);
               gl.toneMapping = ACESFilmicToneMapping;
-              gl.toneMappingExposure = quality === "high" ? 1.18 : 1.08;
+              gl.toneMappingExposure = quality === "high" ? 1.02 : 0.96;
 
               const canvas = gl.domElement;
               const handleLost = (event: Event) => {
@@ -1076,6 +1073,16 @@ export function HeroCanvas({
               intensity={quality === "high" ? 0.06 : 0.04}
               color="#7c738f"
             />
+
+            {/* Environnement réfléchissant (panneaux colorés) : donne de vraies
+                réflexions au métal/clearcoat sans HDR à télécharger. Bake unique. */}
+            <Environment resolution={quality === "high" ? 256 : 128} frames={1}>
+              <Lightformer color="#a529ff" intensity={2.4} form="rect" position={[4, 3, 4]} scale={[7, 7, 1]} />
+              <Lightformer color="#4b1fff" intensity={1.5} form="rect" position={[-5, 1, 2]} scale={[6, 8, 1]} />
+              <Lightformer color="#ffffff" intensity={2} form="ring" position={[0, 5, -2]} scale={[3, 3, 1]} />
+              <Lightformer color="#ff3df0" intensity={1} form="circle" position={[2, -3, 3]} scale={[4, 4, 1]} />
+              <Lightformer color="#180a3a" intensity={0.6} form="rect" position={[0, -5, -3]} scale={[10, 10, 1]} />
+            </Environment>
 
             <CubeController
               queueRef={queueRef}
