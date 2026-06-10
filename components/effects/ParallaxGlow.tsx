@@ -9,10 +9,12 @@ export function ParallaxGlow() {
   const reduced = useReducedMotion();
   const { scrollY } = useScroll();
 
-  const yA = useTransform(scrollY, [0, 3000], [0, -280]);
-  const xA = useTransform(scrollY, [0, 3000], [0, 70]);
-  const yB = useTransform(scrollY, [0, 3000], [0, 220]);
-  const yC = useTransform(scrollY, [0, 3000], [0, -150]);
+  // Dérive proportionnelle au scroll (continue, sans plafond) → mouvement bien
+  // visible même sur les pages longues. Facteurs et sens différents = profondeur.
+  const yA = useTransform(scrollY, (v) => v * 0.28);
+  const xA = useTransform(scrollY, (v) => v * 0.12);
+  const yB = useTransform(scrollY, (v) => v * -0.5);
+  const yC = useTransform(scrollY, (v) => v * -0.32);
 
   // z-index auto : par ordre DOM, le calque est rendu après le fond (shader) donc
   // au-dessus, mais avant main/footer donc sous le contenu.
