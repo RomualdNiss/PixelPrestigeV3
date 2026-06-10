@@ -490,7 +490,7 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
       metalness: 0.96,
       emissive: "#2a0c55",
       emissiveIntensity: 0.07,
-      envMapIntensity: isHigh ? 1.7 : 1.3,
+      envMapIntensity: isHigh ? 2.1 : 1.55,
       clearcoat: 1,
       clearcoatRoughness: 0.04,
       roughnessMapKey: "microNoise",
@@ -528,7 +528,7 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
       metalness: 0,
       emissive: "#4a13a0",
       emissiveIntensity: 0.1,
-      envMapIntensity: isHigh ? 1.4 : 1.05,
+      envMapIntensity: isHigh ? 1.6 : 1.2,
       clearcoat: 1,
       clearcoatRoughness: 0.04,
       roughnessMapKey: "microNoise",
@@ -536,7 +536,7 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
       bumpScale: isHigh ? 0.004 : 0.002,
       transmission: isHigh ? 0.92 : 0.6,
       thickness: isHigh ? 1.4 : 0.85,
-      attenuationColor: "#9a3dff",
+      attenuationColor: "#a64dff",
       attenuationDistance: isHigh ? 1.4 : 0.9,
       ior: 1.46,
       iridescence: 0.4,
@@ -555,7 +555,7 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
       metalness: 0.6,
       emissive: "#3c1184",
       emissiveIntensity: 0.12,
-      envMapIntensity: isHigh ? 1.15 : 0.9,
+      envMapIntensity: isHigh ? 1.45 : 1.1,
       clearcoat: 0.7,
       clearcoatRoughness: 0.18,
       roughnessMapKey: "microNoise",
@@ -596,7 +596,7 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
       metalness: 0.55,
       emissive: "#220a44",
       emissiveIntensity: 0.06,
-      envMapIntensity: isHigh ? 0.85 : 0.65,
+      envMapIntensity: isHigh ? 1.05 : 0.8,
       clearcoat: 0.3,
       clearcoatRoughness: 0.4,
       roughnessMapKey: "mineralNoise",
@@ -1077,11 +1077,13 @@ export function HeroCanvas({
             {/* Environnement réfléchissant (panneaux colorés) : donne de vraies
                 réflexions au métal/clearcoat sans HDR à télécharger. Bake unique. */}
             <Environment resolution={quality === "high" ? 256 : 128} frames={1}>
-              <Lightformer color="#a529ff" intensity={2.4} form="rect" position={[4, 3, 4]} scale={[7, 7, 1]} />
-              <Lightformer color="#4b1fff" intensity={1.5} form="rect" position={[-5, 1, 2]} scale={[6, 8, 1]} />
-              <Lightformer color="#ffffff" intensity={2} form="ring" position={[0, 5, -2]} scale={[3, 3, 1]} />
-              <Lightformer color="#ff3df0" intensity={1} form="circle" position={[2, -3, 3]} scale={[4, 4, 1]} />
-              <Lightformer color="#180a3a" intensity={0.6} form="rect" position={[0, -5, -3]} scale={[10, 10, 1]} />
+              <Lightformer color="#a529ff" intensity={3.4} form="rect" position={[4, 3, 4]} scale={[8, 8, 1]} />
+              <Lightformer color="#4b1fff" intensity={2.3} form="rect" position={[-5, 1, 2]} scale={[7, 9, 1]} />
+              <Lightformer color="#ffffff" intensity={2.8} form="ring" position={[0, 5, -2]} scale={[3.5, 3.5, 1]} />
+              <Lightformer color="#ff3df0" intensity={1.6} form="circle" position={[2, -3, 3]} scale={[5, 5, 1]} />
+              <Lightformer color="#c77bff" intensity={1.8} form="rect" position={[-3, -2, -4]} scale={[6, 6, 1]} />
+              <Lightformer color="#ffffff" intensity={1.4} form="rect" position={[5, -1, -2]} scale={[2, 6, 1]} />
+              <Lightformer color="#1f0c46" intensity={0.7} form="rect" position={[0, -5, -3]} scale={[12, 12, 1]} />
             </Environment>
 
             <CubeController
