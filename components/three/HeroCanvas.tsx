@@ -34,6 +34,7 @@ type CubeControllerProps = {
 };
 
 const SPACING = 1.04;
+const EXPLODE = 0.95; // écartement max des cubies au scroll (effet "explode")
 const HALF_TURN = Math.PI / 2;
 const REST_ROTATION: [number, number, number] = [-1.05, -2.15, 0];
 
@@ -481,150 +482,134 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
 
   return {
 
-    // ── R · DARK IRIDESCENT METAL ────────────────────────────────────────────────
-    // Deep gunmetal base so it never blows out to white. Iridescence gives
-    // the color-shift without washing everything out.
+    // ── R · MÉTAL VIOLET IRIDESCENT ──────────────────────────────────────────
+    // Base très sombre violette, finition métal brillante + iridescence violette.
     R: {
-      color: "#1a1428",           // very dark base — env map adds brightness
-      roughness: isHigh ? 0.1 : 0.16,
-      metalness: 0.02,
-      emissive: "#0b0d10",
-      emissiveIntensity: 0,
-      envMapIntensity: isHigh ? 1.4 : 1.1,   // was 3.2 — that was blowing it out
+      color: "#181024",
+      roughness: isHigh ? 0.16 : 0.22,
+      metalness: 0.55,
+      emissive: "#6a1fc0",
+      emissiveIntensity: 0.28,
+      envMapIntensity: isHigh ? 1.1 : 0.85,
       clearcoat: 1,
-      clearcoatRoughness: 0.04,
-      roughnessMapKey: "microNoise",
-      metalnessMapKey: undefined,
-      bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.01 : 0.006,
-      iridescence: 0,
-      iridescenceIOR: 1.5,                    // was 2.2 — caused white saturation
-      iridescenceThicknessRange: undefined,
-      specularIntensity: 0.96,
-      specularColor: "#eef2f8",
-    },
-
-    // ── L · CARBON NEON ──────────────────────────────────────────────────────
-    // Matte-black carbon weave that glows deep purple from within.
-    // Circuit line emissive map creates a PCB trace effect.
-    // Moderate clearcoat so highlights glide across the weave.
-    L: {
-      color: "#6f747a",
-      roughness: isHigh ? 0.9 : 0.92,
-      metalness: 0.02,
-      emissive: "#111317",
-      emissiveIntensity: 0,
-      envMapIntensity: isHigh ? 0.18 : 0.14,
-      clearcoat: 0.02,
-      clearcoatRoughness: 0.96,
-      roughnessMapKey: "mineralNoise",
-      bumpMapKey: "mineralNoise",
-      bumpScale: isHigh ? 0.018 : 0.011,
-      specularIntensity: 0.08,
-      specularColor: "#d4d7dc",
-    },
-
-    // ── U · HOLOGRAPHIC GLASS ────────────────────────────────────────────────
-    // Fully transmissive crystal. You can see through it. The attenuation
-    // tints deep-path light violet, iridescence adds rainbow oil-slick
-    // sheen at grazing angles, and the pearl bump gives it micro-texture.
-    U: {
-      color: "#ffffff",
-      roughness: isHigh ? 0.05 : 0.1,
-      metalness: 0,
-      emissive: "#111317",
-      emissiveIntensity: 0,
-      envMapIntensity: isHigh ? 1.18 : 0.92,
-      clearcoat: 1,
-      clearcoatRoughness: 0.03,
+      clearcoatRoughness: 0.06,
       roughnessMapKey: "microNoise",
       bumpMapKey: "microNoise",
-      bumpScale: isHigh ? 0.003 : 0.0015,
-      transmission: isHigh ? 0.97 : 0.74,
-      thickness: isHigh ? 1.45 : 0.82,
-      attenuationColor: "#f8fafc",
-      attenuationDistance: isHigh ? 2.4 : 1.55,
-      ior: 1.48,
-      iridescence: 0,
+      bumpScale: isHigh ? 0.009 : 0.006,
+      iridescence: 0.4,
       iridescenceIOR: 1.3,
-      iridescenceThicknessRange: undefined,
-      sheen: 0,
-      sheenColor: "#ffffff",
-      sheenRoughness: 1,
-      specularIntensity: 0.98,
-      specularColor: "#ffffff",
-      transparent: true,
-      opacity: 0.93,
+      iridescenceThicknessRange: [120, 420],
+      specularIntensity: 0.7,
+      specularColor: "#cba6ff",
     },
 
-    // ── D · FROSTED GLOW GLASS ───────────────────────────────────────────────
-    // Semi-opaque slab like backlit etched acrylic. The frost roughness
-    // blurs transmitted light into a soft halo. Inner purple emissive
-    // leaks through the frost, making it look lit from behind.
-    D: {
-      color: "#eef1f4",
-      roughness: isHigh ? 0.78 : 0.82,
-      metalness: 0,
-      emissive: "#111317",
-      emissiveIntensity: 0,
-      envMapIntensity: isHigh ? 0.36 : 0.28,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.72,
-      roughnessMapKey: "frostNoise",
-      bumpMapKey: "frostNoise",
-      bumpScale: isHigh ? 0.022 : 0.013,
-      transmission: isHigh ? 0.46 : 0.24,
-      thickness: isHigh ? 0.68 : 0.38,
-      attenuationColor: "#f5f7fa",
-      attenuationDistance: isHigh ? 1.16 : 0.72,
-      ior: 1.16,
-      sheen: 0,
-      sheenColor: "#ffffff",
-      sheenRoughness: 1,
-      specularIntensity: 0.2,
-      specularColor: "#ffffff",
-      transparent: true,
-      opacity: 0.92,
-    },
-
-    // ── F · NEON CORE ────────────────────────────────────────────────────────
-    // The brightest face. Near-black base with maximum-intensity purple
-    // emissive driven by the circuit map — hot traces look like they're
-    // conducting electricity. High clearcoat creates reflective top layer
-    // over the glowing surface, like epoxy over an LED panel.
-    F: {
-      color: "#f1efea",
-      roughness: isHigh ? 0.38 : 0.44,
-      metalness: 0.02,
-      emissive: "#111317",
-      emissiveIntensity: 0,
-      envMapIntensity: isHigh ? 0.52 : 0.4,
-      clearcoat: 0.22,
-      clearcoatRoughness: 0.42,
-      roughnessMapKey: "microNoise",
-      bumpMapKey: "marbleVein",
-      bumpScale: isHigh ? 0.014 : 0.008,
-      specularIntensity: 0.28,
-      specularColor: "#ffffff",
-    },
-
-    // ── B · ELECTRIC STORM ───────────────────────────────────────────────────────
-    // Near-black void with white-blue lightning bolts crackling across it.
-    // emissiveMap drives the bolt glow, clearcoat adds a glass-panel sheen.
-    B: {
-      color: "#3a4047",
-      roughness: isHigh ? 0.82 : 0.86,
-      metalness: 0.03,
-      emissive: "#101216",
-      emissiveIntensity: 0,
-      envMapIntensity: isHigh ? 0.22 : 0.18,
-      clearcoat: 0.04,
-      clearcoatRoughness: 0.92,
+    // ── L · MÉTAL VIOLET MAT ──────────────────────────────────────────────────
+    L: {
+      color: "#140d20",
+      roughness: isHigh ? 0.4 : 0.48,
+      metalness: 0.35,
+      emissive: "#581aa6",
+      emissiveIntensity: 0.24,
+      envMapIntensity: isHigh ? 0.7 : 0.55,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.3,
       roughnessMapKey: "mineralNoise",
       bumpMapKey: "mineralNoise",
       bumpScale: isHigh ? 0.016 : 0.01,
-      specularIntensity: 0.1,
-      specularColor: "#cfd4da",
+      iridescence: 0.25,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [140, 400],
+      specularIntensity: 0.5,
+      specularColor: "#b489ff",
+    },
+
+    // ── U · VERRE VIOLET TRANSMISSIF ──────────────────────────────────────────
+    // Cristal violet translucide pour la profondeur (laisse passer la lumière).
+    U: {
+      color: "#2a1840",
+      roughness: isHigh ? 0.08 : 0.14,
+      metalness: 0,
+      emissive: "#7d24d6",
+      emissiveIntensity: 0.16,
+      envMapIntensity: isHigh ? 1.0 : 0.8,
+      clearcoat: 1,
+      clearcoatRoughness: 0.05,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.003 : 0.0015,
+      transmission: isHigh ? 0.9 : 0.6,
+      thickness: isHigh ? 1.3 : 0.8,
+      attenuationColor: "#a855ff",
+      attenuationDistance: isHigh ? 1.6 : 1.1,
+      ior: 1.45,
+      iridescence: 0.35,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [120, 420],
+      specularIntensity: 0.8,
+      specularColor: "#e6d4ff",
+      transparent: true,
+      opacity: 0.96,
+    },
+
+    // ── D · VIOLET BRILLANT ÉMISSIF ───────────────────────────────────────────
+    D: {
+      color: "#160f24",
+      roughness: isHigh ? 0.24 : 0.3,
+      metalness: 0.3,
+      emissive: "#7d24d6",
+      emissiveIntensity: 0.42,
+      envMapIntensity: isHigh ? 0.8 : 0.62,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.12,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.01 : 0.006,
+      iridescence: 0.3,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [120, 400],
+      specularIntensity: 0.6,
+      specularColor: "#cba6ff",
+    },
+
+    // ── F · CŒUR NÉON ─────────────────────────────────────────────────────────
+    // La face la plus lumineuse : émissif violet de marque intense.
+    F: {
+      color: "#1b1032",
+      roughness: isHigh ? 0.18 : 0.26,
+      metalness: 0.25,
+      emissive: "#a529ff",
+      emissiveIntensity: 0.72,
+      envMapIntensity: isHigh ? 0.85 : 0.65,
+      clearcoat: 1,
+      clearcoatRoughness: 0.08,
+      roughnessMapKey: "microNoise",
+      bumpMapKey: "microNoise",
+      bumpScale: isHigh ? 0.012 : 0.007,
+      iridescence: 0.45,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [140, 460],
+      specularIntensity: 0.7,
+      specularColor: "#e0c8ff",
+    },
+
+    // ── B · VIOLET SOMBRE PROFOND ─────────────────────────────────────────────
+    B: {
+      color: "#120c1e",
+      roughness: isHigh ? 0.46 : 0.54,
+      metalness: 0.3,
+      emissive: "#581aa6",
+      emissiveIntensity: 0.26,
+      envMapIntensity: isHigh ? 0.6 : 0.46,
+      clearcoat: 0.5,
+      clearcoatRoughness: 0.32,
+      roughnessMapKey: "mineralNoise",
+      bumpMapKey: "mineralNoise",
+      bumpScale: isHigh ? 0.014 : 0.009,
+      iridescence: 0.22,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [140, 400],
+      specularIntensity: 0.45,
+      specularColor: "#b489ff",
     },
   };
 }
@@ -634,20 +619,21 @@ function createOuterFaceMaterials(quality: "high" | "low"): Record<Face, FaceMat
 // interior cavity, slightly reflective so the neon bleeds in.
 
 function createInnerFaceMaterial(quality: "high" | "low"): FaceMaterial {
+  const isHigh = quality === "high";
   return {
-    color: quality === "high" ? "#171b21" : "#14181d",
-    roughness: 0.88,
-    metalness: 0.02,
-    emissive: "#111317",
-    emissiveIntensity: 0,
-    envMapIntensity: quality === "high" ? 0.12 : 0.1,
-    clearcoat: 0.02,
-    clearcoatRoughness: 0.95,
+    color: "#120c1c",
+    roughness: 0.6,
+    metalness: 0.2,
+    emissive: "#3a106e",
+    emissiveIntensity: 0.12,
+    envMapIntensity: isHigh ? 0.3 : 0.22,
+    clearcoat: 0.15,
+    clearcoatRoughness: 0.5,
     roughnessMapKey: "microNoise",
     bumpMapKey: "microNoise",
-    bumpScale: quality === "high" ? 0.009 : 0.006,
-    specularIntensity: 0.07,
-    specularColor: "#c1c7cf",
+    bumpScale: isHigh ? 0.008 : 0.005,
+    specularIntensity: 0.3,
+    specularColor: "#9a78d0",
   };
 }
 
@@ -672,9 +658,8 @@ function materialForFace(
 ): FaceMaterial {
   const base = presets[face];
   const tint = linearFaceTint(face, coords);
-  const resolvedColor = face === "R" ? "#121317" : base.color;
-  const color = new Color(resolvedColor);
-  const envMapBase = face === "R" ? 0.78 : base.envMapIntensity;
+  const color = new Color(base.color);
+  const envMapBase = base.envMapIntensity;
   color.offsetHSL(0, 0, tint);
 
   return {
@@ -714,6 +699,14 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
   const rootRef = useRef<Group>(null);
   const pivotRef = useRef<Group>(null);
   const cubieRefs = useRef<Record<string, Group>>({});
+  // Cellule de grille courante de chaque cubie (mise à jour à chaque finalizeMove).
+  // Source stable pour l'éclatement (ne pas la redériver d'une position éclatée).
+  const cubieGridRef = useRef<Record<string, [number, number, number]>>(
+    Object.fromEntries(CUBIES.map((cubie) => [cubie.id, [...cubie.coords]])) as Record<
+      string,
+      [number, number, number]
+    >,
+  );
   const activeMoveRef = useRef<ActiveMove | null>(null);
   const idleTimerRef = useRef(0);
   const nextMoveDelayRef = useRef(motionPreset === "mobile" ? 1.4 : 0.7);
@@ -791,11 +784,11 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
       }
 
       root.attach(cubie);
-      cubie.position.set(
-        Math.round(cubie.position.x / SPACING) * SPACING,
-        Math.round(cubie.position.y / SPACING) * SPACING,
-        Math.round(cubie.position.z / SPACING) * SPACING,
-      );
+      const gx = Math.round(cubie.position.x / SPACING);
+      const gy = Math.round(cubie.position.y / SPACING);
+      const gz = Math.round(cubie.position.z / SPACING);
+      cubie.position.set(gx * SPACING, gy * SPACING, gz * SPACING);
+      cubieGridRef.current[id] = [gx, gy, gz];
 
       const euler = new Euler().setFromQuaternion(cubie.quaternion, "XYZ");
       cubie.rotation.set(
@@ -812,17 +805,21 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
   useFrame((_, delta) => {
     // Réaction au scroll : pilote un groupe parent dédié (n'interfère pas avec la
     // mécanique interne du cube). La progression est lissée pour rester fluide.
+    let p = 0;
     const scrollGroup = scrollGroupRef.current;
     if (scrollGroup && typeof window !== "undefined") {
       const viewport = window.innerHeight || 1;
-      const raw = clamp(window.scrollY / viewport, 0, 1);
-      scrollProgressRef.current = MathUtils.lerp(scrollProgressRef.current, raw, 0.08);
-      const p = scrollProgressRef.current;
-      scrollGroup.rotation.y = p * 1.3;
-      scrollGroup.rotation.x = p * 0.35;
-      scrollGroup.rotation.z = p * 0.2;
-      scrollGroup.position.y = p * 1.0;
-      scrollGroup.scale.setScalar(MathUtils.lerp(1, 0.72, p));
+      // Déclenchement précoce : effet complet en ~45 % d'un écran, pendant que le
+      // cube est encore visible.
+      const raw = clamp(window.scrollY / (viewport * 0.45), 0, 1);
+      scrollProgressRef.current = MathUtils.lerp(scrollProgressRef.current, raw, 0.12);
+      p = scrollProgressRef.current;
+      // Drift/rotation légers (l'éclatement est l'effet principal).
+      scrollGroup.rotation.y = p * 0.8;
+      scrollGroup.rotation.x = p * 0.25;
+      scrollGroup.rotation.z = p * 0.12;
+      scrollGroup.position.y = p * 0.5;
+      scrollGroup.scale.setScalar(MathUtils.lerp(1, 0.92, p));
     }
 
     const cubeGroup = cubeGroupRef.current;
@@ -834,7 +831,8 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
       return;
     }
 
-    if (!activeMoveRef.current && queueRef.current.length > 0) {
+    // Pas de nouveaux tours pendant l'éclatement (scroll).
+    if (p < 0.02 && !activeMoveRef.current && queueRef.current.length > 0) {
       const move = queueRef.current.shift();
       if (move) {
         startMove(move);
@@ -864,7 +862,20 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
       return;
     }
 
-    if (!draggingRef.current) {
+    // Éclatement au scroll : écarte chaque cubie du centre selon sa cellule de
+    // grille (hors mouvement actif). À p≈0, la formule = simple snap grille.
+    if (p > 0.001) {
+      const expand = SPACING + p * EXPLODE;
+      for (const id in cubieRefs.current) {
+        const cubie = cubieRefs.current[id];
+        const grid = cubieGridRef.current[id];
+        if (cubie && grid) {
+          cubie.position.set(grid[0] * expand, grid[1] * expand, grid[2] * expand);
+        }
+      }
+    }
+
+    if (!draggingRef.current && p < 0.02) {
       idleTimerRef.current += delta;
       if (idleTimerRef.current >= nextMoveDelayRef.current) {
         queueRef.current.push(randomMove());
@@ -1029,16 +1040,16 @@ export function HeroCanvas({
               };
             }}
           >
-            <ambientLight intensity={quality === "high" ? 0.72 : 0.58} />
+            <ambientLight intensity={quality === "high" ? 0.5 : 0.42} />
             <hemisphereLight
-              intensity={quality === "high" ? 0.42 : 0.34}
-              color="#f3f5f7"
-              groundColor="#181b20"
+              intensity={quality === "high" ? 0.38 : 0.3}
+              color="#e9ddff"
+              groundColor="#160f24"
             />
             <directionalLight
               position={[5.8, 6.3, 4.4]}
-              intensity={quality === "high" ? 2.05 : 1.68}
-              color="#fcfdff"
+              intensity={quality === "high" ? 1.45 : 1.2}
+              color="#f3ecff"
             />
             <directionalLight
               position={[-4.8, 3.2, -3.8]}
@@ -1047,13 +1058,13 @@ export function HeroCanvas({
             />
             <pointLight
               position={[-4.8, -2.4, 3]}
-              intensity={quality === "high" ? 0.32 : 0.24}
-              color="#dfe5ec"
+              intensity={quality === "high" ? 0.85 : 0.6}
+              color="#8a3fff"
             />
             <pointLight
               position={[3.8, 5.2, 4.6]}
-              intensity={quality === "high" ? 1.32 : 0.96}
-              color="#9052ff"
+              intensity={quality === "high" ? 2.1 : 1.5}
+              color="#a529ff"
             />
             <pointLight
               position={[3.4, -1.8, -3.2]}
