@@ -826,7 +826,7 @@ function CubeController({ queueRef, draggingRef, motionPreset, quality }: CubeCo
         // et qu'on le dépasse (pas déjà éclaté à l'arrivée).
         const rect = state.gl.domElement.getBoundingClientRect();
         const center = rect.top + rect.height / 2;
-        raw = clamp((viewport * 0.62 - center) / (viewport * 0.5), 0, 1);
+        raw = clamp((viewport * 0.75 - center) / (viewport * 0.5), 0, 1);
       } else {
         // PC : déclenchement précoce (cube en haut du hero, visible dès scrollY ≈ 0).
         raw = clamp(window.scrollY / (viewport * 0.45), 0, 1);
