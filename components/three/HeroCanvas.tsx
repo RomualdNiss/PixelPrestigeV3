@@ -1023,7 +1023,7 @@ export function HeroCanvas({
               cleanupContextRef.current?.();
               gl.setClearColor("#000000", 0);
               gl.toneMapping = ACESFilmicToneMapping;
-              gl.toneMappingExposure = quality === "high" ? 1.02 : 0.96;
+              gl.toneMappingExposure = quality === "high" ? 1.16 : 1.08;
 
               const canvas = gl.domElement;
               const handleLost = (event: Event) => {
