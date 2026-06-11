@@ -18,7 +18,15 @@ function Tiles({ logos }: { logos: ClientLogo[] }) {
           <span className="flex h-16 min-w-[132px] items-center justify-center rounded-[3px] border border-black/10 bg-white px-6 shadow-[3px_3px_0_0_rgba(165,41,255,0.35)] md:h-[72px]">
             {/* Export statique : next/image indisponible (images.unoptimized). */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo.src} alt="" loading="lazy" draggable={false} className="h-8 w-auto select-none md:h-9" />
+            <img
+              src={logo.src}
+              alt=""
+              loading="lazy"
+              draggable={false}
+              width={120}
+              height={36}
+              className="h-8 w-auto select-none md:h-9"
+            />
           </span>
         </li>
       ))}

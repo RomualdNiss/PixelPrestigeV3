@@ -454,7 +454,7 @@ const enCases: CaseStudy[] = [
 const clientLogos: ClientLogo[] = [
   { name: "Consult Rénov", src: "/assets/img/clients/consult_renov.svg" },
   { name: "Wirton", src: "/assets/img/clients/logo-wirton.svg" },
-  { name: "Ostéo Mille-Pattes", src: "/assets/img/clients/osteo_mille_patte.png" },
+  { name: "Ostéo Mille-Pattes", src: "/assets/img/clients/osteo_mille_patte.webp" },
   { name: "BR VTC", src: "/assets/img/clients/br_vtc.svg" },
   { name: "Resoi", src: "/assets/img/clients/logo_resoi.svg" },
 ];

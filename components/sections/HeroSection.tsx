@@ -48,28 +48,29 @@ export function HeroSection({ locale, dictionary }: HeroSectionProps) {
   const shouldAnimateFallback = !reducedMotion && isCoarsePointer === false;
 
   useEffect(() => {
-    if (reducedMotion) {
-      const timeoutId = window.setTimeout(() => {
-        setIsCoarsePointer(window.matchMedia("(pointer: coarse)").matches);
-        setUse3D(false);
-        setWebglIssue(false);
-      }, 0);
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    setIsCoarsePointer(coarsePointer);
+    setWebglIssue(false);
 
-      return () => {
-        window.clearTimeout(timeoutId);
-      };
+    // Pas de cube three.js sur mobile (pointeur grossier) ni en mouvement réduit :
+    // on conserve le repli CSS, ce qui évite de charger le chunk three.js/drei.
+    if (reducedMotion || coarsePointer) {
+      setUse3D(false);
+      return;
     }
 
-    const timeoutId = window.setTimeout(() => {
-      const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
-      setIsCoarsePointer(coarsePointer);
-      setUse3D(hasWebGL());
-      setWebglIssue(false);
-    }, 0);
+    // Sur desktop, on diffère l'init WebGL hors du chemin critique : le héros
+    // affiche le glow de repli tant que `use3D` est faux, le cube apparaît une fois
+    // le thread principal libre.
+    const enable3D = () => setUse3D(hasWebGL());
 
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
+    if (typeof window.requestIdleCallback === "function") {
+      const idleId = window.requestIdleCallback(enable3D, { timeout: 2000 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(enable3D, 200);
+    return () => window.clearTimeout(timeoutId);
   }, [reducedMotion]);
 
   return (
